@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sisliova Karar Masası</title>
+<meta name="description" content="30 Günde Kasabayı Kurtar: kasabanın bugünkü durumu, verilen kararlar ve yakında gelecek oyun. Kurgusal animasyon serisi.">
+<meta property="og:title" content="Sisliova Karar Masası">
+<meta property="og:description" content="Deden sana bir kasaba bıraktı. Ve 5 milyon lira borç. Kararları yorumlar veriyor.">
+<meta property="og:image" content="https://yunusterziii.github.io/sisliova/img/og.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#F3EAD9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --kagit: #F3EAD9;
+    --kagit-koyu: #E9DDC6;
+    --murekkep: #292621;
+    --kursun: #77736A;
+    --kirmizi: #BE453C;
+    --yesil: #56836A;
+    --cizgi: rgba(41, 38, 33, .09);
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background-color: var(--kagit);
+    background-image:
+      linear-gradient(var(--cizgi) 1px, transparent 1px),
+      linear-gradient(90deg, var(--cizgi) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: var(--murekkep);
+    font: 400 17px/1.5 "Nunito", system-ui, sans-serif;
+  }
+  .sayfa { max-width: 520px; margin: 0 auto; padding: 20px 16px 48px; }
+  h1, h2, .el { font-family: "Patrick Hand", "Nunito", cursive; font-weight: 400; }
+  h1 { font-size: 40px; line-height: 1.05; margin: 6px 0 4px; }
+  h2 { font-size: 28px; line-height: 1.1; margin: 0 0 10px; }
+  p { margin: 0 0 12px; }
+  a { color: inherit; }
+  .ust { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--kursun); font-weight: 800; }
+  .kurgu { font-size: 13px; color: var(--kursun); }
+
+  .kagit {
+    position: relative;
+    background: #FBF6EC;
+    border: 1.5px solid var(--murekkep);
+    border-radius: 3px 6px 4px 5px;
+    padding: 18px 16px;
+    margin: 22px 0;
+    box-shadow: 3px 4px 0 rgba(41, 38, 33, .12);
+  }
+  .kagit.egik { transform: rotate(-.6deg); }
+  .kagit.egik2 { transform: rotate(.5deg); }
+  .bant {
+    position: absolute; top: -11px; left: 50%; width: 86px; height: 22px;
+    transform: translateX(-50%) rotate(-2deg);
+    background: rgba(233, 221, 198, .85); border: 1px solid rgba(41, 38, 33, .12);
+  }
+
+  .giris { display: grid; grid-template-columns: 1fr 112px; gap: 10px; align-items: end; }
+  .giris img { width: 112px; height: auto; display: block; }
+  .acilis { font-size: 19px; }
+  .acilis b { color: var(--kirmizi); }
+
+  .hud { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .hud .kutu { border: 1.5px dashed var(--kursun); border-radius: 4px; padding: 8px 10px; }
+  .hud .etiket { font-size: 11.5px; font-weight: 800; letter-spacing: .07em; color: var(--kursun); text-transform: uppercase; }
+  .hud .deger { font-size: 26px; font-weight: 800; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .hud .borc .deger { color: var(--kirmizi); }
+  .hud .kasa .deger { color: var(--yesil); }
+  .cubuk { height: 8px; border: 1.5px solid var(--murekkep); border-radius: 4px; margin-top: 6px; overflow: hidden; }
+  .cubuk span { display: block; height: 100%; background: var(--yesil); width: 0; transition: width 1.2s ease-out; }
+  .gunler { display: grid; grid-template-columns: repeat(15, 1fr); gap: 4px; margin-top: 12px; }
+  .gunler i { aspect-ratio: 1; border: 1.3px solid var(--kursun); border-radius: 2px; position: relative; }
+  .gunler i.gecti { background: var(--murekkep); border-color: var(--murekkep); }
+  .gunler i.bugun { border: 2px solid var(--kirmizi); }
+  .not-kucuk { font-size: 13px; color: var(--kursun); margin-top: 8px; }
+
+  .oylama .secenekler { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .secenek { border: 1.5px solid var(--murekkep); border-radius: 4px; padding: 10px; background: var(--kagit); }
+  .secenek .kelime { font-family: "Patrick Hand", cursive; font-size: 30px; line-height: 1; color: var(--kirmizi); }
+  .secenek ul { margin: 6px 0 0; padding-left: 16px; font-size: 14px; }
+  .yorum-cagri { font-weight: 800; }
+
+  .dugme {
+    display: block; width: 100%; text-align: center; text-decoration: none;
+    font: 800 18px/1.2 "Nunito", sans-serif;
+    padding: 15px 16px; margin-top: 12px;
+    border: 2px solid var(--murekkep); border-radius: 6px 4px 7px 5px;
+    background: var(--murekkep); color: var(--kagit);
+    box-shadow: 3px 3px 0 var(--kirmizi);
+  }
+  .dugme:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--kirmizi); }
+  .dugme.ikincil { background: transparent; color: var(--murekkep); box-shadow: 3px 3px 0 rgba(41, 38, 33, .2); }
+
+  .oyun { border-color: var(--kirmizi); }
+  .oyun h2 { color: var(--kirmizi); }
+  .oyun .liste { margin: 8px 0 4px; padding-left: 18px; }
+  .kvkk { font-size: 12.5px; color: var(--kursun); margin-top: 10px; }
+
+  .arsiv { list-style: none; margin: 0; padding: 0; }
+  .arsiv li { display: grid; grid-template-columns: 52px 1fr; gap: 10px; padding: 12px 0; border-bottom: 1px dashed var(--kursun); }
+  .arsiv li:last-child { border-bottom: 0; }
+  .arsiv .no { font-family: "Patrick Hand", cursive; font-size: 24px; line-height: 1; }
+  .arsiv .soru { font-weight: 600; }
+  .arsiv .kazanan { display: inline-block; margin-top: 4px; padding: 1px 8px; border: 1.5px solid var(--yesil); color: var(--yesil); border-radius: 12px; font-size: 13px; font-weight: 800; }
+  .arsiv .kazanan.acik { border-color: var(--kirmizi); color: var(--kirmizi); }
+  .arsiv .sonuc { font-size: 14px; color: var(--kursun); margin-top: 4px; }
+  .arsiv a.izle { font-size: 14px; font-weight: 800; margin-left: 6px; }
+
+  .harita img { width: 100%; height: auto; display: block; border-radius: 2px; }
+  .dede { display: grid; grid-template-columns: 120px 1fr; gap: 14px; align-items: center; }
+  .dede img { width: 120px; height: auto; transform: rotate(-3deg); }
+  .dede .alinti { font-family: "Patrick Hand", cursive; font-size: 24px; line-height: 1.15; }
+
+  footer { margin-top: 32px; font-size: 13px; color: var(--kursun); text-align: center; }
+  @media (prefers-reduced-motion: reduce) { .cubuk span { transition: none; } }
+</style>
+</head>
+<body>
+<main class="sayfa">
+
+  <header>
+    <div class="ust">Sisliova Karar Masası</div>
+    <div class="giris">
+      <div>
+        <h1>30 Günde Kasabayı Kurtar</h1>
+        <p class="acilis">Deden sana bir kasaba bıraktı. Ve <b>5 milyon lira borç</b>. 84 kişinin evi artık sana bağlı.</p>
+      </div>
+      <img src="img/deniz.webp" width="360" height="530" alt="Deniz, dizinin ana karakteri">
+    </div>
+    <p class="kurgu">Kurgusal animasyon serisi. Her bölümün sonunu yorumlar seçiyor.</p>
+  </header>
+
+  <section class="kagit egik" aria-labelledby="durum-baslik">
+    <span class="bant" aria-hidden="true"></span>
+    <h2 id="durum-baslik">Kasabanın bugünkü durumu</h2>
+    <div class="hud">
+      <div class="kutu"><div class="etiket">Gün</div><div class="deger" id="hud-gun">–</div></div>
+      <div class="kutu kasa"><div class="etiket">Kasa</div><div class="deger" id="hud-kasa">–</div></div>
+      <div class="kutu borc"><div class="etiket">Talep edilen borç</div><div class="deger" id="hud-borc">–</div></div>
+      <div class="kutu"><div class="etiket">Güven</div><div class="deger" id="hud-guven">–</div><div class="cubuk"><span id="hud-guven-cubuk"></span></div></div>
+    </div>
+    <div class="gunler" id="gunler" aria-hidden="true"></div>
+    <p class="not-kucuk" id="kalan"></p>
+  </section>
+
+  <section class="kagit oyun" aria-labelledby="oyun-baslik">
+    <span class="bant" aria-hidden="true"></span>
+    <h2 id="oyun-baslik">Kararı tek başına vermek ister misin?</h2>
+    <p>Dizide kararı yorumlar veriyor. Oyunda Sisliova senin: 30 gün, her gün yeni bir karar, kasa, borç ve güven senin elinde.</p>
+    <ul class="liste">
+      <li>Dizideki karakterler ve kasaba</li>
+      <li>Dizide seçilmeyen yollar da açık</li>
+      <li>Birden çok son</li>
+    </ul>
+    <a class="dugme" id="form-link" target="_blank" rel="noopener">Oyun çıkınca haber ver</a>
+    <p class="kvkk">Formda bıraktığın bilgiler yalnızca oyun çıktığında sana haber vermek için kullanılır, kimseyle paylaşılmaz. Silinmesini istersen Instagram'dan mesaj atman yeterli.</p>
+  </section>
+
+  <section class="kagit oylama egik2" aria-labelledby="oylama-baslik" id="oylama">
+    <span class="bant" aria-hidden="true"></span>
+    <div class="ust" id="oylama-ust"></div>
+    <h2 id="oylama-baslik"></h2>
+    <div class="secenekler" id="secenekler"></div>
+    <p class="yorum-cagri">Kararı sen ver: bölümün altına tek kelime yaz. En çok beğenilen yorum hikâyeyi seçer.</p>
+    <a class="dugme ikincil" id="oylama-link" target="_blank" rel="noopener">Bölümü izle ve oy ver</a>
+  </section>
+
+  <section class="kagit egik" aria-labelledby="arsiv-baslik">
+    <span class="bant" aria-hidden="true"></span>
+    <h2 id="arsiv-baslik">Bugüne kadar verilen kararlar</h2>
+    <ul class="arsiv" id="arsiv"></ul>
+    <a class="dugme ikincil" id="basla-link" target="_blank" rel="noopener">Bölüm 1'den başla</a>
+  </section>
+
+  <section class="kagit harita egik2" aria-label="Sisliova haritası">
+    <span class="bant" aria-hidden="true"></span>
+    <img src="img/harita.webp" width="850" height="620" alt="Sisliova'nın elle çizilmiş kasaba planı: fabrika, su kulesi, meydan, market ve evler" loading="lazy">
+  </section>
+
+  <section class="kagit dede" aria-label="Dedenin notu">
+    <img src="img/dede.webp" width="403" height="420" alt="Dedenin eski fotoğrafı" loading="lazy">
+    <div>
+      <div class="ust">Dedenin notu</div>
+      <div class="alinti">"Sisliova'yı onlara bırakma."</div>
+      <p class="not-kucuk">Onlar kim? Cevap bölümlerde.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>30 Günde Kasabayı Kurtar kurgusal bir animasyon serisidir. Gerçek kişi, yer ve kurumlarla ilgisi yoktur; hukuki bilgi niteliği taşımaz.</p>
+  </footer>
+</main>
+
+<script>
+  // Her bölüm yayımlandıktan ve oylama kapandıktan sonra yalnızca bu bloğu güncelle.
+  const SEZON = {
+    instagram: "",          // ör. "https://www.instagram.com/kullaniciadi/"
+    form: "https://docs.google.com/forms/d/e/1FAIpQLSd0SNr2Fh3Kw6c2q5Bkcqk5O2uXAXyg1T-l3IQJ9igTrppFhw/viewform",
+    toplamGun: 30,
+    durum: { gun: 3, kasa: 27000, borc: 5000000, guven: 33 },
+    bolumler: [
+      { no: 1, link: "", soru: "Elektrik için ₺18.000 ödensin mi?", secenekler: ["ÖDE", "BEKLE"], kazanan: "ÖDE",
+        sonuc: "Kasa ₺30.000 → ₺12.000, kasabanın ışıkları yanmaya devam etti." },
+      { no: 2, link: "", soru: "Fabrika hangi işe verilsin?", secenekler: ["KARGO", "FATURASIZ DEPO"], kazanan: "KARGO",
+        sonuc: "Yasal kargo deposu açıldı: günde ₺15.000, kasabadan 5 kişiye iş." },
+      { no: 3, link: "", soru: "İkinci salonda hangi iş kurulsun?", secenekler: ["DÜĞÜN", "SİNEMA"], kazanan: null,
+        sonuc: "",
+        detay: {
+          "DÜĞÜN": ["Hazırlık ₺20.000", "Düğün başına ₺45.000", "Cumartesi için soran var", "Nermin'in isteği"],
+          "SİNEMA": ["Hazırlık ₺20.000", "Dolu salonda her gece ₺30.000", "Dolmazsa ₺20.000 boşa gider", "Nermin kırılır"]
+        } }
+    ]
+  };
+
+  const tl = n => "₺" + n.toLocaleString("tr-TR");
+  const $ = id => document.getElementById(id);
+  const azHareket = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function say(el, hedef, bicim) {
+    if (azHareket) { el.textContent = bicim(hedef); return; }
+    const sure = 900, bas = performance.now();
+    const adim = t => {
+      const p = Math.min(1, (t - bas) / sure), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = bicim(Math.round(hedef * e));
+      if (p < 1) requestAnimationFrame(adim);
+    };
+    requestAnimationFrame(adim);
+  }
+
+  function baglanti(el, url) {
+    if (url) el.href = url; else el.hidden = true;
+  }
+
+  const d = SEZON.durum;
+  $("hud-gun").textContent = d.gun + "/" + SEZON.toplamGun;
+  say($("hud-kasa"), d.kasa, tl);
+  $("hud-borc").textContent = tl(d.borc);
+  say($("hud-guven"), d.guven, n => n + "/100");
+  requestAnimationFrame(() => { $("hud-guven-cubuk").style.width = d.guven + "%"; });
+  $("kalan").textContent = "Alacaklının verdiği süreden " + (SEZON.toplamGun - d.gun) + " gün kaldı.";
+
+  const gunler = $("gunler");
+  for (let i = 1; i <= SEZON.toplamGun; i++) {
+    const k = document.createElement("i");
+    if (i < d.gun) k.className = "gecti";
+    if (i === d.gun) k.className = "bugun";
+    gunler.appendChild(k);
+  }
+
+  const acik = SEZON.bolumler.find(b => !b.kazanan);
+  if (acik) {
+    $("oylama-ust").textContent = "Bölüm " + acik.no + " · oylama açık";
+    $("oylama-baslik").textContent = acik.soru;
+    acik.secenekler.forEach(s => {
+      const kutu = document.createElement("div");
+      kutu.className = "secenek";
+      const kelime = document.createElement("div");
+      kelime.className = "kelime";
+      kelime.textContent = s;
+      kutu.appendChild(kelime);
+      const satirlar = (acik.detay || {})[s] || [];
+      if (satirlar.length) {
+        const ul = document.createElement("ul");
+        satirlar.forEach(x => { const li = document.createElement("li"); li.textContent = x; ul.appendChild(li); });
+        kutu.appendChild(ul);
+      }
+      $("secenekler").appendChild(kutu);
+    });
+    baglanti($("oylama-link"), acik.link || SEZON.instagram);
+  } else {
+    $("oylama").hidden = true;
+  }
+
+  baglanti($("form-link"), SEZON.form);
+  const ilk = SEZON.bolumler.find(b => b.no === 1);
+  baglanti($("basla-link"), (ilk && ilk.link) || SEZON.instagram);
+
+  SEZON.bolumler.slice().reverse().forEach(b => {
+    const li = document.createElement("li");
+    const no = document.createElement("div");
+    no.className = "no";
+    no.textContent = "B" + String(b.no).padStart(2, "0");
+    const govde = document.createElement("div");
+    const soru = document.createElement("div");
+    soru.className = "soru";
+    soru.textContent = b.soru;
+    govde.appendChild(soru);
+    const etiket = document.createElement("span");
+    etiket.className = "kazanan" + (b.kazanan ? "" : " acik");
+    etiket.textContent = b.kazanan ? "Kazanan: " + b.kazanan : "Oylama sürüyor";
+    govde.appendChild(etiket);
+    if (b.link) {
+      const a = document.createElement("a");
+      a.className = "izle"; a.href = b.link; a.target = "_blank"; a.rel = "noopener";
+      a.textContent = "İzle →";
+      govde.appendChild(a);
+    }
+    if (b.sonuc) {
+      const s = document.createElement("div");
+      s.className = "sonuc";
+      s.textContent = b.sonuc;
+      govde.appendChild(s);
+    }
+    li.append(no, govde);
+    $("arsiv").appendChild(li);
+  });
+</script>
+</body>
+</html>
