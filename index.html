@@ -204,17 +204,19 @@
     instagram: "",          // ör. "https://www.instagram.com/kullaniciadi/"
     form: "https://docs.google.com/forms/d/e/1FAIpQLSd0SNr2Fh3Kw6c2q5Bkcqk5O2uXAXyg1T-l3IQJ9igTrppFhw/viewform",
     toplamGun: 30,
-    durum: { gun: 3, kasa: 27000, borc: 5000000, guven: 33 },
+    durum: { gun: 4, kasa: 67000, borc: 5000000, guven: 43 },
     bolumler: [
       { no: 1, link: "https://www.instagram.com/reel/DesRwU7NV8y/", soru: "Elektrik için ₺18.000 ödensin mi?", secenekler: ["ÖDE", "BEKLE"], kazanan: "ÖDE",
         sonuc: "Kasa ₺30.000 → ₺12.000, kasabanın ışıkları yanmaya devam etti." },
       { no: 2, link: "https://www.instagram.com/reel/DeuOrTnNFFI/", soru: "Fabrika hangi işe verilsin?", secenekler: ["KARGO", "FATURASIZ DEPO"], kazanan: "KARGO",
         sonuc: "Yasal kargo deposu açıldı: günde ₺15.000, kasabadan 5 kişiye iş." },
-      { no: 3, link: "https://www.instagram.com/reel/DewzQkxtTR_/", soru: "İkinci salonda hangi iş kurulsun?", secenekler: ["DÜĞÜN", "SİNEMA"], kazanan: null,
+      { no: 3, link: "https://www.instagram.com/reel/DewzQkxtTR_/", soru: "İkinci salonda hangi iş kurulsun?", secenekler: ["DÜĞÜN", "SİNEMA"], kazanan: "DÜĞÜN",
+        sonuc: "Salonda ilk düğün yapıldı: kasa ₺67.000'e çıktı, ışıklar sönünce kasaba telefon ışıklarıyla düğünü kurtardı." },
+      { no: 4, link: "https://www.instagram.com/p/DezfMxTNuks/", soru: "Borcun sahibiyle buluşma nerede olsun?", secenekler: ["KASABADA", "ŞEHİRDE"], kazanan: null,
         sonuc: "",
         detay: {
-          "DÜĞÜN": ["Hazırlık ₺20.000", "Düğün başına ₺45.000", "Cumartesi için soran var", "Nermin'in isteği"],
-          "SİNEMA": ["Hazırlık ₺20.000", "Dolu salonda her gece ₺30.000", "Dolmazsa ₺20.000 boşa gider", "Nermin kırılır"]
+          "KASABADA": ["O meydana gelir", "84 kişinin önünde konuşur", "Herkes her şeyi duyar"],
+          "ŞEHİRDE": ["Sen onun ofisine gidersin", "Yalnız gidersin", "Kuralları o koyar"]
         } }
     ]
   };
