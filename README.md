@@ -2,7 +2,7 @@
 
 "30 Günde Kasabayı Kurtar" serisinin Instagram bio linki için tek sayfalık site: kasabanın güncel sayaçları, açık oylama, verilen kararların arşivi ve oyun bekleme listesi.
 
-Yayın: GitHub Pages, `main` dalının kökü. Adres: https://yunusterziii.github.io/sisliova/
+Yayın: GitHub Pages, `main` dalının kökü. Adres: https://kasabayikurtar.com (DNS: Namecheap, 4 GitHub Pages A kaydı + www CNAME)
 
 ## Her bölümden sonra güncelleme
 
