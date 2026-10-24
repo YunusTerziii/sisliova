@@ -228,6 +228,10 @@
       a: { yazi: "Mektubu al", son: "demo" } }
   ];
 
+  // Güven akşam gelirini, şüphe akşam kaybını belirler
+  const GUVEN_YUKSEK = 60, GUVEN_DUSUK = 25, SUPHE_IZLEME = 50;
+  const HEDEF_KASA = 150000;
+
   const ANLAR = ["sabah", "ogle", "gece"];
   const AN_ADI = { sabah: "Sabah", ogle: "Öğlen", aksam: "Akşam", gece: "Gece" };
   const SONLAR = {
@@ -273,6 +277,8 @@
     $("s-kasa").textContent = tl(d.kasa);
     $("k-kasa").classList.toggle("dusuk", d.kasa < 5000);
     $("s-guven").textContent = d.guven;
+    $("s-guven").style.color = d.guven >= GUVEN_YUKSEK ? "var(--yesil)" : d.guven < GUVEN_DUSUK ? "var(--kirmizi)" : "";
+    $("s-suphe").style.color = d.suphe >= SUPHE_IZLEME ? "var(--kirmizi)" : "";
     $("s-suphe").textContent = d.suphe;
     $("c-guven").style.width = d.guven + "%";
     $("c-suphe").style.width = d.suphe + "%";
@@ -348,19 +354,26 @@
   function aksamGoster() {
     $("an").textContent = "Gün " + d.gun + " · " + AN_ADI.aksam;
     const once = d.kasa;
-    const toplam = d.gelirler.reduce((t, g) => t + g.tutar, 0);
-    d.kasa += toplam;
-    hudCiz(toplam ? ["s-kasa"] : []);
-    const satirlar = d.gelirler.length
-      ? d.gelirler.map(g => `<div class="sonuc-satir"><span>${g.ad}</span><b style="color:var(--yesil)">+${tl(g.tutar)}</b></div>`).join("")
+    const ham = d.gelirler.reduce((t, g) => t + g.tutar, 0);
+    const yuz = n => Math.round(n / 100) * 100;
+    const guvenFark = d.guven >= GUVEN_YUKSEK ? yuz(ham * 0.25) : d.guven < GUVEN_DUSUK ? -yuz(ham * 0.3) : 0;
+    const izleme = d.suphe >= SUPHE_IZLEME ? (d.suphe - 40) * 150 : 0;
+    d.kasa += ham + guvenFark - izleme;
+    hudCiz(once !== d.kasa ? ["s-kasa"] : []);
+    const satir = (ad, tutar) => `<div class="sonuc-satir"><span>${ad}</span><b style="color:var(--${tutar >= 0 ? "yesil" : "kirmizi"})">${tutar >= 0 ? "+" : ""}${tl(tutar)}</b></div>`;
+    let satirlar = d.gelirler.length
+      ? d.gelirler.map(g => satir(g.ad, g.tutar)).join("")
       : `<div class="sonuc-satir"><span>Bugün gelir getiren bir iş yok.</span></div>`;
+    if (guvenFark > 0) satirlar += satir("Köy arkanda (güven " + GUVEN_YUKSEK + "+)", guvenFark);
+    if (guvenFark < 0) satirlar += satir("Köylü isteksiz (güven " + GUVEN_DUSUK + "'in altında)", guvenFark);
+    if (izleme) satirlar += satir("Alacaklının adamları köyde (şüphe " + SUPHE_IZLEME + "+)", -izleme);
     $("kart").innerHTML = `<span class="bant"></span>
       <div class="metin">Akşam oldu${d.isim ? ", " + d.isim : ""}. Günün hesabı:</div>
       ${satirlar}
       <div class="sonuc-satir"><span>Kasa</span><span><span class="eski">${tl(once)}</span><b>${tl(d.kasa)}</b></span></div>
       <div class="secenekler" style="margin-top:18px"><button class="secim ana" id="devam">Geceye geç</button></div>`;
     kaydet();
-    $("devam").addEventListener("click", kartGoster);
+    $("devam").addEventListener("click", () => { const sinir = sinirKontrol(); sinir ? bitir(sinir) : kartGoster(); });
     tazele();
   }
 
@@ -378,7 +391,11 @@
       <div class="metin" style="font-size:34px">${s.baslik}</div>
       <p>${s.metin}</p>
       <p class="kucuk" style="margin:8px 0 4px">Topladığın ipuçları</p>${ipuclari}
-      ${demo ? `<p><b>Tam oyun hazırlanıyor:</b> 30 gün, haini bul, 6 farklı son.</p>
+      ${demo ? `<p class="kucuk" style="margin:8px 0 4px">30. gün hedefine göre durumun</p>
+        <div class="sonuc-satir"><span>Kasa en az ${tl(HEDEF_KASA)}</span><b>${d.kasa >= HEDEF_KASA ? "✓" : tl(d.kasa)}</b></div>
+        <div class="sonuc-satir"><span>Güven en az ${GUVEN_YUKSEK}</span><b>${d.guven >= GUVEN_YUKSEK ? "✓" : d.guven}</b></div>
+        <div class="sonuc-satir"><span>Şüphe 100'ün altında</span><b>${d.suphe < 100 ? "✓" : d.suphe}</b></div>
+        <p style="margin-top:12px"><b>Tam oyun hazırlanıyor:</b> 30 gün, haini bul, 6 farklı son.</p>
         <p class="kucuk" style="margin-bottom:6px">Tam sürüm ₺59 olsa alır mıydın?</p>
         <div class="secenekler" style="grid-template-columns:1fr 1fr; margin-bottom:10px">
           <button class="secim" data-fiyat="evet" style="text-align:center">Alırdım</button>
@@ -422,6 +439,11 @@
       <div class="metin" style="font-size:40px; margin-bottom:8px">Karaçam</div>
       <p>Halan sana bir dağ köyü bıraktı. Ve <b style="color:var(--kirmizi)">3 milyon lira borç</b>. 52 kişinin evi artık sana bağlı.</p>
       <p class="kucuk">Sisliova'nın komşusu Karaçam'da 30 günün var. Bu demo ilk 7 günü içeriyor. Kurgusal bir oyundur.</p>
+      <ul class="liste kucuk" style="color:var(--murekkep)">
+        <li><b>Kasa</b> eksiye düşerse oyun biter.</li>
+        <li><b>Güven</b> 60 ve üstündeyse akşam gelirin %25 artar, 25'in altındaysa %30 düşer. 0 olursa kooperatif dağılır.</li>
+        <li><b>Şüphe</b> 50'yi geçerse alacaklının adamları köye gelir, her akşam para kaybedersin. 100 olursa oyun biter.</li>
+      </ul>
       <div class="giris" style="margin-top:auto">
         <label class="kucuk" for="isim">Adın (isteğe bağlı)</label>
         <input id="isim" maxlength="20" autocomplete="off" placeholder="Kartlar seni bu adla çağırır">
