@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kasabayı Kurtar: Karaçam</title>
+<meta name="description" content="Sisliova'nın komşusu Karaçam köyü 30 gün boyunca senin elinde. Ücretsiz demo: ilk 7 gün. Kurgusal bir oyun.">
+<meta property="og:title" content="Kasabayı Kurtar: Karaçam">
+<meta property="og:description" content="Halan sana bir dağ köyü bıraktı. Ve 3 milyon lira borç. Kaç gün dayanırsın?">
+<meta property="og:image" content="https://kasabayikurtar.com/img/og.jpg">
+<meta name="theme-color" content="#F3EAD9">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --kagit: #F3EAD9;
+    --kagit-acik: #FBF6EC;
+    --murekkep: #292621;
+    --kursun: #77736A;
+    --kirmizi: #BE453C;
+    --yesil: #56836A;
+    --cizgi: rgba(41, 38, 33, .09);
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background-color: var(--kagit);
+    background-image:
+      linear-gradient(var(--cizgi) 1px, transparent 1px),
+      linear-gradient(90deg, var(--cizgi) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: var(--murekkep);
+    font: 400 17px/1.45 "Nunito", system-ui, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .oyun { max-width: 480px; min-height: 100%; margin: 0 auto; padding: 12px 16px 28px; display: flex; flex-direction: column; }
+  .el { font-family: "Patrick Hand", "Nunito", cursive; font-weight: 400; }
+  .test { font-size: 11px; font-weight: 800; letter-spacing: .1em; color: var(--kirmizi); text-align: center; margin-bottom: 6px; }
+
+  /* Sayaçlar */
+  .hud { display: grid; grid-template-columns: auto 1fr 1fr 1fr; gap: 6px; }
+  .hud > div { border: 1.5px dashed var(--kursun); border-radius: 4px; padding: 4px 8px; background: rgba(251, 246, 236, .8); min-width: 0; }
+  .hud .e { font-size: 10.5px; font-weight: 800; letter-spacing: .07em; color: var(--kursun); }
+  .hud .d { font-weight: 800; font-size: 17px; line-height: 1.2; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .hud .kasa .d { color: var(--yesil); }
+  .hud .kasa.dusuk .d { color: var(--kirmizi); }
+  .cubuk { height: 6px; border: 1.3px solid var(--murekkep); border-radius: 3px; margin-top: 3px; overflow: hidden; }
+  .cubuk span { display: block; height: 100%; width: 0; transition: width .6s ease-out; }
+  .guven .cubuk span { background: var(--yesil); }
+  .suphe .cubuk span { background: var(--kirmizi); }
+  .hud .titre { animation: titre .45s; }
+  @keyframes titre { 25% { transform: translateY(-2px) scale(1.06); } 75% { transform: translateY(1px); } }
+  .zaman { display: flex; justify-content: space-between; align-items: baseline; margin: 14px 2px 6px; }
+  .zaman .an { font-family: "Patrick Hand", cursive; font-size: 26px; }
+  .zaman .ipucu { font-size: 13px; color: var(--kursun); font-weight: 600; }
+
+  /* Kart */
+  .kart {
+    position: relative; flex: 1;
+    background: var(--kagit-acik);
+    border: 1.5px solid var(--murekkep);
+    border-radius: 3px 6px 4px 5px;
+    padding: 20px 16px 16px;
+    box-shadow: 3px 4px 0 rgba(41, 38, 33, .12);
+    display: flex; flex-direction: column;
+    animation: birak .35s ease-out;
+  }
+  @keyframes birak { from { opacity: 0; transform: translateY(14px) rotate(1.5deg); } to { opacity: 1; transform: none; } }
+  .bant { position: absolute; top: -11px; left: 50%; width: 86px; height: 22px; transform: translateX(-50%) rotate(-2deg); background: rgba(233, 221, 198, .9); border: 1px solid rgba(41, 38, 33, .12); }
+  .kim { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .yuz {
+    width: 64px; height: 64px; flex: none; border-radius: 50%;
+    border: 1.8px solid var(--murekkep); background: var(--kagit);
+    display: grid; place-items: center; overflow: hidden;
+    font-family: "Patrick Hand", cursive; font-size: 30px;
+  }
+  .yuz img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .kim .ad { font-weight: 800; font-size: 16px; }
+  .kim .rol { font-size: 13px; color: var(--kursun); }
+  .metin { font-family: "Patrick Hand", cursive; font-size: 27px; line-height: 1.18; margin: 4px 0 18px; }
+  .secenekler { margin-top: auto; display: grid; gap: 10px; }
+  .secim {
+    width: 100%; text-align: left; cursor: pointer;
+    font: 800 17px/1.25 "Nunito", sans-serif; color: var(--murekkep);
+    padding: 13px 14px; border: 2px solid var(--murekkep); border-radius: 6px 4px 7px 5px;
+    background: var(--kagit); box-shadow: 3px 3px 0 rgba(41, 38, 33, .2);
+  }
+  .secim:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 rgba(41, 38, 33, .2); }
+  .secim .etki { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; font-size: 12.5px; font-weight: 800; }
+  .etki span { border: 1.3px solid currentColor; border-radius: 10px; padding: 0 7px; }
+  .etki .iyi { color: var(--yesil); }
+  .etki .kotu { color: var(--kirmizi); }
+  .etki .notr { color: var(--kursun); }
+  .ana { background: var(--murekkep); color: var(--kagit); box-shadow: 3px 3px 0 var(--kirmizi); text-align: center; }
+
+  .sonuc-satir { font-size: 15px; padding: 6px 0; border-bottom: 1px dashed var(--kursun); display: flex; justify-content: space-between; gap: 10px; }
+  .sonuc-satir:last-child { border-bottom: 0; }
+  .eski { text-decoration: line-through; text-decoration-color: var(--kirmizi); color: var(--kursun); margin-right: 6px; }
+  .kucuk { font-size: 13px; color: var(--kursun); }
+  .giris input {
+    width: 100%; font: 600 18px "Nunito", sans-serif; padding: 12px; margin: 6px 0 14px;
+    border: 2px solid var(--murekkep); border-radius: 6px; background: var(--kagit); color: var(--murekkep);
+  }
+  .liste { margin: 6px 0 12px; padding-left: 18px; }
+  .ipucu-listesi li { margin-bottom: 4px; }
+  @media (prefers-reduced-motion: reduce) { .kart, .hud .titre { animation: none; } .cubuk span { transition: none; } }
+</style>
+</head>
+<body>
+<main class="oyun">
+  <div class="test"><a href="/" style="color:inherit;text-decoration:none">← KARAR MASASI</a> · DEMO · İLK 7 GÜN</div>
+
+  <div class="hud" id="hud" hidden>
+    <div><div class="e">GÜN</div><div class="d" id="s-gun"></div></div>
+    <div class="kasa" id="k-kasa"><div class="e">KASA</div><div class="d" id="s-kasa"></div></div>
+    <div class="guven"><div class="e">GÜVEN</div><div class="d" id="s-guven"></div><div class="cubuk"><span id="c-guven"></span></div></div>
+    <div class="suphe"><div class="e">ŞÜPHE</div><div class="d" id="s-suphe"></div><div class="cubuk"><span id="c-suphe"></span></div></div>
+  </div>
+  <div class="zaman" id="zaman" hidden><span class="an" id="an"></span><span class="ipucu" id="ipucu-say"></span></div>
+
+  <section class="kart" id="kart"></section>
+</main>
+
+<script>
+  const FORM = "https://docs.google.com/forms/d/e/1FAIpQLSd0SNr2Fh3Kw6c2q5Bkcqk5O2uXAXyg1T-l3IQJ9igTrppFhw/viewform";
+  const KAYIT = "karacam-demo-v1";
+  const SUPHELILER = [{ ad: "Muhtar Selim", in: "Muhtar Selim'in" }, { ad: "Bekçi Halil", in: "Bekçi Halil'in" }, { ad: "Sayman Sevim", in: "Sayman Sevim'in" }];
+
+  const KISI = {
+    muhtar: { ad: "Muhtar Selim", rol: "Karaçam muhtarı", harf: "S" },
+    elif: { ad: "Elif", rol: "Köyün en genci, 19", harf: "E" },
+    halil: { ad: "Bekçi Halil", rol: "Kaplıcanın gece bekçisi", harf: "H" },
+    nermin: { ad: "Nermin", rol: "Sisliova'dan, market", resim: "img/nermin.webp" },
+    rauf: { ad: "Rauf", rol: "Sisliova'dan, tamirci", harf: "R" },
+    not: { ad: "Kapının altında bir not", rol: "İmzasız", harf: "?" },
+    haber: { ad: "Sisliova'dan haber", rol: "Komşu kasaba", harf: "✉" },
+    mektup: { ad: "Alacaklının mektubu", rol: "Resmî ihtar", harf: "!" },
+    araba: { ad: "Siyah araba", rol: "Köyün girişinde", resim: "img/araba.webp" },
+    avukat: { ad: "Bir avukat", rol: "Şehirden geldi", harf: "A" },
+    nine: { ad: "Hatice Nine", rol: "Köyün en yaşlısı", harf: "N" },
+    kamyon: { ad: "Kamyon şoförü", rol: "Köprünün başında", resim: "img/kamyon.webp" }
+  };
+
+  // Etki alanları: kasa, guven, suphe, ipucu, gelir (her akşam), bayrak (durum), son (oyunu bitirir)
+  const DESTE = [
+    { gun: 1, an: "sabah", kim: "muhtar", metin: "Halanın yerine geçen sen misin? Kooperatif bu akşam toplanıyor. Gelecek misin?",
+      a: { yazi: "Gelirim", guven: 5 },
+      b: { yazi: "Önce defterlere bakarım", guven: -3, ipucu: "Kooperatif defterinde bir sayfa kopuk." } },
+    { gun: 1, an: "ogle", kim: "elif", metin: "Kaplıcayı mı açalım, arı evini mi? İkisine para yetmez.",
+      a: { yazi: "Kaplıca", kasa: -15000, suphe: 5, gelir: ["Kaplıca", 6000], bayrak: "kaplica" },
+      b: { yazi: "Arı evi", kasa: -8000, guven: 3, gelir: ["Arı evi", 2500], bayrak: "ari" } },
+    { gun: 1, an: "gece", kim: "halil", metin: "Halan kaplıcanın anahtarını kimseye vermedi. Sana da vermem.",
+      a: { yazi: "Anahtar benim hakkım", guven: -5 },
+      b: { yazi: "Sende kalsın", guven: 4 } },
+
+    { gun: 2, an: "sabah", kim: "nermin", metin: "Marketime bal lazım, düzenli alırım. Ama fiyatı ben koyarım.",
+      a: { yazi: "Anlaştık", guven: 2, gelirKosul: ["ari", "Nermin'in siparişi", 1500] },
+      b: { yazi: "Peşin ver, öyle olsun", kasa: 3000, guven: -2 } },
+    { gun: 2, an: "ogle", kim: "rauf", metin: "Köprünün demirleri çürümüş. Tamiri 12 bin. Yapmazsan kamyon geçemez.",
+      a: { yazi: "Tamir et", kasa: -12000, suphe: -3, bayrak: "kopru" },
+      b: { yazi: "Bekle", guven: -3 } },
+    { gun: 2, an: "gece", kim: "halil", metin: "Gece köprüde bir araba durdu. Plakasını yazdım.",
+      a: { yazi: "Plakayı al", suphe: 5, ipucu: "Köprüde duran arabanın plakası şehirden." },
+      b: { yazi: "Karışma", suphe: -5 } },
+
+    { gun: 3, an: "sabah", kim: "elif", metin: "Köyün videosunu çekip paylaşalım mı?",
+      a: { yazi: "Çek", suphe: 5, bayrak: "video" },
+      b: { yazi: "Şimdi değil", guven: -2 } },
+    { gun: 3, an: "ogle", kim: "muhtar", metin: "Aidatları artırırsak kasaya her gün 2 bin girer. Ama köylü kızar.",
+      a: { yazi: "Artır", guven: -8, gelir: ["Aidat", 2000] },
+      b: { yazi: "Artırma", guven: 3 } },
+    { gun: 3, an: "gece", kim: "not", metin: "\"Sat. Yoksa her şeyi kaybedersin.\"",
+      a: { yazi: "Muhtara göster", guven: 3 },
+      b: { yazi: "Sakla", suphe: 3, ipucu: "Nottaki el yazısı eğik, kurşun kalemle." } },
+
+    { gun: 4, an: "sabah", kosul: "video", kim: "elif", metin: "Şehirden 30 kişi geldi! Kaplıcaya girmek istiyorlar.",
+      a: { yazi: "Kapıyı aç", kasa: 9000, suphe: 6 },
+      b: { yazi: "Köy pazarına yönlendir", kasa: 4000, guven: 4 } },
+    { gun: 4, an: "sabah", yedek: true, kim: "nine", metin: "Kışlık odunum yok evladım. Kooperatif yardım eder mi?",
+      a: { yazi: "Eder", kasa: -3000, guven: 5 },
+      b: { yazi: "Kasa buna yetmez", guven: -4 } },
+    { gun: 4, an: "ogle", kosul: "!kopru", kim: "kamyon", metin: "Kamyon köprüde kaldı. Ne yapacağız?",
+      a: { yazi: "Acil tamir", kasa: -18000, bayrak: "kopru" },
+      b: { yazi: "Kamyonu geri çevir", guven: -6 } },
+    { gun: 4, an: "ogle", yedek: true, kim: "rauf", metin: "Köprü sağlam, kamyon geçti. Kooperatife odun siparişi var.",
+      a: { yazi: "Satalım", kasa: 5000 },
+      b: { yazi: "Odun köyde kalsın", guven: 4 } },
+    { gun: 4, an: "gece", kim: "halil", metin: "Kooperatif defterinden bir sayfa koparılmış. Kim yapmış olabilir?",
+      a: { yazi: "Dolapları ara", guven: -4, ipucu: "Kopuk sayfa dolaplarda yok; biri yanında taşıyor." },
+      b: { yazi: "Yarın herkese soralım", guven: 2, suphe: 2 } },
+
+    { gun: 5, an: "sabah", kim: "haber", metin: "Sisliova'daki düğünden dönen aile anlatıyor: ışıklar sönünce herkes telefonunu yakmış.",
+      a: { yazi: "Biz de köy düğünü yapalım", kasa: -10000, guven: 10 },
+      b: { yazi: "Bizim işimiz değil" } },
+    { gun: 5, an: "ogle", kim: "mektup", metin: "İlk ihtar: Kooperatifin bütün gelirlerini bildirin.",
+      a: { yazi: "Hepsini bildir", kasa: -5000, suphe: -10 },
+      b: { yazi: "Bir kısmını sakla", suphe: 12 } },
+    { gun: 5, an: "gece", kim: "araba", metin: "Köyün girişinde siyah bir araba. Farlarını iki kez yakıp gidiyor.",
+      a: { yazi: "Peşinden git", suphe: 8, ipucu: "Siyah araba kaplıcanın arka yolunda durdu." },
+      b: { yazi: "Kapıyı kilitle", suphe: -2 } },
+
+    { gun: 6, an: "sabah", kim: "muhtar", metin: "Köylü toplandı. Kasada ne var, açıkça söyle.",
+      a: { yazi: "Defteri aç", guven: 8, suphe: 3 },
+      b: { yazi: "Henüz değil", guven: -6 } },
+    { gun: 6, an: "ogle", kosul: "kaplica", kim: "rauf", metin: "Kaplıcanın kazanı patlamak üzere. Söküp satarsan 25 bin eder.",
+      a: { yazi: "Tamir et", kasa: -7000 },
+      b: { yazi: "Söküp sat", kasa: 25000, guven: -5, gelirSil: "Kaplıca" } },
+    { gun: 6, an: "ogle", yedek: true, kim: "elif", metin: "Arı evinden bir kovan boş çıktı. Biri bal çalmış.",
+      a: { yazi: "Gece bekçi koy", kasa: -2000, suphe: -2 },
+      b: { yazi: "Görmezden gel", guven: -3 } },
+    { gun: 6, an: "gece", kim: "elif", metin: "{SUPHELI} dün gece telefonda birine 'imzaladım' dedi. Yanlış duymuş olabilirim.",
+      a: { yazi: "Onunla konuş", guven: -3, ipucu: "Elif, {SUPHELI_IN} telefonda 'imzaladım' dediğini duydu." },
+      b: { yazi: "Şimdilik sus", ipucu: "Elif, {SUPHELI_IN} telefonda 'imzaladım' dediğini duydu." } },
+
+    { gun: 7, an: "sabah", kim: "avukat", metin: "Köyün hisselerine 400 bin veririz. Bugün imzalarsan.",
+      a: { yazi: "İmzala", kasa: 400000, son: "sattin" },
+      b: { yazi: "Reddet", guven: 5, suphe: 5 } },
+    { gun: 7, an: "ogle", kosul: "ari", kim: "elif", metin: "Arılar ilk balı verdi!",
+      a: { yazi: "Satalım", kasa: 8000 },
+      b: { yazi: "Köye dağıt", guven: 8 } },
+    { gun: 7, an: "ogle", yedek: true, kim: "elif", metin: "Kaplıcaya gelen ilk müşteri yorum yazmış: 'Suyu harika!'",
+      a: { yazi: "Fiyatı artır", guven: -3, gelir: ["Kaplıca zammı", 2000] },
+      b: { yazi: "Böyle kalsın", guven: 3 } },
+    { gun: 7, an: "gece", kim: "halil", metin: "Halan sana bir mektup bıraktı. Ama ancak 30. gün açılabilir dedi.",
+      a: { yazi: "Mektubu al", son: "demo" } }
+  ];
+
+  const ANLAR = ["sabah", "ogle", "gece"];
+  const AN_ADI = { sabah: "Sabah", ogle: "Öğlen", aksam: "Akşam", gece: "Gece" };
+  const SONLAR = {
+    kasa: { baslik: "Kasa boş", metin: "Kooperatifin kasasında para kalmadı. Alacaklı beklemedi." },
+    guven: { baslik: "Kooperatif dağıldı", metin: "Köylü sana artık güvenmiyor. Toplantıya kimse gelmedi." },
+    suphe: { baslik: "Erken tahsilat", metin: "Alacaklı fazla şey duydu. 30 gün dolmadan kapıya geldi." },
+    sattin: { baslik: "Sattın", metin: "400 bin lira hesabında. Karaçam'da artık kimse seninle konuşmuyor." },
+    demo: { baslik: "7. gün bitti", metin: "Mektup cebinde. Ne yazdığını 30. gün öğreneceksin." }
+  };
+
+  const tl = n => (n < 0 ? "−₺" : "₺") + Math.abs(n).toLocaleString("tr-TR");
+  const $ = id => document.getElementById(id);
+  const sayac = ad => { try { window.goatcounter && window.goatcounter.count({ path: "oyun/" + ad, title: ad, event: true }); } catch (e) {} };
+
+  let d;
+  function yeniOyun(isim) {
+    d = {
+      isim: isim || "", gun: 1, anIndex: 0, kasa: 30000, guven: 20, suphe: 10,
+      gelirler: [], bayraklar: {}, ipuclari: [],
+      supheli: SUPHELILER[Math.floor(Math.random() * SUPHELILER.length)], bitti: null
+    };
+    kaydet();
+    sayac("basla");
+  }
+  function kaydet() { try { localStorage.setItem(KAYIT, JSON.stringify(d)); } catch (e) {} }
+  function yukle() { try { return JSON.parse(localStorage.getItem(KAYIT)); } catch (e) { return null; } }
+  function sil() { try { localStorage.removeItem(KAYIT); } catch (e) {} }
+
+  function kosulTutar(k) {
+    if (!k) return true;
+    return k.startsWith("!") ? !d.bayraklar[k.slice(1)] : !!d.bayraklar[k];
+  }
+  function siradakiKart() {
+    const an = ANLAR[d.anIndex];
+    const adaylar = DESTE.filter(k => k.gun === d.gun && k.an === an);
+    return adaylar.find(k => !k.yedek && kosulTutar(k.kosul)) || adaylar.find(k => k.yedek);
+  }
+  const doldur = s => (s || "").replace(/\{SUPHELI_IN\}/g, d.supheli.in).replace(/\{SUPHELI\}/g, d.supheli.ad);
+
+  function hudCiz(titreyen) {
+    $("hud").hidden = false; $("zaman").hidden = false;
+    $("s-gun").textContent = d.gun + "/30";
+    $("s-kasa").textContent = tl(d.kasa);
+    $("k-kasa").classList.toggle("dusuk", d.kasa < 5000);
+    $("s-guven").textContent = d.guven;
+    $("s-suphe").textContent = d.suphe;
+    $("c-guven").style.width = d.guven + "%";
+    $("c-suphe").style.width = d.suphe + "%";
+    $("ipucu-say").textContent = d.ipuclari.length ? "İpucu: " + d.ipuclari.length : "";
+    (titreyen || []).forEach(id => {
+      const el = $(id).parentElement;
+      el.classList.remove("titre"); void el.offsetWidth; el.classList.add("titre");
+    });
+  }
+
+  function etkiRozetleri(s) {
+    const r = [];
+    const ekle = (yazi, sinif) => r.push(`<span class="${sinif}">${yazi}</span>`);
+    if (s.kasa) ekle("Kasa " + (s.kasa > 0 ? "▲" : "▼"), s.kasa > 0 ? "iyi" : "kotu");
+    if (s.gelir || (s.gelirKosul && d.bayraklar[s.gelirKosul[0]])) ekle("Her akşam ▲", "iyi");
+    if (s.gelirSil) ekle("Gelir ▼", "kotu");
+    if (s.guven) ekle("Güven " + (s.guven > 0 ? "▲" : "▼"), s.guven > 0 ? "iyi" : "kotu");
+    if (s.suphe) ekle("Şüphe " + (s.suphe > 0 ? "▲" : "▼"), s.suphe > 0 ? "kotu" : "iyi");
+    if (s.ipucu) ekle("İpucu +1", "notr");
+    if (s.son && s.son !== "demo") ekle("Oyun biter", "kotu");
+    return r.length ? `<div class="etki">${r.join("")}</div>` : "";
+  }
+
+  function kisiBasligi(k) {
+    const yuz = k.resim ? `<img src="${k.resim}" alt="">` : k.harf;
+    return `<div class="kim"><div class="yuz" aria-hidden="true">${yuz}</div><div><div class="ad">${k.ad}</div><div class="rol">${k.rol}</div></div></div>`;
+  }
+
+  function kartGoster() {
+    const kart = siradakiKart();
+    const an = ANLAR[d.anIndex];
+    $("an").textContent = "Gün " + d.gun + " · " + AN_ADI[an];
+    hudCiz();
+    const kisi = KISI[kart.kim];
+    const secimler = [kart.a, kart.b].filter(Boolean);
+    $("kart").innerHTML = `<span class="bant"></span>${kisiBasligi(kisi)}
+      <div class="metin">${doldur(kart.metin)}</div>
+      <div class="secenekler">${secimler.map((s, i) => `<button class="secim" data-i="${i}">${s.yazi}${etkiRozetleri(s)}</button>`).join("")}</div>`;
+    $("kart").querySelectorAll(".secim").forEach(b => b.addEventListener("click", () => sec(secimler[+b.dataset.i])));
+    tazele();
+  }
+
+  function sec(s) {
+    const titreyen = [];
+    if (s.kasa) { d.kasa += s.kasa; titreyen.push("s-kasa"); }
+    if (s.guven) { d.guven = Math.max(0, Math.min(100, d.guven + s.guven)); titreyen.push("s-guven"); }
+    if (s.suphe) { d.suphe = Math.max(0, Math.min(100, d.suphe + s.suphe)); titreyen.push("s-suphe"); }
+    if (s.ipucu) d.ipuclari.push(doldur(s.ipucu));
+    if (s.bayrak) d.bayraklar[s.bayrak] = true;
+    if (s.gelir) d.gelirler.push({ ad: s.gelir[0], tutar: s.gelir[1] });
+    if (s.gelirKosul && d.bayraklar[s.gelirKosul[0]]) d.gelirler.push({ ad: s.gelirKosul[1], tutar: s.gelirKosul[2] });
+    if (s.gelirSil) d.gelirler = d.gelirler.filter(g => g.ad !== s.gelirSil);
+    hudCiz(titreyen);
+
+    if (s.son) return bitir(s.son);
+    const sinir = sinirKontrol();
+    if (sinir) return bitir(sinir);
+
+    d.anIndex++;
+    if (ANLAR[d.anIndex] === "gece") { kaydet(); return aksamGoster(); }
+    if (d.anIndex >= ANLAR.length) { d.gun++; d.anIndex = 0; if (d.gun === 3 || d.gun === 7) sayac("gun-" + d.gun); }
+    kaydet();
+    kartGoster();
+  }
+
+  function sinirKontrol() {
+    if (d.kasa < 0) return "kasa";
+    if (d.guven <= 0) return "guven";
+    if (d.suphe >= 100) return "suphe";
+    return null;
+  }
+
+  function aksamGoster() {
+    $("an").textContent = "Gün " + d.gun + " · " + AN_ADI.aksam;
+    const once = d.kasa;
+    const toplam = d.gelirler.reduce((t, g) => t + g.tutar, 0);
+    d.kasa += toplam;
+    hudCiz(toplam ? ["s-kasa"] : []);
+    const satirlar = d.gelirler.length
+      ? d.gelirler.map(g => `<div class="sonuc-satir"><span>${g.ad}</span><b style="color:var(--yesil)">+${tl(g.tutar)}</b></div>`).join("")
+      : `<div class="sonuc-satir"><span>Bugün gelir getiren bir iş yok.</span></div>`;
+    $("kart").innerHTML = `<span class="bant"></span>
+      <div class="metin">Akşam oldu${d.isim ? ", " + d.isim : ""}. Günün hesabı:</div>
+      ${satirlar}
+      <div class="sonuc-satir"><span>Kasa</span><span><span class="eski">${tl(once)}</span><b>${tl(d.kasa)}</b></span></div>
+      <div class="secenekler" style="margin-top:18px"><button class="secim ana" id="devam">Geceye geç</button></div>`;
+    kaydet();
+    $("devam").addEventListener("click", kartGoster);
+    tazele();
+  }
+
+  function bitir(neden) {
+    d.bitti = neden; kaydet();
+    sayac("son-" + neden);
+    const s = SONLAR[neden];
+    const demo = neden === "demo";
+    hudCiz();
+    $("an").textContent = demo ? "Demo sonu" : "Oyun bitti";
+    const ipuclari = d.ipuclari.length
+      ? `<ul class="liste ipucu-listesi">${d.ipuclari.map(x => `<li>${x}</li>`).join("")}</ul>`
+      : `<p class="kucuk">Hiç ipucu toplamadın.</p>`;
+    $("kart").innerHTML = `<span class="bant"></span>
+      <div class="metin" style="font-size:34px">${s.baslik}</div>
+      <p>${s.metin}</p>
+      <p class="kucuk" style="margin:8px 0 4px">Topladığın ipuçları</p>${ipuclari}
+      ${demo ? `<p><b>Tam oyun hazırlanıyor:</b> 30 gün, haini bul, 6 farklı son.</p>
+        <p class="kucuk" style="margin-bottom:6px">Tam sürüm ₺59 olsa alır mıydın?</p>
+        <div class="secenekler" style="grid-template-columns:1fr 1fr; margin-bottom:10px">
+          <button class="secim" data-fiyat="evet" style="text-align:center">Alırdım</button>
+          <button class="secim" data-fiyat="hayir" style="text-align:center">Almazdım</button>
+        </div>
+        <p class="kucuk" id="fiyat-tesekkur" hidden>Teşekkürler, not aldık.</p>` : ""}
+      <div class="secenekler" style="margin-top:12px">
+        <a class="secim ana" href="${FORM}" target="_blank" rel="noopener" style="text-decoration:none">Tam oyun çıkınca haber ver</a>
+        <button class="secim" id="paylas" style="text-align:center">Sonucunu paylaş</button>
+        <button class="secim" id="tekrar" style="text-align:center">Baştan oyna</button>
+      </div>
+      <p class="kucuk" style="margin-top:14px; text-align:center">Sisliova'da neler oluyor? <a href="/">Dizinin kararlarına bak</a></p>`;
+    $("kart").querySelectorAll("[data-fiyat]").forEach(b => b.addEventListener("click", () => {
+      sayac("fiyat-" + b.dataset.fiyat);
+      $("kart").querySelectorAll("[data-fiyat]").forEach(x => x.disabled = true);
+      $("fiyat-tesekkur").hidden = false;
+    }));
+    $("kart").querySelector(".ana").addEventListener("click", () => sayac("form"));
+    $("tekrar").addEventListener("click", () => { sil(); girisGoster(); });
+    $("paylas").addEventListener("click", () => paylas(s.baslik));
+    tazele();
+  }
+
+  async function paylas(baslik) {
+    sayac("paylas");
+    const metin = `Karaçam'da ${d.gun}. gündeyim: "${baslik}". Kasa ${tl(d.kasa)}, güven ${d.guven}. Sen kaç gün dayanırsın?`;
+    const url = "https://kasabayikurtar.com/oyun/";
+    try {
+      if (navigator.share) { await navigator.share({ title: "Kasabayı Kurtar: Karaçam", text: metin, url }); return; }
+      await navigator.clipboard.writeText(metin + " " + url);
+      $("paylas").textContent = "Kopyalandı";
+    } catch (e) {}
+  }
+
+  function girisGoster() {
+    $("hud").hidden = true; $("zaman").hidden = true;
+    const eski = yukle();
+    const devamEt = eski && !eski.bitti;
+    $("kart").innerHTML = `<span class="bant"></span>
+      <div class="kucuk" style="font-weight:800; letter-spacing:.08em">KASABAYI KURTAR</div>
+      <div class="metin" style="font-size:40px; margin-bottom:8px">Karaçam</div>
+      <p>Halan sana bir dağ köyü bıraktı. Ve <b style="color:var(--kirmizi)">3 milyon lira borç</b>. 52 kişinin evi artık sana bağlı.</p>
+      <p class="kucuk">Sisliova'nın komşusu Karaçam'da 30 günün var. Bu demo ilk 7 günü içeriyor. Kurgusal bir oyundur.</p>
+      <div class="giris" style="margin-top:auto">
+        <label class="kucuk" for="isim">Adın (isteğe bağlı)</label>
+        <input id="isim" maxlength="20" autocomplete="off" placeholder="Kartlar seni bu adla çağırır">
+        <div class="secenekler">
+          ${devamEt ? `<button class="secim ana" id="devam">Kaldığın yerden devam et (Gün ${eski.gun})</button>` : ""}
+          <button class="secim ${devamEt ? "" : "ana"}" id="basla" style="text-align:center">${devamEt ? "Yeni oyun" : "Başla"}</button>
+        </div>
+      </div>`;
+    $("basla").addEventListener("click", () => { yeniOyun($("isim").value.trim()); kartGoster(); });
+    if (devamEt) $("devam").addEventListener("click", () => { d = eski; kartGoster(); });
+    tazele();
+  }
+
+  function tazele() { $("kart").style.animation = "none"; void $("kart").offsetWidth; $("kart").style.animation = ""; window.scrollTo(0, 0); }
+
+  girisGoster();
+</script>
+<script data-goatcounter="https://kasabayikurtar.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
