@@ -166,9 +166,9 @@
   // her iz iki şüpheliye uyar (kume); iki izi birleştiren oyuncu tek kişiye iner.
   const SUPHELILER = ["selim", "halil", "sevim"];
   const HAIN = {
-    selim: { ad: "Muhtar Selim", ini: "Muhtar Selim'i", bilinen: "Erkek. Kooperatif ofisinin anahtarı onda. Kaplıcanın arka odasına anahtarı yok." },
-    halil: { ad: "Bekçi Halil", ini: "Bekçi Halil'i", bilinen: "Erkek. Ofise anahtarı yok. Kaplıcanın arka odasının anahtarı onda." },
-    sevim: { ad: "Sayman Sevim", ini: "Sayman Sevim'i", bilinen: "Kadın. Ofisin anahtarı onda. Eski kaplıca hesapları arka odada durduğu için oranın anahtarı da onda." }
+    selim: { ad: "Muhtar Selim", ini: "Muhtar Selim'i", bilinen: "Erkek. Kooperatif ofisinin iki anahtarından biri onda. Kaplıcanın arka odasına anahtarı yok." },
+    halil: { ad: "Bekçi Halil", ini: "Bekçi Halil'i", bilinen: "Erkek. Ofise anahtarı yok. Arka odanın bekçi anahtarı hep belinde." },
+    sevim: { ad: "Sayman Sevim", ini: "Sayman Sevim'i", bilinen: "Kadın. Ofisin öbür anahtarı onda. Eski kaplıca hesapları arka odada durduğu için oranın da anahtarı var." }
   };
   const OZELLIK = { erkek: ["selim", "halil"], ofis: ["selim", "sevim"], arka: ["halil", "sevim"] };
   const uyar = (o, oz) => OZELLIK[oz].includes(o.hain);
@@ -216,8 +216,8 @@
         not: "Kaplıcanın bacası tüttü. Şehirde \"Karaçam'da para var\" diye konuşulmaya başlandı." },
       b: { yazi: "Arı evi", kasa: -8000, guven: 3, bayrak: "ari", gelir: { ad: "Arı evi", tutar: 2500, kaynak: "ari" },
         not: "Hatice Nine eski kovanların yerini gösterdi. Köylüler kendi kovanlarını getirdi." } },
-    { id: "g1-gece", gun: 1, an: "gece", kim: "halil", metin: "Halan kaplıcanın anahtarını kimseye vermedi. Sana da vermem.",
-      a: { yazi: "Anahtar benim hakkım", guven: -5, bayrak: "anahtar", not: "Halil anahtarı masaya bıraktı ve tek kelime etmeden çıktı. Arka oda artık sana açık." },
+    { id: "g1-gece", gun: 1, an: "gece", kim: "halil", metin: "Halan kaplıcanın yedek anahtarını bana emanet etti. Kimseye vermem, sana da vermem.",
+      a: { yazi: "Anahtar benim hakkım", guven: -5, bayrak: "anahtar", not: "Halil yedek anahtarı masaya bıraktı ve tek kelime etmeden çıktı. Kendi anahtarı hâlâ belinde. Arka oda artık sana da açık." },
       b: { yazi: "Sende kalsın", guven: 4, bayrak: "halilDestek", not: "Halil başını salladı: \"Gece bir şey görürsem sana söylerim.\"" } },
 
     { id: "g2-sabah-ari", gun: 2, an: "sabah", kim: "nermin", kosul: o => bay(o, "ari"), metin: "Arı evini açmışsın. Marketime düzenli bal lazım, alırım. Ama fiyatı ben koyarım.",
@@ -275,7 +275,7 @@
       b: { yazi: "Bir kısmını sakla", suphe: 12, bayrak: "sakladi", not: "Kaplıca ve bal gelirinin bir kısmı dosyaya girmedi. Bunu köylü de bilmiyor." } },
     { id: "g5-gece-halil", gun: 5, an: "gece", kim: "halil", kosul: o => bay(o, "halilDestek") && o.hain !== "halil",
       metin: "Siyah araba yine geldi, peşine düştüm. Kaplıcanın arka odasına biri bunu bırakmış.",
-      a: { yazi: "Kâğıda bak", guven: 2, ipucu: o => [IP.halilKopya, IP.halilMasum, zarfIzi(o, "Halil gördü:")], not: "Halil anahtarı sana uzattı: \"Bundan sonra ikimiz bakarız.\"" },
+      a: { yazi: "Kâğıda bak", guven: 2, ipucu: o => [IP.halilKopya, IP.halilMasum, zarfIzi(o, "Halil gördü:")], not: "Halil yedek anahtarı sana uzattı: \"Bundan sonra ikimiz bakarız.\"" },
       b: { yazi: "Yak, iz kalmasın", suphe: -4, not: "Kâğıt sobada yandı. Ne yazdığını hiç bilmeyeceksin." } },
     { id: "g5-gece-araba", gun: 5, an: "gece", kim: "araba", yedek: true, metin: "Köyün girişinde siyah bir araba. Farlarını iki kez yakıp kaplıcanın arka yoluna sapıyor.",
       a: { yazi: "Peşinden git", suphe: 8, ipucu: o => [zarfIzi(o, "Gördün:")].concat(halilGece(o), bay(o, "anahtar") ? [IP.arkaOda] : []),
@@ -522,7 +522,7 @@
     if (h.guvenFark < 0) satirlar += satir((d.gun === 1 ? "Köylü seni henüz tanımıyor" : "Köylü isteksiz") + " (güven " + GUVEN_DUSUK + "'in altında, −%30)", h.guvenFark);
     if (h.izleme) satirlar += satir("Alacaklının adamları köyde (baskı " + SUPHE_IZLEME + " ve üstü)", -h.izleme);
     const kopru = !gelirVar(d, "kopru") ? "" : kopruTamirEdilebilir(d)
-      ? `<button class="secim" id="kopru-tamir">Rauf'a köprüyü tamir ettir, sonra geceye geç<div class="etki"><span class="kotu">Kasa −${tl(KOPRU_TAMIR)}</span><span class="iyi">Nakliye farkı biter</span></div></button>`
+      ? `<button class="secim" id="kopru-tamir">Rauf'a köprüyü tamir ettir, sonra geceye geç<div class="etki"><span class="kotu">Kasa −${tl(KOPRU_TAMIR)}</span><span class="iyi">Yarından itibaren nakliye farkı yok</span></div></button><p class="kucuk" style="margin:0">Bu akşamın nakliye farkı yukarıda ödendi.</p>`
       : `<p class="kucuk" style="margin:0">Köprü tamiri ${tl(KOPRU_TAMIR)}. Kasada o kadar para olunca buradan tamir ettirebilirsin.</p>`;
     const ilk = h.ilkIzleme ? `<p class="uyari">Bu akşam şehirden iki adam köye geldi. Baskı 50'nin altına inene kadar her akşam alacaklının payını alacaklar.</p>` : "";
     $("kart").innerHTML = `<span class="bant"></span>${ustNotlar()}
@@ -548,8 +548,8 @@
     if (!o.ipuclari.length) return `<p class="kucuk">Henüz ipucu yok. Gece kartları seni kopuk sayfanın peşine düşürür.</p>`;
     return `<ul class="liste ipucu-listesi">${o.ipuclari.map(i => `<li><span class="etiket">${TUR_ADI[i.tur]}</span>${i.metin}</li>`).join("")}</ul>`;
   }
-  function supheliHtml() {
-    return SUPHELILER.map(k => `<div class="sonuc-satir" style="display:block"><b>${HAIN[k].ad}</b><div class="kucuk" style="color:var(--murekkep)">${HAIN[k].bilinen}</div></div>`).join("");
+  function supheliHtml(o) {
+    return `<p class="kucuk" style="margin:0 0 4px">Bu hafta kimin hangi kapıya anahtarı vardı. Anahtarlar sahiplerinin üstünde duruyor, kimse anahtarını kaybettiğini söylemiyor, kapılar zorlanmamış.${o && bay(o, "anahtar") ? " Senin aldığın yedek anahtar bu tabloyu değiştirmiyor: sen şüpheli değilsin." : ""}</p>` + SUPHELILER.map(k => `<div class="sonuc-satir" style="display:block"><b>${HAIN[k].ad}</b><div class="kucuk" style="color:var(--murekkep)">${HAIN[k].bilinen}</div></div>`).join("");
   }
   // Oyuncunun tahminini topladığı izlerle karşılaştırır; gerçeği değil, izlerin neyi desteklediğini söyler
   function tahminHtml(o) {
@@ -580,7 +580,7 @@
       <div class="baslik-k">30. gün anlaşması</div>${anlasmaHtml(d, false)}
       <div class="baslik-k">Her akşam</div>${gelir}<p class="kucuk" style="margin:4px 0 0">${carpan}${d.suphe >= SUPHE_IZLEME ? " Baskı 50'nin üstünde: her akşam " + tl((d.suphe - 40) * 150) + " gidiyor." : ""}</p>
       <div class="baslik-k">Kopuk sayfa</div>${cozumHtml(d)}
-      <div class="baslik-k">Şüpheliler hakkında bilinenler</div>${supheliHtml()}
+      <div class="baslik-k">Şüpheliler hakkında bilinenler</div>${supheliHtml(d)}
       <div class="baslik-k">İpuçları</div>${ipucuHtml(d)}
       <div class="secenekler" style="margin-top:14px"><button class="secim ana" id="defter-kapat">Karta dön</button></div>`;
     $("kart").hidden = true; $("defter").hidden = false;
@@ -609,14 +609,15 @@
     hudCiz();
     $("kart").innerHTML = `<span class="bant"></span>
       <div class="metin">Mektubu açmadan önce defterine bir isim yazıyorsun. Satış yetkisini kim imzalamış olabilir?</div>
-      <div class="baslik-k">Şüpheliler hakkında bilinenler</div>${supheliHtml()}
+      <div class="baslik-k">Şüpheliler hakkında bilinenler</div>${supheliHtml(d)}
       <div class="baslik-k">İpuçların</div>${ipucuHtml(d)}
       <div class="secenekler" style="margin-top:12px">${SUPHELILER.concat("bilmiyorum").map(k => `<button class="secim" data-t="${k}" style="text-align:center">${k === "bilmiyorum" ? "Henüz bilmiyorum" : HAIN[k].ad}</button>`).join("")}</div>`;
     $("kart").querySelectorAll("[data-t]").forEach(b => b.addEventListener("click", () => {
       if (!hazir()) return;
+      if (d.tahmin) return;  // ilk tahmin kalıcı; ölçüm kanıt durumuna göre ayrılır (kaç aday kalmıştı)
       const t = b.dataset.t;
       d.tahmin = t;
-      sayac("tahmin-" + (t === "bilmiyorum" ? "yok" : t === d.hain ? "dogru" : "yanlis"));
+      sayac("tahmin/aday" + adaylar(d).length + "-" + (t === "bilmiyorum" ? "yok" : t === d.hain ? "dogru" : "yanlis"));
       bitir("demo");
     }));
     tazele();
