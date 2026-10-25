@@ -205,7 +205,7 @@
     instagram: "",          // ör. "https://www.instagram.com/kullaniciadi/"
     form: "https://docs.google.com/forms/d/e/1FAIpQLSd0SNr2Fh3Kw6c2q5Bkcqk5O2uXAXyg1T-l3IQJ9igTrppFhw/viewform",
     toplamGun: 30,
-    durum: { gun: 4, kasa: 67000, borc: 5000000, guven: 43 },
+    durum: { gun: 6, kasa: 67000, borc: 5000000, guven: 46 },
     bolumler: [
       { no: 1, link: "https://www.instagram.com/reel/DesRwU7NV8y/", soru: "Elektrik için ₺18.000 ödensin mi?", secenekler: ["ÖDE", "BEKLE"], kazanan: "ÖDE",
         sonuc: "Kasa ₺30.000 → ₺12.000, kasabanın ışıkları yanmaya devam etti." },
@@ -213,11 +213,15 @@
         sonuc: "Yasal kargo deposu açıldı: günde ₺15.000, kasabadan 5 kişiye iş." },
       { no: 3, link: "https://www.instagram.com/reel/DewzQkxtTR_/", soru: "İkinci salonda hangi iş kurulsun?", secenekler: ["DÜĞÜN", "SİNEMA"], kazanan: "DÜĞÜN",
         sonuc: "Salonda ilk düğün yapıldı: kasa ₺67.000'e çıktı, ışıklar sönünce kasaba telefon ışıklarıyla düğünü kurtardı." },
-      { no: 4, link: "https://www.instagram.com/p/DezfMxTNuks/", soru: "Borcun sahibiyle buluşma nerede olsun?", secenekler: ["KASABADA", "ŞEHİRDE"], kazanan: null,
+      { no: 4, link: "https://www.instagram.com/p/DezfMxTNuks/", soru: "Borcun sahibiyle buluşma nerede olsun?", secenekler: ["KASABADA", "ŞEHİRDE"], kazanan: "KASABADA",
+        sonuc: "Koray Vural meydana geldi: borcu dedeye yükledi, tek imzayla 5 milyonu silmeyi teklif etti; kasaba ikiye bölündü." },
+      { no: 5, link: "https://www.instagram.com/p/De45TnMNmLL/", soru: "Koray'ın anlaşması imzalansın mı?", secenekler: ["İMZALA", "YIRT"], kazanan: "YIRT",
+        sonuc: "Anlaşma 84 kişinin önünde yırtıldı, kasaba alkışladı; Nermin 30 yıl önceki gecenin sırrını anlattı." },
+      { no: 6, link: "https://www.instagram.com/p/De7mYDttj7F/", soru: "Fabrikaya ne zaman girilsin?", secenekler: ["GİR", "BEKLE"], kazanan: null,
         sonuc: "",
         detay: {
-          "KASABADA": ["O meydana gelir", "84 kişinin önünde konuşur", "Herkes her şeyi duyar"],
-          "ŞEHİRDE": ["Sen onun ofisine gidersin", "Yalnız gidersin", "Kuralları o koyar"]
+          "GİR": ["Bu gece", "Yalnız", "İçeride kim var, görürsün"],
+          "BEKLE": ["Sabaha kadar", "Kasabayla", "İz kaybolabilir"]
         } }
     ]
   };
