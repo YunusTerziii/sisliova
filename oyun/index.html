@@ -121,6 +121,10 @@
   .harita { height: 170px; margin: 0 0 12px; border: 1.5px solid var(--murekkep); border-radius: 3px; overflow: hidden; }
   .harita img { width: 100%; height: 100%; object-fit: cover; object-position: center 48%; display: block; }
   .mini { width: 42px; height: 42px; flex: none; border-radius: 50%; border: 1.3px solid var(--murekkep); }
+  .anket { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .anket .secim { text-align: center; padding: 10px; }
+  .anket .secim:disabled { opacity: .55; }
+  .anket .secim.secili { opacity: 1; background: var(--murekkep); color: var(--kagit); }
   .ozet { font-family: "Patrick Hand", cursive; font-size: 22px; line-height: 1.2; margin: 4px 0 6px; }
   @media (prefers-reduced-motion: reduce) { .kart, .hud .titre { animation: none; } .cubuk span { transition: none; } }
 </style>
@@ -655,19 +659,30 @@
         <a class="secim ana" href="${FORM}" target="_blank" rel="noopener" style="text-decoration:none">Tam oyun çıkınca haber ver</a>
         <div class="ikili"><button class="secim" id="paylas">Sonucunu paylaş</button><button class="secim" id="tekrar">Baştan oyna</button></div>
       </div>
-      ${demo ? `<p class="kucuk" style="margin:16px 0 6px">Tam sürüm ₺59 olsa alır mıydın?</p>
-        <div class="ikili"><button class="secim" data-fiyat="evet">Alırdım</button><button class="secim" data-fiyat="hayir">Almazdım</button></div>
-        <p class="kucuk" id="fiyat-tesekkur" hidden>Teşekkürler, not aldık.</p>` : ""}
+      <div class="baslik-k">Kısa sorular (isteğe bağlı)</div>${anketHtml(demo)}
+      <p class="kucuk" id="anket-tesekkur" hidden>Teşekkürler, not aldık.</p>
       <p class="kucuk" style="margin-top:14px; text-align:center">Sisliova'da neler oluyor? <a href="/">Dizinin kararlarına bak</a></p>`;
-    $("kart").querySelectorAll("[data-fiyat]").forEach(b => b.addEventListener("click", () => {
-      sayac("fiyat-" + b.dataset.fiyat);
-      $("kart").querySelectorAll("[data-fiyat]").forEach(x => x.disabled = true);
-      $("fiyat-tesekkur").hidden = false;
+    $("kart").querySelectorAll("[data-anket]").forEach(b => b.addEventListener("click", () => {
+      const [grup, deger] = b.dataset.anket.split(":");
+      sayac(grup === "fiyat" ? "fiyat-" + deger : "anket/" + grup + "-" + deger);
+      $("kart").querySelectorAll(`[data-anket^="${grup}:"]`).forEach(x => { x.disabled = true; x.classList.toggle("secili", x === b); });
+      $("anket-tesekkur").hidden = false;
     }));
     $("kart").querySelector(".ana").addEventListener("click", () => sayac("form"));
     $("tekrar").addEventListener("click", () => { sayac("tekrar"); sil(); girisGoster(); });
     $("paylas").addEventListener("click", () => paylas(neden));
     tazele();
+  }
+
+  // Son ekrandaki tek dokunuşluk sorular; cevaplar sadece ölçüm olayı olarak sayılır
+  const ANKET = [
+    ["sevdin", "En çok neyi sevdin?", [["gizem", "Gizem"], ["kararlar", "Kararlar"], ["cizimler", "Çizimler"], ["hikaye", "Hikâye"]]],
+    ["devam", "Devamını oynamak ister misin?", [["hemen", "Hemen"], ["belki", "Belki"], ["hayir", "Hayır"]]],
+    ["fiyat", "Tam sürüm ₺59 olsa alır mıydın?", [["evet", "Alırdım"], ["hayir", "Almazdım"]]]
+  ];
+  function anketHtml(demo) {
+    return ANKET.filter(([g]) => demo || g !== "fiyat").map(([g, soru, l]) => `<p class="kucuk" style="margin:10px 0 6px">${soru}</p>
+      <div class="anket">${l.map(([d, yazi]) => `<button class="secim" data-anket="${g}:${d}">${yazi}</button>`).join("")}</div>`).join("");
   }
 
   async function paylas(neden) {
