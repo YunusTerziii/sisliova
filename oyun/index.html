@@ -678,7 +678,7 @@
   const ANKET = [
     ["sevdin", "En çok neyi sevdin?", [["gizem", "Gizem"], ["kararlar", "Kararlar"], ["cizimler", "Çizimler"], ["hikaye", "Hikâye"]]],
     ["devam", "Devamını oynamak ister misin?", [["hemen", "Hemen"], ["belki", "Belki"], ["hayir", "Hayır"]]],
-    ["fiyat", "Tam sürüm ₺59 olsa alır mıydın?", [["evet", "Alırdım"], ["hayir", "Almazdım"]]]
+    ["fiyat", "30 günlük tam sürüme en fazla ne öderdin?", [["ucretsiz", "Ücretsiz olmalı"], ["29", "₺29"], ["59", "₺59"], ["99", "₺99 ve üstü"]]]
   ];
   function anketHtml(demo) {
     return ANKET.filter(([g]) => demo || g !== "fiyat").map(([g, soru, l]) => `<p class="kucuk" style="margin:10px 0 6px">${soru}</p>
