@@ -125,6 +125,16 @@
   .anket .secim { text-align: center; padding: 10px; }
   .anket .secim:disabled { opacity: .55; }
   .anket .secim.secili { opacity: 1; background: var(--murekkep); color: var(--kagit); }
+  .yeni-ip { border: 1.5px dashed var(--murekkep); border-radius: 4px; background: var(--kagit-acik); padding: 8px 10px; margin: 0 0 12px; font-size: 14.5px; line-height: 1.35; }
+  .yeni-ip > b { display: block; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 2px; }
+  .yeni-ip p { margin: 4px 0 0; }
+  .supheli { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--cizgi); }
+  .supheli > div { flex: 1; }
+  .supheli.elendi img, .supheli.elendi > div { opacity: .4; }
+  .supheli.elendi b { text-decoration: line-through; }
+  .ele { flex: none; font: inherit; font-size: 12px; font-weight: 800; padding: 6px 9px; border: 1.3px solid var(--murekkep); border-radius: 14px; background: none; color: var(--murekkep); cursor: pointer; }
+  .uclu { display: flex; justify-content: space-around; text-align: center; margin: 6px 0 4px; font-size: 12.5px; font-weight: 800; }
+  .uclu img { display: block; width: 52px; height: 52px; margin: 0 auto 2px; border-radius: 50%; border: 1.3px solid var(--murekkep); }
   .ozet { font-family: "Patrick Hand", cursive; font-size: 22px; line-height: 1.2; margin: 4px 0 6px; }
   @media (prefers-reduced-motion: reduce) { .kart, .hud .titre { animation: none; } .cubuk span { transition: none; } }
 </style>
@@ -484,6 +494,12 @@
   }
   function ustNotlar() {
     let h = d.not ? `<p class="onceki">${d.not}</p>` : "";
+    const yeni = (d.yeniIp || []).map(id => d.ipuclari.find(i => i.id === id)).filter(Boolean);
+    if (yeni.length) {
+      h += `<div class="yeni-ip"><b>Yeni ipucu</b>${yeni.map(i => `<p>${i.metin}</p>`).join("")}<p class="kucuk">${d.ipucuAnlatildi ? "Defter'e eklendi." : "İpuçları Defter'de birikir. Hepsi aynı soruya çıkıyor: kooperatifi kim satıyor? Her ipucunu şüphelilerin bilinen özellikleriyle karşılaştır. Uymayanı Defter'de ele, 7. gecenin sonunda bir isim yazacaksın."}</p></div>`;
+      d.ipucuAnlatildi = true;
+    }
+    d.yeniIp = [];
     if (d.suphe >= 40 && d.suphe < SUPHE_IZLEME) h += `<p class="uyari">Baskı 50'ye yaklaşıyor. 50'de alacaklının adamları köye gelir ve her akşam para alır.</p>`;
     if (d.guven > 0 && d.guven <= 10) h += `<p class="uyari">Güven 0'a inerse kooperatif dağılır.</p>`;
     if (d.kasa >= 0 && d.kasa < 5000) h += `<p class="uyari">Kasa eksiye düşerse oyun biter.</p>`;
@@ -511,6 +527,7 @@
   function sec(kart, e, i) {
     sayac("kart/" + kart.id + "-" + "ab"[i]);
     const once = { kasa: d.kasa, guven: d.guven, suphe: d.suphe };
+    d.yeniIp = (e.ipucu || []).filter(i => !d.ipuclari.some(x => x.id === i.id)).map(i => i.id);
     uygula(e, d);
     hudCiz([["kasa", "s-kasa"], ["guven", "s-guven"], ["suphe", "s-suphe"]].filter(([k]) => once[k] !== d[k]).map(([, id]) => id));
     if (e.son === "demo") { kaydet(); return tahminGoster(); }
@@ -555,11 +572,16 @@
     return COZUM.map(([tur, yazi]) => `<div class="sonuc-satir"><span>${yazi}</span><b style="color:var(--${ipucuVar(o, tur) ? "yesil" : "kursun"})">${ipucuVar(o, tur) ? "✓" : "?"}</b></div>`).join("");
   }
   function ipucuHtml(o) {
-    if (!o.ipuclari.length) return `<p class="kucuk">Henüz ipucu yok. Gece kartları seni kopuk sayfanın peşine düşürür.</p>`;
+    if (!o.ipuclari.length) return `<p class="kucuk">Henüz ipucu yok. Seçimlerin, özellikle gece kartları, ipucu getirir.</p>`;
     return `<ul class="liste ipucu-listesi">${o.ipuclari.map(i => `<li><span class="etiket">${TUR_ADI[i.tur]}</span>${i.metin}</li>`).join("")}</ul>`;
   }
-  function supheliHtml(o) {
-    return `<p class="kucuk" style="margin:0 0 4px">Bu hafta kimin hangi kapıya anahtarı vardı. Anahtarlar sahiplerinin üstünde duruyor, kimse anahtarını kaybettiğini söylemiyor, kapılar zorlanmamış.${o && bay(o, "anahtar") ? " Senin aldığın yedek anahtar bu tabloyu değiştirmiyor: sen şüpheli değilsin." : ""}</p>` + SUPHELILER.map(k => `<div class="sonuc-satir" style="justify-content:flex-start; align-items:center"><img class="mini" src="img/${k}.webp" alt=""><div><b>${HAIN[k].ad}</b><div class="kucuk" style="color:var(--murekkep)">${HAIN[k].bilinen}</div></div></div>`).join("");
+  // Oyuncunun kendi elediği şüpheliler (yalnız not; oyunu değiştirmez)
+  const elendi = (o, k) => !!(o && o.elenen && o.elenen.includes(k));
+  function supheliHtml(o, eleDugme) {
+    return `<p class="kucuk" style="margin:0 0 4px">Bu hafta kimin hangi kapıya anahtarı vardı. Anahtarlar sahiplerinin üstünde duruyor, kimse anahtarını kaybettiğini söylemiyor, kapılar zorlanmamış.${o && bay(o, "anahtar") ? " Senin aldığın yedek anahtar bu tabloyu değiştirmiyor: sen şüpheli değilsin." : ""}</p>` + SUPHELILER.map(k => {
+      const el = elendi(o, k);
+      return `<div class="supheli${el ? " elendi" : ""}"><img class="mini" src="img/${k}.webp" alt=""><div><b>${HAIN[k].ad}</b><div class="kucuk" style="color:var(--murekkep)">${HAIN[k].bilinen}</div></div>${eleDugme ? `<button class="ele" type="button" data-ele="${k}">${el ? "Geri al" : "Ele"}</button>` : ""}</div>`;
+    }).join("");
   }
   // Oyuncunun tahminini topladığı izlerle karşılaştırır; gerçeği değil, izlerin neyi desteklediğini söyler
   function tahminHtml(o) {
@@ -581,7 +603,7 @@
       `<p class="kucuk" style="margin:6px 0 0">Bugünkü koşullarla her akşam net ${net >= 0 ? "+" : ""}${tl(net)}. Hiçbir şey değişmezse 30. günde kasan yaklaşık ${tl(tahmin)} olur.</p>`;
   }
 
-  function defterAc() {
+  function defterAc(yenile) {
     if (!d) return;
     const gelir = gelirHtml(d);
     const carpan = d.guven >= GUVEN_YUKSEK ? "Güven 60 ve üstünde: gelir %25 fazla." : d.guven < GUVEN_DUSUK ? "Güven 25'in altında: gelir %30 eksik." : "Güven 25 ile 60 arasında: gelir olduğu gibi.";
@@ -589,13 +611,21 @@
       <div class="metin" style="margin-bottom:6px">Defter</div>
       <div class="baslik-k">30. gün anlaşması</div>${anlasmaHtml(d, false)}
       <div class="baslik-k">Her akşam</div>${gelir}<p class="kucuk" style="margin:4px 0 0">${carpan}${d.suphe >= SUPHE_IZLEME ? " Baskı 50'nin üstünde: her akşam " + tl((d.suphe - 40) * 150) + " gidiyor." : ""}</p>
-      <div class="baslik-k">Kopuk sayfa</div>${cozumHtml(d)}
-      <div class="baslik-k">Şüpheliler hakkında bilinenler</div>${supheliHtml(d)}
+      <div class="baslik-k">Gizem: kooperatifi kim satıyor?</div>
+      <p class="kucuk" style="margin:0 0 4px; color:var(--murekkep)">İpuçlarını aşağıdaki şüphelilerle karşılaştır. Bir ipucuna uymayan kişiyi ele. 7. gecenin sonunda bir isim yazacaksın.</p>
+      <div class="baslik-k">Ne oldu?</div>${cozumHtml(d)}
+      <div class="baslik-k">Şüpheliler</div>${supheliHtml(d, true)}
       <div class="baslik-k">İpuçları</div>${ipucuHtml(d)}
       <div class="secenekler" style="margin-top:14px"><button class="secim ana" id="defter-kapat">Karta dön</button></div>`;
     $("kart").hidden = true; $("defter").hidden = false;
+    $("defter").querySelectorAll("[data-ele]").forEach(b => b.addEventListener("click", () => {
+      const k = b.dataset.ele, l = d.elenen || (d.elenen = []);
+      if (l.includes(k)) l.splice(l.indexOf(k), 1); else { l.push(k); sayac("ele"); }
+      kaydet();
+      const y = window.scrollY; defterAc(true); window.scrollTo(0, y);
+    }));
     $("defter-kapat").addEventListener("click", () => { $("defter").hidden = true; $("kart").hidden = false; window.scrollTo(0, 0); });
-    sayac("defter");
+    if (yenile !== true) sayac("defter");
     window.scrollTo(0, 0);
   }
 
@@ -710,8 +740,11 @@
         <li><b>Kasa</b> eksiye düşerse oyun biter.</li>
         <li><b>Güven</b> köylünün sana desteği. 60 ve üstündeyse akşam gelirin %25 artar, 25'in altındaysa %30 düşer. Köylü seni henüz tanımıyor: 20'den başlıyorsun. 0 olursa kooperatif dağılır.</li>
         <li><b>Baskı</b> alacaklının köye ilgisi. 50'yi geçerse adamları gelir, her akşam para alır. 100 olursa erken tahsilat.</li>
-        <li>Kooperatif defterinden bir sayfa kopmuş. Gece kartları seni onun peşine düşürür; bulduklarını <b>Defter</b>'de görürsün.</li>
       </ul>
+      <div class="baslik-k">Bir de gizem var</div>
+      <p style="margin:0">Köyden biri kooperatifi senden habersiz satmaya çalışıyor. Üç şüpheli var:</p>
+      <div class="uclu">${SUPHELILER.map(k => `<div><img src="img/${k}.webp" alt="">${HAIN[k].ad}</div>`).join("")}</div>
+      <p class="kucuk" style="color:var(--murekkep)">Seçimlerin sana <b>ipucu</b> getirir. Her ipucunu şüphelilerle karşılaştır, uymayanı ele. 7. gecenin sonunda kim olduğunu tahmin edeceksin. Hepsi <b>Defter</b>'de.</p>
       <p class="kucuk">Bu demo ilk 7 günü içeriyor. Kurgusal bir oyundur.</p>
       ${eskiKayitVardi ? `<p class="uyari">Oyun güncellendi. Eski kaydın bu sürümde açılmıyor, baştan başlaman gerekiyor.</p>` : ""}
       <div class="giris" style="margin-top:auto">
