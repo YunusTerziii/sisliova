@@ -53,9 +53,18 @@ import Testing
     @Test func finalDayPaysOnceAndCannotBeReplayed() throws {
         let engine = Engine(content: sharedContent)
         let player = Autoplayer(engine: engine)
-        let r = player.play(seed: 11, strategy: Strategy.presets(business: "spa")[0], caseOverride: .sevim)
+        let strategy = Strategy.presets(business: "spa")[0]
+        let r = player.play(seed: 11, strategy: strategy, caseOverride: .sevim)
         #expect(r.ending == .together)
         #expect(r.finalCash == r.cashBeforePayment - 15_000_000)
+        // Bitmiş oyunda akşam hesabı ya da gün sonu ikinci kez para üretmez.
+        let env = player.playEnvelope(seed: 11, strategy: strategy, caseOverride: .sevim)
+        for action in [Command.Action.settleEvening, .finishDay] {
+            #expect(throws: CoreError.gameEnded) {
+                try engine.reduce(env, Command(expectedRevision: env.state.revision, action: action), fullGameUnlocked: true)
+            }
+        }
+        #expect(env.state.paymentMade)
     }
 
     @Test func endingPresentationFillsAllPlaceholders() throws {

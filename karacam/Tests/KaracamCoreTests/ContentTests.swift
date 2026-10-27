@@ -90,4 +90,18 @@ struct ContentTests {
             }
         }
     }
+
+    /// Romantizmi istememek ana oyunu bozmaz: Derya seçimleri para, güven, baskı veya kanıt üretmez.
+    @Test func deryaChoicesOnlySetFlags() {
+        for def in sharedContent.scenes.values {
+            let groups: [(String, [ChoiceDefinition])] = [(def.speakerID, def.choices)]
+                + (def.variants ?? []).map { ($0.speakerID ?? def.speakerID, $0.choices ?? def.choices) }
+            for (speaker, choices) in groups where speaker == "derya" {
+                for choice in choices {
+                    let kinds = choice.effects.map(\.kind).filter { $0 != .setFlag && $0 != .clearFlag }
+                    #expect(kinds.isEmpty, "\(def.id)/\(choice.id): \(kinds)")
+                }
+            }
+        }
+    }
 }
