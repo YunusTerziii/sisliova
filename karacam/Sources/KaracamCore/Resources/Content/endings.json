@@ -1,0 +1,96 @@
+{
+  "endings": [
+    {
+      "id": "together",
+      "title": "Birlikte kurtardık",
+      "summary": "İlk taksit gönderildiğinde kasada kalan sayı küçüktü. Üç milyonluk borç bir anda yok olmamıştı. Ama kapıya gelen kâğıtta artık \"bugün\" değil, bir takvim yazıyordu. Kayıtların bir kopyası panoya asıldı. Bu kez mühür tek bir kişinin cebine girmedi.",
+      "why": [
+        {"when": [], "text": "Ödeme öncesi kasa {finalCashBefore} idi; 150.000 TL ilk taksit ödendi. Güven {trust}, baskı {pressure}."},
+        {"when": [], "text": "Satış yetkisini imza, bağımsız tarih ve tanıklı mühür zinciriyle kendi dosyanla kanıtladın; düzeltilmemiş haksız itham yok."}
+      ],
+      "decisive": [
+        {"when": [{"kind": "counterBelow", "target": "caseResolvedDay", "amount": 19}], "text": "Dosyayı 18. günden önce kapattın; şirketin geri adımı bu yüzden erken geldi."},
+        {"when": [{"kind": "flag", "target": "halilSupport"}], "text": "İlk gece anahtarı Halil'e bırakman, gece gördüklerinin sana gelmesini sağladı."},
+        {"when": [{"kind": "flag", "target": "sawLedger"}], "text": "İlk akşam toplantı yerine deftere bakman, kopuk sayfayı herkesten önce görmeni sağladı."},
+        {"when": [{"kind": "flag", "target": "registryRequested"}], "text": "9. gece bağımsız kayıt istemen tarih parçasını erken getirdi."},
+        {"when": [{"kind": "commitmentIs", "target": "order9", "value": "fulfilled"}], "text": "16. gün verdiğin sözü tutman, 22. günkü siparişi getirdi."}
+      ]
+    },
+    {
+      "id": "cooperative",
+      "title": "Köy nefes aldı",
+      "summary": "İlk taksit gitti. Borç bitmedi ama bir takvime bağlandı. Köy arkanda; kasada kalan para az, ama gerçek.",
+      "why": [
+        {"when": [], "text": "Ödeme öncesi kasa {finalCashBefore} idi; 150.000 TL ilk taksit ödendi. Güven {trust}, baskı {pressure}."},
+        {"when": [{"kind": "flag", "target": "authorityFrozen"}, {"kind": "notFlag", "target": "caseResolved"}], "text": "Satış yetkisi mühür kaybı bildirimiyle donduruldu; kimin imzaladığını kendi dosyanla kanıtlamadın."},
+        {"when": [{"kind": "flag", "target": "authorityRevoked"}, {"kind": "notFlag", "target": "caseResolved"}], "text": "Şüpheli yetki kurulda iptal edildi; imzanın sahibi dosyada kanıtlanmadı."},
+        {"when": [{"kind": "flag", "target": "caseResolved"}, {"kind": "wrongAccusationOpen"}], "text": "Dosyayı kapattın ama köyün önünde düzeltmediğin haksız bir itham kaldı."},
+        {"when": [{"kind": "flag", "target": "caseResolved"}, {"kind": "notFlag", "target": "custodyVerified"}], "text": "Dosyayı kapattın; mührün teslim zinciri tanıklı değildi."}
+      ],
+      "decisive": [
+        {"when": [{"kind": "business", "value": "spa"}], "text": "Kaplıcanın akşam geliri son haftaları taşıdı."},
+        {"when": [{"kind": "business", "value": "bees"}], "text": "Arıların düzenli geliri ve alıcıların sadakati son haftaları taşıdı."},
+        {"when": [{"kind": "flag", "target": "nineHelped"}], "text": "Hatice Nine'ye yardım etmen köyde ilk kez senin adına konuşan birini çıkardı."},
+        {"when": [{"kind": "commitmentIs", "target": "order22", "value": "fulfilled"}], "text": "25. gün kış paketini teslim etmen ödemenin son parçasıydı."},
+        {"when": [{"kind": "flag", "target": "minibusSold"}], "text": "Minibüsü satmak son haftada nakit verdi; ortak bir varlık gitti."}
+      ]
+    },
+    {
+      "id": "sale",
+      "title": "Satış / başka bir düzen",
+      "summary": "Karaçam artık bir şirketin. Borç baskısı bitti; köyün kendi işine karar verme hakkı da.",
+      "why": [
+        {"when": [{"kind": "flag", "target": "sale.day7"}], "text": "7. gün şirketin teklifini imzaladın. 400.000 TL ortak hesaba geldi; evler 12 ay, işler 3 ay güvence altında."},
+        {"when": [{"kind": "flag", "target": "sale.day27"}], "text": "27. gün şirketin son açık teklifini kabul ettin. 400.000 TL ortak hesaba geldi; evler 12 ay, işler 3 ay güvence altında."},
+        {"when": [{"kind": "flag", "target": "otherOrder"}], "text": "Para ve güven yetiyordu, ama satış yetkisi hiç dondurulmadı ya da iptal edilmedi. Şirket elindeki imzalı yetki ve mühürle kooperatifin yönetimine el koydu."}
+      ],
+      "decisive": [
+        {"when": [{"kind": "flag", "target": "otherOrder"}], "text": "Mühür kaybı bildirimi 9. günden 29. güne kadar gündemdeydi; tek bir sabah yeterdi."},
+        {"when": [{"kind": "notFlag", "target": "otherOrder"}], "text": "Kabul eden kişi kötü biri değil: rahatlama gerçek, kaybedilen bağımsızlık da."}
+      ]
+    },
+    {
+      "id": "cash",
+      "title": "Kasa yetmedi",
+      "summary": "Otuzuncu akşam hesap kapandığında ilk taksit için para yoktu. Alacaklı takvim açmadı.",
+      "why": [
+        {"when": [], "text": "Ödeme öncesi kasa {finalCashBefore} idi; ilk taksit 150.000 TL."},
+        {"when": [{"kind": "trustBelow", "amount": 25}], "text": "Güven 25'in altındaydı; brüt gelirin yalnız %70'i kasaya girdi."},
+        {"when": [{"kind": "pressureAtLeast", "amount": 50}], "text": "Baskı 50'nin üstündeydi; her akşam kesinti vardı."}
+      ],
+      "decisive": [
+        {"when": [{"kind": "flag", "target": "companyAdvance"}], "text": "Şirketin kapalı avansı bir gün nakit verdi, sonra her akşam payını aldı."},
+        {"when": [{"kind": "expenseActive", "target": "bridge.transport"}], "text": "Köprü hiç onarılmadı; kamyonet farkı son güne kadar kesildi."},
+        {"when": [{"kind": "flag", "target": "caseResolved"}], "text": "İmza sahibini bulmak ekonomik kaybı başarıya çevirmedi; araştırman yine kayıtlarda duruyor."}
+      ]
+    },
+    {
+      "id": "trust",
+      "title": "Köy desteği kaybı",
+      "summary": "Para bir yana, köy artık arkanda değildi. Kurul ilk taksiti senin imzanla göndermeyi reddetti.",
+      "why": [
+        {"when": [{"kind": "trustBelow", "amount": 1}], "text": "Güven sıfıra indi; kooperatif desteği bitti."},
+        {"when": [{"kind": "trustAtLeast", "amount": 1}], "text": "Kasa {finalCashBefore} ile yetiyordu, ama güven {trust}; ödeme için kurulun desteği 60 gerekiyordu. Taksit körlemesine düşülmedi."}
+      ],
+      "decisive": [
+        {"when": [{"kind": "flag", "target": "grievance.hiddenIncome"}], "text": "Saklanan gelir hiç açıklanmadı."},
+        {"when": [{"kind": "flag", "target": "boardOversight"}], "text": "Güven oylaması kaybedildi ya da tanınmadı; kurul denetimi başladı."},
+        {"when": [{"kind": "wrongAccusationOpen"}], "text": "Köyün önündeki haksız itham düzeltilmedi."},
+        {"when": [{"kind": "incomeActive", "target": "dues"}], "text": "Aidat artışı köyün bütçesine yük oldu."}
+      ]
+    },
+    {
+      "id": "pressure",
+      "title": "Erken tahsilat",
+      "summary": "Alacaklının sabrı otuz günü beklemedi. Baskı 100'e ulaştığında icra memuru köprüden geçti.",
+      "why": [
+        {"when": [], "text": "Baskı 100'e ulaştı. Her akşamki kesinti büyüdü, sonra alacaklı erken tahsilata gitti."}
+      ],
+      "decisive": [
+        {"when": [{"kind": "flag", "target": "hidIncome"}], "text": "5. gün gelirin bir kısmını saklaman baskıyı ilk kez sıçrattı."},
+        {"when": [{"kind": "flag", "target": "companyAdvance"}], "text": "Şirketin kapalı avansı alacaklıya da duyuldu."},
+        {"when": [{"kind": "flag", "target": "video"}], "text": "Köyün videosu şehirde dikkat çekti; alacaklı da izledi."}
+      ]
+    }
+  ]
+}

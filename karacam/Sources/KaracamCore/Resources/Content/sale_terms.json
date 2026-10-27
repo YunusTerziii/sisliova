@@ -1,0 +1,19 @@
+{
+  "title": "Şirketin satış şartları (kurgusal sözleşme)",
+  "cashToCommonAccount": 40000000,
+  "terms": [
+    "Şirket kooperatifin kalan borcunu üstlenir.",
+    "400.000 TL ortak devir hesabına gelir.",
+    "Evlerin mevcut kullanımı ilk 12 ay güvence altındadır.",
+    "Kaplıca ve arı evindeki işler ilk 3 ay güvence altındadır.",
+    "Sonraki işletme ve yatırım kararları şirkettedir."
+  ],
+  "gains": [
+    "Borç baskısı biter; kimsenin evi bu kış tehlikede olmaz.",
+    "Ortak hesaba gelen para hanelere paylaştırılabilir."
+  ],
+  "losses": [
+    "Kooperatifin bağımsızlığı biter; köy kendi işletmesine karar veremez.",
+    "Üç aydan sonra işlerin kime kalacağını şirket belirler."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "chapters": [
+    {"id": 1, "title": "Köye tutunmak", "firstDay": 1, "lastDay": 7, "theme": "İşletme ve ilk küçük çözüm"},
+    {"id": 2, "title": "Plan kurmak", "firstDay": 8, "lastDay": 14, "theme": "Büyüme, sözleşme ve yer bilgisi"},
+    {"id": 3, "title": "Gerçeğin bedeli", "firstDay": 15, "lastDay": 21, "theme": "Mühür ve erken hesaplaşma"},
+    {"id": 4, "title": "Köyün tarafı", "firstDay": 22, "lastDay": 27, "theme": "Son iş, yönetim ve taviz"},
+    {"id": 5, "title": "Sayılardan insanlara", "firstDay": 28, "lastDay": 30, "theme": "Açık hesap ve tamamlanan hikâye"}
+  ],
+  "days": [
+    {"day": 1, "chapter": 1, "title": "Halanın yerine", "dueMorning": true, "promise": "Yarın: Nermin ve Rauf köye geliyor."},
+    {"day": 2, "chapter": 1, "title": "İlk siparişler", "dueMorning": true},
+    {"day": 3, "chapter": 1, "title": "Sevim'in hesabı", "dueMorning": true},
+    {"day": 4, "chapter": 1, "title": "Köprünün öbür yakası", "dueMorning": true},
+    {"day": 5, "chapter": 1, "title": "İlk ihtar", "dueMorning": true},
+    {"day": 6, "chapter": 1, "title": "Kasada ne var?", "dueMorning": true},
+    {"day": 7, "chapter": 1, "title": "Bir hafta", "dueMorning": true, "promise": "8. gün: ilk tam çalışma haftası ve rutin giderler başlıyor."},
+    {"day": 8, "chapter": 2, "title": "Kasanın gerçek resmi", "dueMorning": true, "promise": "Bundan sonra her şeyin para götürmesi değil, bir plan kurabilmek."},
+    {"day": 9, "chapter": 2, "title": "Söz vermek", "dueMorning": false, "dueNote": "Nermin'in grup siparişi yalnız bugün konuşulur"},
+    {"day": 10, "chapter": 2, "title": "Emek kimin?", "dueMorning": false},
+    {"day": 11, "chapter": 2, "title": "Köyün tezgâhı", "dueMorning": false},
+    {"day": 12, "chapter": 2, "title": "Kimin müşterisi?", "dueMorning": false},
+    {"day": 13, "chapter": 2, "title": "Büyümek veya nefes almak", "dueMorning": false},
+    {"day": 14, "chapter": 2, "title": "İlk bölümün hesabı", "dueMorning": false, "promise": "Aidat katkısı varsa bu akşam son kez yatar."},
+    {"day": 15, "chapter": 3, "title": "Para değil kayıt meselesi", "dueMorning": false},
+    {"day": 16, "chapter": 3, "title": "Verilen sözün günü", "dueMorning": true, "dueNote": "9. gün verilen sözün teslim günü"},
+    {"day": 17, "chapter": 3, "title": "Bir kişinin üstünde bütün iş", "dueMorning": false},
+    {"day": 18, "chapter": 3, "title": "İlk hesaplaşma fırsatı", "dueMorning": false},
+    {"day": 19, "chapter": 3, "title": "Kimin adı geçecek?", "dueMorning": false, "promise": "Yarın: haber verilen hava ve yol kesintisi."},
+    {"day": 20, "chapter": 3, "title": "Hazır olmak", "dueMorning": true, "dueNote": "Hava ve yol kesintisi (17. gün haber verildi)"},
+    {"day": 21, "chapter": 3, "title": "Sahip olmak mı, paylaşmak mı?", "dueMorning": false},
+    {"day": 22, "chapter": 4, "title": "Son büyük fırsat", "dueMorning": false, "dueNote": "Son kış siparişi yalnız bugün konuşulur"},
+    {"day": 23, "chapter": 4, "title": "Yalnız kazanç yetmiyor", "dueMorning": false},
+    {"day": 24, "chapter": 4, "title": "Geç kalan dosya da kapanabilir", "dueMorning": false},
+    {"day": 25, "chapter": 4, "title": "Son teslimat", "dueMorning": true, "dueNote": "22. gün siparişinin teslim günü"},
+    {"day": 26, "chapter": 4, "title": "Kim yönetecek?", "dueMorning": true},
+    {"day": 27, "chapter": 4, "title": "Bedelli çıkışlar", "dueMorning": false},
+    {"day": 28, "chapter": 5, "title": "Sayılardan insanlara", "dueMorning": false},
+    {"day": 29, "chapter": 5, "title": "Son kontrol, yeni felaket yok", "dueMorning": true},
+    {"day": 30, "chapter": 5, "title": "Verilen sözün karşılığı", "dueMorning": true, "dueNote": "150.000 TL ilk taksit"}
+  ]
+}
