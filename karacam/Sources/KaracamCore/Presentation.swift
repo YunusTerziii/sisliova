@@ -612,9 +612,10 @@ extension Engine {
     }
 
     func trustNote(_ s: RunState) -> String {
-        if s.trust < rules.lowTrust { return "Brüt gelirin %\(rules.lowBasisPoints / 100)'i" }
-        if s.trust >= rules.highTrust { return "Brüt gelirin %\(rules.highBasisPoints / 100)'i" }
-        return "Brüt gelirin tamamı"
+        let pay = s.trust >= rules.requiredTrust ? "kurul ödeme planını destekler" : "ödeme için \(rules.requiredTrust) gerekli"
+        if s.trust < rules.lowTrust { return "Gelirin %\(rules.lowBasisPoints / 100)'i kasaya girer · \(pay)" }
+        if s.trust >= rules.highTrust { return "Gelir %\(rules.highBasisPoints / 100) · \(pay)" }
+        return "Gelirin tamamı · \(pay)"
     }
 
     func pressureNote(_ s: RunState) -> String {
