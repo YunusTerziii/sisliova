@@ -151,6 +151,14 @@ public final class GameStore {
         return true
     }
 
+    /// Hazır bir kaydı yeni oyun gibi yükler (geliştirme: geç günleri denemek).
+    public func loadPrepared(_ env: SaveEnvelope) async {
+        await store.beginRun(env.state.runID)
+        do { try await store.save(env) } catch { return }
+        commit(env)
+        screen = .playing
+    }
+
     public func deleteSave() async {
         do {
             try await store.deleteAll()

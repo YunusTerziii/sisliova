@@ -79,6 +79,9 @@ enum SpeakerSymbol {
         case "koy": "person.3.fill"
         case "sicil": "archivebox.fill"
         case "derya": "hammer.fill"
+        case "anlatici": "mountain.2.fill"
+        case "kamyon": "truck.box.fill"
+        case "araba": "car.side.fill"
         default: nil
         }
     }
