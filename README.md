@@ -13,3 +13,7 @@ Yalnızca `index.html` içindeki `SEZON` bloğu değişir:
 - `link`: bölümün Instagram linki. Boş bırakılırsa ilgili buton gizlenir veya `instagram` profil linkine düşer.
 
 Kurgusal animasyon serisi. Görseller dizinin kendi çizimleridir.
+
+## iPhone uygulaması
+
+Karaçam iPhone uygulamasının kodu bu depodan ayrıldı ve private `YunusTerziii/kasabayikurtar-ios` deposuna geçmişiyle birlikte taşındı. Bu depoda yalnız site ve web demosu (`/oyun`) kalıyor.
