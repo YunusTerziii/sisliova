@@ -197,9 +197,7 @@ extension Engine {
             trust: s.trust, pressure: s.pressure,
             trustNote: trustNote(s), pressureNote: pressureNote(s),
             businessLabel: businessLabel(s),
-            lastOutcome: s.lastOutcome.map { o in
-                Outcome(day: o.day, sceneTitle: o.sceneTitle, text: o.text)
-            },
+            lastOutcome: s.lastOutcome,
             scene: scene, agenda: agenda,
             evening: eveningVisible ? presentEvening(s, day: s.day) : nil,
             recap: s.phase == .recap ? presentRecap(s) : nil,
@@ -252,12 +250,9 @@ extension Engine {
     func confirmText(_ choice: ChoiceDefinition, _ s: RunState) -> String? {
         if let accuse = choice.effects.first(where: { $0.kind == .accuse }),
            let who = SuspectID(rawValue: accuse.target ?? "") {
+            // Onay metni kişiye göre değişmez; hangi kaydın kimi gösterdiğini oyuncu kendisi okur.
             let person = content.suspect(who)
-            if CaseSolver.canProve(who, with: Array(s.evidence.values)) {
-                return choice.confirm.map { Cases.fill($0, s, content) }
-            }
-            let missing = Cases.missingParts(who, s).map(\.label).joined(separator: ", ")
-            return "\(person.accusative) kanıtı tamamlanmamış bir dosyayla köyün önünde suçlamak üzeresin. Eksik: \(missing). Haksız çıkarsa güven −\(rules.wrongAccusationTrust). Yine de açıklayacak mısın?"
+            return "\(person.accusative) köyün önünde suçlamak üzeresin. Dosyanda: \(fileSummary(s)). Kurul kayıtları yan yana koyacak; dosya bu kişiyi taşımazsa güven −\(rules.wrongAccusationTrust). Emin misin?"
         }
         return choice.confirm.map { Cases.fill($0, s, content) }
     }
@@ -265,10 +260,8 @@ extension Engine {
     func dynamicPreview(_ choice: ChoiceDefinition, _ s: RunState) -> [String] {
         var lines: [String] = []
         for e in choice.effects where Rulebook.all(e.when, s, content) {
-            if e.kind == .accuse, let who = SuspectID(rawValue: e.target ?? "") {
-                let missing = Cases.missingParts(who, s)
-                lines.append(missing.isEmpty ? "Dosya tam: imza, tarih ve tanıklı mühür zinciri."
-                             : "Dosya eksik: " + missing.map(\.label).joined(separator: ", ") + ".")
+            if e.kind == .accuse, !lines.contains(where: { $0.hasPrefix("Dosyanda") }) {
+                lines.append("Dosyanda: \(fileSummary(s)).")
             }
             if e.kind == .interview, let who = SuspectID(rawValue: e.target ?? ""),
                !Rulebook.holds(Predicate(kind: .interviewAvailable, target: nil, amount: nil, value: who.rawValue), s, content) {
@@ -276,6 +269,21 @@ extension Engine {
             }
         }
         return lines
+    }
+
+    /// Kişiden bağımsız dosya özeti: hangi tür doğrulanmış kayıt elde.
+    func fileSummary(_ s: RunState) -> String {
+        CaseSolver.ProofPart.allCases.map { part in
+            let have = s.evidence.values.contains { $0.reliability == .verified && $0.kind == kind(of: part) }
+            return "\(part.label) \(have ? "var" : "yok")"
+        }.joined(separator: ", ")
+    }
+
+    /// Güven ve baskı rozetleri sayı değil yön gösterir: oyuncu hesap tablosu değil karar okur.
+    func direction(_ name: String, _ a: Int64) -> String {
+        let strong = abs(a) >= 6
+        if a > 0 { return name + (strong ? " ▲▲" : " ▲") }
+        return name + (strong ? " ▼▼" : " ▼")
     }
 
     func badges(for choice: ChoiceDefinition, _ s: RunState) -> [String] {
@@ -288,9 +296,9 @@ extension Engine {
             case .cash where a != 0:
                 out.append("Kasa \(Money.format(a, signed: true))\(later)")
             case .trust where a != 0:
-                out.append("Güven \(a > 0 ? "+" : "−")\(abs(a))\(later)")
+                out.append(direction("Güven", a) + later)
             case .pressure where a != 0:
-                out.append("Baskı \(a > 0 ? "+" : "−")\(abs(a))\(later)")
+                out.append(direction("Baskı", a) + later)
             case .setIncome:
                 var t = "Her akşam \(Money.format(a, signed: true)) brüt"
                 if let end = e.expiresAfterDay { t += " (\(end). akşama kadar)" }
@@ -321,17 +329,15 @@ extension Engine {
             case .closeBusiness:
                 out.append("İşletmenin bütün geliri ve gideri kapanır")
             case .acceptCommitment:
-                out.append("Taahhüt: \(e.expiresAfterDay ?? s.day). gün")
+                out.append("Teslim: \(e.expiresAfterDay ?? s.day). gün")
             case .setDayGrossPercent:
                 out.append("\(Rulebook.list(e.value).map { "\($0)." }.joined(separator: ", ")) akşam brüt %\(a)")
             case .endGame:
                 out.append("Hikâye burada biter")
             case .setMandate:
-                if s.mandate?.rawValue != e.value, a != 0 {
-                    out.append("Güven \(a > 0 ? "+" : "−")\(abs(a))")
+                if s.mandate?.rawValue != e.value, a != 0, !s.flags.contains("mandateTrust.\(e.value ?? "")") {
+                    out.append(direction("Güven", a))
                 }
-            case .grantEvidence:
-                if !out.contains("Yeni bilgi") { out.append("Yeni bilgi") }
             default:
                 break
             }
@@ -381,8 +387,8 @@ extension Engine {
         let settledRecord = s.evenings.last { $0.day == day }
         let pct: String
         switch ev.basisPoints {
-        case rules.lowBasisPoints: pct = "Güven \(rules.lowTrust) altında: brütün %\(ev.basisPoints / 100)'i"
-        case rules.highBasisPoints: pct = "Güven \(rules.highTrust) ve üstü: brütün %\(ev.basisPoints / 100)'i"
+        case rules.lowBasisPoints: pct = "Güven \(rules.lowTrust) altında: köy çekingen, brütün %\(ev.basisPoints / 100)'i"
+        case rules.highBasisPoints: pct = "Güven \(rules.highTrust) ve üstü: köy sana koşuyor, brütün %\(ev.basisPoints / 100)'i"
         default: pct = "Güven \(rules.lowTrust)–\(rules.highTrust - 1): brütün tamamı"
         }
         let dayNote = ev.dayPercent != 100 ? " · bugün yalnız %\(ev.dayPercent)" : ""
@@ -408,10 +414,10 @@ extension Engine {
         if let ch = content.chapter(for: s.day), ch.lastDay == s.day {
             summary = chapterSummary(s, ch)
         }
-        let next = content.dayDefinition(s.day + 1)
+        // Takvim notları o günün sonunda okunacak biçimde yazılır ("Yarın: …").
         return RecapPresentation(day: s.day, memories: mem,
                                  evening: s.settledDays.contains(s.day) ? presentEvening(s, day: s.day) : nil,
-                                 chapter: summary, nextDayNote: next?.promise)
+                                 chapter: summary, nextDayNote: content.dayDefinition(s.day)?.promise)
     }
 
     func commitmentCash(_ s: RunState) -> Kurus {
@@ -452,7 +458,7 @@ extension Engine {
         }
         if s.day == 27 {
             let st = Final.status(s, content)
-            lines.append("30. gün koşulları: kasa \(st.cashEnough ? "yetiyor" : "yetmiyor") · güven \(st.trustEnough ? "yeterli" : "\(rules.highTrust) altında") · baskı \(st.pressureOK ? "sınırda değil" : "sınırda") · yetki \(st.authoritySafe ? "güvende" : "güvende değil")")
+            lines.append("30. gün koşulları: kasa \(st.cashEnough ? "yetiyor" : "yetmiyor") · güven \(st.trustEnough ? "yeterli" : "\(rules.requiredTrust) altında") · baskı \(st.pressureOK ? "sınırda değil" : "sınırda") · yetki \(st.authoritySafe ? "güvende" : "güvende değil")")
             lines.append("Son üç günde yeni zorunlu felaket yok. 29. gün son çalışma kararı, 30. gün son gelir ve ödeme.")
         }
         let chapterMemories = s.memories.filter { $0.day >= ch.firstDay && $0.day <= ch.lastDay }
@@ -480,7 +486,7 @@ extension Engine {
         } else if gap > 0 {
             goal = "İlk taksite \(Money.format(gap)) eksik · \(max(0, evenings)) akşam kaldı"
         } else {
-            goal = "Kasa ilk taksiti karşılıyor · güven \(rules.highTrust)+ ve yetki güvencesi de gerekli"
+            goal = "Kasa ilk taksiti karşılıyor · kurul desteği (güven \(rules.requiredTrust)+) ve yetki güvencesi de gerekli"
         }
         let open = s.commitments.values.filter(\.isOpen).sorted { $0.dueDay < $1.dueDay }
         let commitmentLine: String
@@ -492,8 +498,6 @@ extension Engine {
             commitmentLine = "\(rules.finalDay). gün: 150.000 TL ilk taksit"
         }
         let evidenceList = Array(s.evidence.values)
-        let candidates = CaseSolver.candidates(evidenceList)
-        let names = candidates.sorted().map { content.suspect($0).name }
         let question: String
         if s.flags.contains("caseResolved") {
             question = "Satış yetkisi dosyası kapandı."
@@ -502,21 +506,29 @@ extension Engine {
         } else {
             question = content.cases.question
         }
-        let candidatesLine = candidates.count == SuspectID.allCases.count
-            ? "Kayıtlar henüz kimseyi elemiyor."
-            : "Gözlem ve kayıtlarla hâlâ uyuşan: " + names.joined(separator: ", ")
+        // Eleme oyuncunun işi: defter kesişimi hesaplamaz, yalnız oyuncunun kendi notlarını sayar.
+        let cleared = env.metadata.eliminated.count
+        let candidatesLine = cleared == 0
+            ? "Kayıtları yan yana koy; kimi şüpheden çıkardığını İnsanlar sayfasında işaretle."
+            : "Kendi notun: \(cleared) kişiyi şüpheden çıkardın."
+
         let parts = CaseSolver.ProofPart.allCases.map { part -> String in
             let have = evidenceList.contains { $0.reliability == .verified && $0.kind == kind(of: part) }
             return (have ? "✓ " : "· ") + part.label
         }
-        let fileLine = "Kurul dosyası: " + parts.joined(separator: "  ")
-        let authority = Final.authoritySafe(s)
-            ? (s.flags.contains("authorityRevoked") ? "Yetki iptal edildi." : "Mühür kaybı bildirildi; yetki donduruldu.")
-            : "Satış yetkisi hâlâ geçerli olabilir. Kayıp bildirimi gündemde açık."
+        let fileLine = "Kurula götürülecek dosya: " + parts.joined(separator: "  ")
+        let authority: String
+        if Final.authoritySafe(s) {
+            authority = s.flags.contains("authorityRevoked") ? "Satış yetkisi iptal edildi." : "Mühür kaybı bildirildi; eski mühürle imza geçmez."
+        } else if s.flags.contains("letterRead") {
+            authority = "İmzalı bir satış yetkisi dolaşıyor olabilir ve mühür kayıp. Kaybı bildirmek gündemde."
+        } else {
+            authority = "Koparılan sayfanın sırrı henüz çözülmedi."
+        }
 
         let today = presentEvening(s, day: s.day)
         let proj = Economy.projection(s, rules: rules, commitmentCash: commitmentCash(s))
-        let projectionNote = "Bugünkü koşullar değişmezse: güven \(s.trust), baskı \(s.pressure) aynı kalır; bilinen bitiş tarihleri, başlayacak giderler ve açık taahhüt tahsilatları dahil. Yeni kararlar bunu değiştirir."
+        let projectionNote = "Güven \(s.trust) ve baskı \(s.pressure) aynı kalırsa; bilinen bitişler, başlayacak giderler ve bekleyen tahsilatlar dahil. Yeni kararların bunu değiştirir."
 
         let incomes = s.incomes.values.sorted { $0.id < $1.id }.map { line in
             LinePresentation(id: line.id, label: line.label, amount: Money.format(line.amount, signed: true),
@@ -584,7 +596,7 @@ extension Engine {
         case .document: "Belge"
         case .signature: "İmza"
         case .timeline: "Tarih"
-        case .custody: "Teslim zinciri"
+        case .custody: "Tanıklı teslim"
         case .testimony: "İfade"
         case .location: "Yer"
         }
@@ -600,15 +612,16 @@ extension Engine {
     }
 
     func trustNote(_ s: RunState) -> String {
-        if s.trust < rules.lowTrust { return "Brüt gelirin %\(rules.lowBasisPoints / 100)'i" }
-        if s.trust >= rules.highTrust { return "Brüt gelirin %\(rules.highBasisPoints / 100)'i" }
-        return "Brüt gelirin tamamı"
+        let pay = s.trust >= rules.requiredTrust ? "kurul ödeme planını destekler" : "ödeme için \(rules.requiredTrust) gerekli"
+        if s.trust < rules.lowTrust { return "Gelirin %\(rules.lowBasisPoints / 100)'i kasaya girer · \(pay)" }
+        if s.trust >= rules.highTrust { return "Gelir %\(rules.highBasisPoints / 100) · \(pay)" }
+        return "Gelirin tamamı · \(pay)"
     }
 
     func pressureNote(_ s: RunState) -> String {
         let fee = Economy.pressureFee(pressure: s.pressure, rules: rules)
-        if fee > 0 { return "Akşam kesintisi \(Money.format(fee)) · \(rules.pressureLoss)'de erken tahsilat" }
-        return "\(rules.pressureStart) altında kesinti yok"
+        if fee > 0 { return "Alacaklı her akşam \(Money.format(fee)) kesiyor · \(rules.pressureLoss)'de borcu bir anda ister" }
+        return "Alacaklının sabrı · \(rules.pressureStart)'te kesinti başlar"
     }
 
     func businessLabel(_ s: RunState) -> String {
@@ -632,7 +645,7 @@ extension Engine {
         } else {
             bridge = "Demirleri çürük; kamyon geçemiyor"
         }
-        m.append(VillageMarker(id: "bridge", label: "Köprü", status: bridge, symbol: "road.lanes",
+        m.append(VillageMarker(id: "bridge", label: "Köprü", status: bridge, symbol: "point.topleft.down.to.point.bottomright.curvepath",
                                x: 0.505, y: 0.79, active: s.flags.contains("bridgeFixed") || s.flags.contains("bridgeRepaired")))
         let spa: String
         switch s.business {
@@ -683,6 +696,9 @@ extension Engine {
         let why = def.why.filter { Rulebook.all($0.when, s, content) }.map { Cases.fill($0.text, s, content) }
         let decisive = def.decisive.filter { Rulebook.all($0.when, s, content) }.map { Cases.fill($0.text, s, content) }
         var numbers: [LinePresentation] = []
+        if let cover = s.counters["villageCover"] {
+            numbers.append(LinePresentation(id: "cover", label: "Köyün imecesi", amount: Money.format(Kurus(cover), signed: true), note: nil))
+        }
         if let before = s.finalCashBeforePayment {
             numbers.append(LinePresentation(id: "before", label: "Ödeme öncesi kasa", amount: Money.format(before), note: nil))
         }

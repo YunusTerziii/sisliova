@@ -71,8 +71,14 @@ public struct Autoplayer {
         run(seed: seed, strategy: strategy, caseOverride: caseOverride, maxCommands: 600).0
     }
 
+    /// Belirli bir günün sabahına kadar oynar (geliştirme sırasında geç sahneleri görmek için).
+    public func playEnvelope(seed: UInt64, strategy: Strategy, untilDay day: Int) -> SaveEnvelope {
+        run(seed: seed, strategy: strategy, caseOverride: nil, maxCommands: 600,
+            stop: { $0.day >= day && ($0.phase == .agenda || $0.phase == .morning) }).0
+    }
+
     func run(seed: UInt64, strategy: Strategy, caseOverride: SuspectID?,
-             maxCommands: Int) -> (SaveEnvelope, AutoplayResult) {
+             maxCommands: Int, stop: ((RunState) -> Bool)? = nil) -> (SaveEnvelope, AutoplayResult) {
         var env = engine.newRun(seed: seed, runID: UUID(uuid: Autoplayer.uuid(seed)),
                                 attemptID: UUID(uuid: Autoplayer.uuid(seed &+ 1)), caseOverride: caseOverride)
         var rng = SplitMix64(seed: seed ^ 0xA5A5_5A5A_1234_5678)
@@ -98,7 +104,8 @@ public struct Autoplayer {
 
         while env.state.ending == nil && commands < maxCommands && stuck == nil {
             let s = env.state
-            if s.trust >= 60 && firstTrust60 == nil { firstTrust60 = s.day }
+            if let stop, stop(s) { break }
+            if s.trust >= engine.content.rules.highTrust && firstTrust60 == nil { firstTrust60 = s.day }
             minCash = min(minCash, s.cash)
             switch s.phase {
             case .morning, .anchor, .night:

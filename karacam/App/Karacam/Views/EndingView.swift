@@ -12,11 +12,24 @@ struct EndingView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            VStack(alignment: .leading, spacing: 10) {
-                Text(ending.title).font(Theme.heading(.title))
-                Text(ending.summary).font(.body).fixedSize(horizontal: false, vertical: true)
+            VStack(alignment: .leading, spacing: 0) {
+                ZStack(alignment: .bottomLeading) {
+                    MapCrop(spot: .whole, height: 220)
+                        .overlay(LinearGradient(colors: [.clear, Theme.paper], startPoint: .center, endPoint: .bottom))
+                    VStack(alignment: .leading, spacing: 4) {
+                        Label("SON", systemImage: "flag.checkered").font(.caption.weight(.bold)).foregroundStyle(Theme.moss)
+                        Text(ending.title).font(Theme.heading(.largeTitle))
+                    }
+                    .padding(16)
+                }
+                Text(ending.summary)
+                    .font(Theme.story)
+                    .lineSpacing(3)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(16)
             }
-            .paperCard()
+            .background(Color.white.opacity(0.6), in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
 
             if !ending.why.isEmpty {
                 block("Neden böyle bitti", ending.why)
@@ -39,7 +52,7 @@ struct EndingView: View {
             ForEach(ending.epilogue) { section in
                 VStack(alignment: .leading, spacing: 6) {
                     Text(section.heading).font(.headline)
-                    Text(section.text).font(.body).fixedSize(horizontal: false, vertical: true)
+                    Text(section.text).font(.system(.body, design: .serif)).fixedSize(horizontal: false, vertical: true)
                 }
                 .paperCard()
                 .accessibilityElement(children: .combine)

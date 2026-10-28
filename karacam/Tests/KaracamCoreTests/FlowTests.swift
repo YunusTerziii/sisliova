@@ -166,4 +166,34 @@ struct FlowTests {
         #expect(d.env.metadata.firstGuess == .sevim)
         #expect(d.env.metadata.firstGuessRecorded)
     }
+
+    @Test func recapShowsThatDaysOwnPromise() throws {
+        var d = Driver()
+        try d.run(to: 1, phase: .recap)
+        let note = d.engine.present(d.env).recap?.nextDayNote
+        #expect(note == sharedContent.dayDefinition(1)?.promise)
+    }
+
+    @Test func switchingMandateBackAndForthGivesTrustOnce() {
+        var s = Driver().s
+        s.trust = 40
+        var notes: [String] = []
+        let e = Engine(content: sharedContent)
+        func set(_ m: String, _ amount: Int64) {
+            e.apply(Effect(kind: .setMandate, target: nil, amount: amount, value: m), to: &s, notes: &notes, deferred: false)
+        }
+        set("shared", 3)
+        set("central", -2)
+        set("shared", 3)
+        #expect(s.trust == 41)
+    }
+
+    @Test func trustCannotEndTheGameInTheFreeWeek() throws {
+        var d = Driver()
+        try d.run(to: 4, phase: .evening)
+        d.env.state.trust = 0
+        try d.settle()
+        #expect(d.s.ending == nil)
+        #expect(d.s.trust == 1)
+    }
 }

@@ -7,8 +7,8 @@
     {
      "when": [
       {
-       "kind": "flag",
-       "target": "sale.day7"
+       "kind": "endingIs",
+       "value": "sale"
       }
      ],
      "text": "Kaplıca da arı evi de şirketin planına girdi. İlk üç ay aynı insanlar çalıştı; sonrasını şirket belirleyecek."
@@ -94,6 +94,15 @@
      "when": [
       {
        "kind": "flag",
+       "target": "sale.day7"
+      }
+     ],
+     "text": "Kopuk sayfanın hikâyesi yarım kaldı. Mühür hiç bulunmadı; imzanın kimde olduğunu artık şirket biliyor, köy değil."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
        "target": "caseResolved"
       },
       {
@@ -166,6 +175,15 @@
      "when": [
       {
        "kind": "flag",
+       "target": "sale.day7"
+      }
+     ],
+     "text": "Yedi gün kaldın, sonra imzaladın. Halil gece turunu sürdürüyor; Sevim defteri şirketin muhasebecisine devretti. Köyde seni hâlâ \"halanın yeğeni\" diye anıyorlar."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
        "target": "deryaInterest"
       }
      ],
@@ -208,8 +226,35 @@
      "text": "Elif kendi küçük tasarım işini kurdu; ilk müşterisi kooperatif."
     },
     {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "elifSupported"
+      }
+     ],
+     "text": "Elif meslek kursunu bitirdi; yol parasını kooperatifin verdiğini kimseye söylemedi, ama ilk işini kooperatife yaptı."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "auntTruthShared"
+      }
+     ],
+     "text": "Halanın hikâyesi artık köyün hikâyesi: iyi niyetiyle de hatasıyla da. Kahvede adı geçince kimse susmuyor."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "auntProtected"
+      }
+     ],
+     "text": "Halanın kurul onayı olmadan aldığı kredileri yalnız kurul biliyor. Köyde adı hâlâ saygıyla anılıyor; bazen biri bir şey sormak isteyip vazgeçiyor."
+    },
+    {
      "when": [],
-     "text": "Halil gece turunu sürdürüyor; Sevim defteri, Selim muhtarlığı. Otuz gün önce yabancıydın; şimdi selam veriliyor."
+     "text": "Halil gece turunu sürdürüyor; Sevim defteri, Selim muhtarlığı. Geldiğinde yabancıydın; şimdi selam veriliyor."
     }
    ]
   },
@@ -239,6 +284,15 @@
      "when": [
       {
        "kind": "flag",
+       "target": "otherOrder"
+      }
+     ],
+     "text": "Kurul kâğıt üstünde duruyor, ama kararları şirketin gönderdiği yönetici veriyor."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
        "target": "futureShared"
       },
       {
@@ -247,6 +301,19 @@
       }
      ],
      "text": "Yetki yedi imzalık kurulda. Sen düzeni kurdun ve devrettin; köy artık bir kişinin omzunda değil."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "futureShared"
+      },
+      {
+       "kind": "flag",
+       "target": "intendStay"
+      }
+     ],
+     "text": "Yetki yedi imzalık kurulda. Elif'e söylediğin gibi köyde kaldın; artık tek başına değilsin."
     },
     {
      "when": [
@@ -275,6 +342,19 @@
       {
        "kind": "flag",
        "target": "futureLead"
+      },
+      {
+       "kind": "flag",
+       "target": "intendStay"
+      }
+     ],
+     "text": "Bir dönem daha sorumluluk sende, ve kalmaya karar verdin. Kayıtlar açık; halanın tek başına taşıdığı yükü sen tek başına taşımayacaksın."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "futureLead"
       }
      ],
      "text": "Bir dönem daha sorumluluk sende. Kayıtlar açık; halanın tek başına taşıdığı yükü sen de tek başına taşımamaya söz verdin."
@@ -289,6 +369,15 @@
    "id": "commons",
    "heading": "Ortak varlıklar",
    "entries": [
+    {
+     "when": [
+      {
+       "kind": "endingIs",
+       "value": "sale"
+      }
+     ],
+     "text": "Köprü, minibüs, meydandaki tezgâh: hepsi devirle şirketin listesine geçti. Pazar günü minibüsün kapısında şirketin adı yazıyor."
+    },
     {
      "when": [
       {
@@ -323,6 +412,19 @@
       }
      ],
      "text": "Köprü sağlam, minibüs köyde, meydandaki ortak tezgâh her cumartesi kuruluyor."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "bridgeFixed"
+      },
+      {
+       "kind": "flag",
+       "target": "minibusKept"
+      }
+     ],
+     "text": "Köprü sağlam. Minibüsü satmadın; pazartesi sabahları köyü Sisliova pazarına hâlâ o götürüyor."
     },
     {
      "when": [
@@ -386,7 +488,7 @@
        "value": "pressure"
       }
      ],
-     "text": "Erken tahsilat kooperatifin hesaplarını dondurdu. Köy evlerinde kaldı; ortak işler durdu. Kurul, borcun nasıl bu noktaya geldiğini kayıtlardan yeniden okuyor."
+     "text": "Alacaklı icraya gitti; kooperatifin hesapları donduruldu. Köy evlerinde kaldı; ortak işler durdu. Kurul, borcun nasıl bu noktaya geldiğini kayıtlardan yeniden okuyor."
     },
     {
      "when": [
@@ -396,6 +498,24 @@
       }
      ],
      "text": "Kurul yeni bir yönetici arıyor. Kurduğun işler duruyor; onları kimin sürdüreceğine köy karar verecek."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "counterVillage"
+      }
+     ],
+     "text": "İlçe koridorunu dolduran otuz kişi, kurulun ilk toplantısına da geldi. Kalan borç için aylık bir takvim imzalandı; bir sonraki taksit bahara."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "finalFeast"
+      }
+     ],
+     "text": "Otuzuncu akşamın sofrası sabaha kadar sürdü. Kalan borç için alacaklıyla aylık bir takvim imzalandı; bir sonraki taksit bahara."
     },
     {
      "when": [

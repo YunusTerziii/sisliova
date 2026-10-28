@@ -131,9 +131,9 @@ public enum CaseSolver {
         case signature, timeline, custody
         public var label: String {
             switch self {
-            case .signature: "imza nüshası"
-            case .timeline: "bağımsız tarih kaydı"
-            case .custody: "tanıklı mühür zinciri"
+            case .signature: "imza kaydı"
+            case .timeline: "tarih kaydı"
+            case .custody: "mührün tanıklı teslimi"
             }
         }
     }

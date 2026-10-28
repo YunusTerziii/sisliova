@@ -7,6 +7,10 @@ enum Cases {
         let culprit = c.suspect(s.caseID)
         let decoy = c.suspect(s.decoySuspect)
         let pair = [culprit, decoy].sorted { $0.location < $1.location }
+        // İki kişilik kayıtlarda adlar alfabetik; sıra suçluyu ele vermez.
+        let third = SuspectID.allCases.first { $0 != s.caseID && $0 != s.decoySuspect } ?? s.decoySuspect
+        let sig = [culprit, decoy].map(\.name).sorted()
+        let tl = [culprit, c.suspect(third)].map(\.name).sorted()
         var out = text
         if out.contains("{missingParts}") {
             let missing = missingParts(s.caseID, s).map(\.label)
@@ -37,6 +41,10 @@ enum Cases {
             .replacingOccurrences(of: "{culpritLocationText}", with: culprit.locationText)
             .replacingOccurrences(of: "{decoy}", with: decoy.name)
             .replacingOccurrences(of: "{decoyLocation}", with: decoy.location)
+            .replacingOccurrences(of: "{sigA}", with: sig[0])
+            .replacingOccurrences(of: "{sigB}", with: sig[1])
+            .replacingOccurrences(of: "{tlA}", with: tl[0])
+            .replacingOccurrences(of: "{tlB}", with: tl[1])
             .replacingOccurrences(of: "{placeA}", with: pair[0].location)
             .replacingOccurrences(of: "{placeB}", with: pair[1].location)
     }
@@ -55,7 +63,7 @@ enum Cases {
             lines.append("Bugünkü koşullarla 30. akşamdan sonra beklenen kasa: \(Money.format(cash)).")
         }
         let st = Final.status(s, c)
-        lines.append("İlk taksit: 150.000 TL · Güven \(s.trust) (gereken \(r.highTrust)) · Baskı \(s.pressure) (\(r.pressureLoss) erken tahsilat).")
+        lines.append("İlk taksit: 150.000 TL · Güven \(s.trust) (gereken \(r.requiredTrust)) · Baskı \(s.pressure) (\(r.pressureLoss) olursa alacaklı beklemez).")
         lines.append(st.authoritySafe ? "Satış yetkisi güvence altında." : "Satış yetkisi güvence altında değil: kayıp bildirimi ya da iptal gerekiyor.")
         return lines.joined(separator: "\n")
     }
@@ -100,6 +108,7 @@ enum Cases {
         case .others: suspects = all.subtracting([t.subject ?? s.caseID])
         case .pair: suspects = [s.caseID, s.decoySuspect]
         case .notCulprit: suspects = all.subtracting([s.caseID])
+        case .notDecoy: suspects = all.subtracting([s.decoySuspect])
         }
         let raw = t.textByCase?[s.caseID.rawValue] ?? t.text
         add(Evidence(id: t.id, title: t.title, text: fill(raw, s, c), kind: t.kind,
@@ -166,29 +175,28 @@ enum Cases {
             s.counters["caseResolvedDay"] = s.day
             s.pressure = max(0, s.pressure - 5)
             notes.append("Kurul üç ayrı kaydı yan yana koydu. \(person.name) satış yetkisinden çekildi; yetki iptal edildi.")
-        } else if who == s.caseID {
-            s.accusations.append(Accusation(subject: who, day: s.day, proven: false, correct: true, corrected: false))
-            s.flags.insert("accusedEarly")
-            s.pressure = min(100, s.pressure + 3)
-            let missing = missingParts(who, s).map(\.label).joined(separator: ", ")
-            notes.append("\(person.name) inkâr etti. Kurul eksik parçaları istiyor: \(missing).")
         } else {
-            s.accusations.append(Accusation(subject: who, day: s.day, proven: false, correct: false, corrected: false))
-            s.flags.insert("wrongAccusation")
+            // Kanıtsız itham, kişi doğru da olsa yanlış da olsa aynı görünür ve aynı bedeli öder;
+            // tepki üzerinden deneme-yanılma ile suçlu bulunamaz.
+            let correct = who == s.caseID
+            s.accusations.append(Accusation(subject: who, day: s.day, proven: false, correct: correct, corrected: false))
+            s.flags.insert(correct ? "accusedEarly" : "wrongAccusation")
+            s.flags.insert("unprovenAccusation")
             s.trust = max(0, s.trust - c.rules.wrongAccusationTrust)
-            notes.append("Köyün önünde \(person.accusative) suçladın. Elindeki kayıtlar bunu taşımadı.")
+            s.pressure = min(100, s.pressure + 3)
+            notes.append("Köyün önünde \(person.accusative) suçladın. \(person.name) inkâr etti; kurul dosyayı yetersiz buldu.")
         }
     }
 
     static func correct(state s: inout RunState, content c: GameContent, notes: inout [String]) {
-        guard let i = s.accusations.firstIndex(where: { !$0.correct && !$0.corrected }) else { return }
+        guard let i = s.accusations.firstIndex(where: { !$0.proven && !$0.corrected }) else { return }
         s.accusations[i].corrected = true
         let person = c.suspect(s.accusations[i].subject)
         // Açık özür bir kez puan verir; yaşananı olmamış yapmaz.
         if s.flags.insert("correctionRewarded.\(person.id.rawValue)").inserted {
             s.trust = min(100, s.trust + c.rules.correctionTrust)
         }
-        notes.append("\(person.accusative) suçladığını açıkça geri aldın.")
+        notes.append("\(person.accusative) kanıtsız suçladığını açıkça geri aldın.")
     }
 
     static func recoverSeal(witnessed: Bool, state s: inout RunState, content c: GameContent) {

@@ -88,7 +88,7 @@ extension Engine {
         case .acceptCommitment:
             let open = s.commitments.values.filter(\.isOpen).count
             guard open < rules.maxActiveCommitments, s.commitments[target] == nil else {
-                notes.append("Aynı anda en fazla \(rules.maxActiveCommitments) açık taahhüt olabilir.")
+                notes.append("Aynı anda en fazla \(rules.maxActiveCommitments) açık sipariş üstlenebilirsin.")
                 return
             }
             s.commitments[target] = Commitment(id: target, label: e.label ?? target, acceptedDay: s.day,
@@ -103,8 +103,9 @@ extension Engine {
 
         case .setMandate:
             guard let m = Mandate(rawValue: e.value ?? "") else { return }
-            // Güven etkisi yalnız yöntem değiştiğinde; aynı yöntemi yeniden seçmek puan üretmez.
-            if s.mandate != m {
+            // Güven etkisi yalnız yöntem değiştiğinde ve her yöntem için bir kez;
+            // ortak → merkezî → ortak gidip gelmek puan üretmez.
+            if s.mandate != m, s.flags.insert("mandateTrust.\(m.rawValue)").inserted {
                 s.trust = min(100, max(0, s.trust + Int(amount)))
             }
             s.mandate = m
