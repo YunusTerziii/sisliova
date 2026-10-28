@@ -5,7 +5,7 @@ import KaracamAppModel
 /// Defter: üstte üç satır (hedef, sıradaki taahhüt, açık soru); altında hesap, insanlar, kanıt, geçmiş.
 struct DefterView: View {
     @Environment(GameStore.self) private var game
-    @State private var page: Page = .accounts
+    @Environment(TabRouter.self) private var router
 
     enum Page: String, CaseIterable, Identifiable {
         case accounts = "Hesap"
@@ -16,24 +16,25 @@ struct DefterView: View {
     }
 
     var body: some View {
+        @Bindable var router = router
         ScrollView {
             if let p = game.presentation {
                 let n = p.notebook
                 VStack(alignment: .leading, spacing: 16) {
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: 10) {
                         topLine("target", n.goalLine)
                         topLine("calendar", n.commitmentLine)
                         topLine("questionmark.circle", n.questionLine)
                     }
                     .paperCard()
-                    Picker("Bölüm", selection: $page) {
+                    Picker("Bölüm", selection: $router.defterPage) {
                         ForEach(Page.allCases) { Text($0.rawValue).tag($0) }
                     }
                     .pickerStyle(.segmented)
-                    switch page {
+                    switch router.defterPage {
                     case .accounts: accounts(n)
                     case .people: people(n, revision: p.revision, open: p.ending == nil)
-                    case .evidence: evidence(n)
+                    case .evidence: evidence(n, today: p.day)
                     case .history: history(n)
                     }
                 }
@@ -43,6 +44,7 @@ struct DefterView: View {
         .background(Theme.paper)
         .navigationTitle("Defter")
         .navigationBarTitleDisplayMode(.inline)
+        .paperNavigationBar()
     }
 
     private func topLine(_ symbol: String, _ text: String) -> some View {
@@ -61,8 +63,8 @@ struct DefterView: View {
     private func accounts(_ n: NotebookPresentation) -> some View {
         EveningCard(evening: n.today)
         VStack(alignment: .leading, spacing: 8) {
-            heading("Bugünkü koşullar değişmezse")
-            Text(n.projection).font(.title3.monospacedDigit().weight(.semibold))
+            heading("30. gün ödeme öncesi kasa (tahmin)")
+            Text(n.projection).font(.title2.monospacedDigit().weight(.bold))
             Text(n.projectionNote).font(.footnote).foregroundStyle(Theme.secondary)
         }
         .paperCard()
@@ -77,7 +79,7 @@ struct DefterView: View {
         .paperCard()
         if !n.commitments.isEmpty {
             VStack(alignment: .leading, spacing: 8) {
-                heading("Taahhütler")
+                heading("Verilen sözler")
                 ForEach(n.commitments) { LineRow(line: $0) }
             }
             .paperCard()
@@ -86,19 +88,28 @@ struct DefterView: View {
 
     @ViewBuilder
     private func people(_ n: NotebookPresentation, revision: Int, open: Bool) -> some View {
+        if n.people.isEmpty {
+            Text("Henüz kimseyle tanışmadın.").font(.callout).foregroundStyle(Theme.secondary)
+        }
         ForEach(n.people) { person in
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(spacing: 14) {
                     if let portrait = person.portrait {
                         Image(portrait)
                             .resizable().scaledToFill()
-                            .frame(width: 48, height: 48)
+                            .frame(width: 76, height: 76)
+                            .background(Theme.paper)
                             .clipShape(Circle())
+                            .overlay(Circle().strokeBorder(Theme.charcoal.opacity(0.12)))
                             .accessibilityHidden(true)
                     }
-                    VStack(alignment: .leading) {
-                        Text(person.name).font(.headline)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(person.name).font(Theme.heading(.title3))
                         Text(person.role).font(.footnote).foregroundStyle(Theme.secondary)
+                        if person.eliminated == true {
+                            Label("Şüpheden çıkardın", systemImage: "checkmark.seal.fill")
+                                .font(.caption.weight(.semibold)).foregroundStyle(Theme.moss)
+                        }
                     }
                     Spacer()
                 }
@@ -113,12 +124,26 @@ struct DefterView: View {
                 }
             }
             .paperCard()
+            .opacity(person.eliminated == true ? 0.75 : 1)
+        }
+    }
+
+    private func evidenceSymbol(_ kindLabel: String) -> String {
+        switch kindLabel {
+        case "İz": "pawprint.fill"
+        case "Belge": "doc.text.fill"
+        case "İmza": "signature"
+        case "Tarih": "clock.fill"
+        case "Teslim zinciri": "seal.fill"
+        case "İfade": "quote.bubble.fill"
+        case "Yer": "mappin.and.ellipse"
+        default: "doc.fill"
         }
     }
 
     @ViewBuilder
-    private func evidence(_ n: NotebookPresentation) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
+    private func evidence(_ n: NotebookPresentation, today: Int) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
             Text(n.fileLine).font(.callout.weight(.semibold))
             Text(n.candidatesLine).font(.callout)
             Text(n.authorityLine).font(.callout)
@@ -128,12 +153,28 @@ struct DefterView: View {
         if n.evidence.isEmpty {
             Text("Henüz kayda geçmiş kanıt yok.").font(.callout).foregroundStyle(Theme.secondary)
         }
-        ForEach(n.evidence) { e in
-            VStack(alignment: .leading, spacing: 4) {
-                Text(e.title).font(.headline)
-                Text("\(e.kindLabel) · \(e.reliabilityLabel) · \(e.day). gün")
-                    .font(.caption).foregroundStyle(Theme.secondary)
-                Text(e.text).font(.callout).fixedSize(horizontal: false, vertical: true)
+        ForEach(n.evidence.reversed()) { e in
+            HStack(alignment: .top, spacing: 12) {
+                Image(systemName: evidenceSymbol(e.kindLabel))
+                    .font(.title3)
+                    .foregroundStyle(Theme.paper)
+                    .frame(width: 44, height: 44)
+                    .background(e.reliabilityLabel == "Doğrulanmış" ? Theme.moss : Theme.charcoal.opacity(0.75),
+                                in: RoundedRectangle(cornerRadius: 10))
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: 6) {
+                        Text(e.title).font(.headline)
+                        if e.day == today {
+                            Text("Yeni").font(.caption2.weight(.bold))
+                                .padding(.horizontal, 6).padding(.vertical, 2)
+                                .foregroundStyle(Theme.moss)
+                                .background(Theme.moss.opacity(0.12), in: Capsule())
+                        }
+                    }
+                    Text("\(e.kindLabel) · \(e.reliabilityLabel) · \(e.day). gün")
+                        .font(.caption).foregroundStyle(Theme.secondary)
+                    Text(e.text).font(.system(.callout, design: .serif)).fixedSize(horizontal: false, vertical: true)
+                }
             }
             .paperCard()
             .accessibilityElement(children: .combine)
@@ -145,10 +186,10 @@ struct DefterView: View {
         if n.history.isEmpty {
             Text("Henüz kayıtlı karar yok.").font(.callout).foregroundStyle(Theme.secondary)
         }
-        ForEach(Array(n.history.reversed())) { line in
+        ForEach(n.history) { line in
             HStack(alignment: .firstTextBaseline) {
-                Text(line.amount).font(.caption.monospacedDigit()).foregroundStyle(Theme.secondary)
-                    .frame(width: 52, alignment: .leading)
+                Text(line.amount).font(.caption.monospacedDigit().weight(.semibold)).foregroundStyle(Theme.secondary)
+                    .frame(width: 56, alignment: .leading)
                 Text(line.label).font(.callout).fixedSize(horizontal: false, vertical: true)
             }
             .accessibilityElement(children: .combine)

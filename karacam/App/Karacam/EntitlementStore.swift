@@ -31,6 +31,10 @@ final class EntitlementStore {
     init() {
         // Son doğrulanmış durum: StoreKit cevap verene kadar çevrim dışı oyuncuyu kilitlemez.
         isUnlocked = UserDefaults.standard.bool(forKey: cacheKey)
+        #if DEBUG
+        // Simülatörde tam oyunu StoreKit olmadan denemek için: `simctl launch … -karacamUnlockAll`.
+        if ProcessInfo.processInfo.arguments.contains("-karacamUnlockAll") { isUnlocked = true }
+        #endif
     }
 
     func start() async {
@@ -42,7 +46,7 @@ final class EntitlementStore {
             }
         }
         await refreshEntitlement()
-        await loadProduct()
+        // Ürün bilgisi satın alma ekranı açılınca istenir (PaywallView).
     }
 
     func loadProduct() async {

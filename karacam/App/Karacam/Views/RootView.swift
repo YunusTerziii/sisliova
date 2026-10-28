@@ -46,56 +46,79 @@ struct TitleView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Image("map-karacam")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxHeight: 280)
-                    .frame(maxWidth: .infinity)
-                    .accessibilityLabel("Karaçam köyünün çizim haritası")
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("Karaçam")
-                        .font(Theme.heading(.largeTitle))
-                    Text("Kasabayı Kurtar")
-                        .font(Theme.heading(.title3))
-                        .foregroundStyle(Theme.secondary)
-                    Text("Halandan kalan kooperatifin 3 milyon liralık borcu var. 30 gün sonra ilk taksit: 150.000 TL.")
-                        .font(.body)
-                        .padding(.top, 4)
-                }
-                if let summary = game.continueSummary {
-                    VStack(alignment: .leading, spacing: 12) {
-                        if let n = game.playerName {
-                            Text("Tekrar hoş geldin, \(n).").font(.headline)
-                        }
-                        Text(summary)
-                            .font(.body)
+            VStack(alignment: .leading, spacing: 0) {
+                ZStack(alignment: .bottomLeading) {
+                    Image("map-karacam")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 460)
+                        .frame(maxWidth: .infinity)
+                        .clipped()
+                        .overlay(LinearGradient(colors: [Theme.paper.opacity(0), Theme.paper.opacity(0.2), Theme.paper],
+                                                startPoint: UnitPoint(x: 0.5, y: 0.45), endPoint: .bottom))
+                        .accessibilityLabel("Karaçam köyünün çizim haritası")
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Karaçam")
+                            .font(.system(size: 56, weight: .bold, design: .serif))
+                        Text("Köyü Kurtar")
+                            .font(Theme.heading(.title2))
                             .foregroundStyle(Theme.secondary)
-                        Button("Devam et") { game.continueGame() }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 4)
+                }
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("Halandan kalan kooperatifin üç milyon liralık borcu var. Otuz gün sonra ilk taksit: 150.000 TL. Ve köyden biri, senden önce bir şey imzalamış.")
+                        .font(Theme.story)
+                        .lineSpacing(3)
+                        .fixedSize(horizontal: false, vertical: true)
+                    if let summary = game.continueSummary {
+                        VStack(alignment: .leading, spacing: 12) {
+                            if let n = game.playerName {
+                                Text("Tekrar hoş geldin, \(n).").font(Theme.heading(.title3))
+                            }
+                            Text(summary)
+                                .font(.callout)
+                                .foregroundStyle(Theme.secondary)
+                                .lineLimit(3)
+                            Button {
+                                game.continueGame()
+                            } label: {
+                                Label("Devam et", systemImage: "play.fill")
+                            }
                             .buttonStyle(ActionButtonStyle())
+                        }
+                        .paperCard()
+                    }
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(game.envelope == nil ? "Yeni hikâye" : "Baştan başla")
+                            .font(Theme.heading(.title3))
+                        TextField("Adın (isteğe bağlı)", text: $name)
+                            .textInputAutocapitalization(.words)
+                            .padding(14)
+                            .frame(minHeight: 48)
+                            .background(Color.white.opacity(0.8), in: RoundedRectangle(cornerRadius: 12))
+                            .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(Theme.charcoal.opacity(0.15)))
+                        Button {
+                            if game.envelope == nil { start() } else { confirmNew = true }
+                        } label: {
+                            Label(game.envelope == nil ? "Karaçam'a git" : "Yeni oyun başlat", systemImage: "figure.walk")
+                        }
+                        .buttonStyle(ActionButtonStyle(prominent: game.envelope == nil))
+                        .disabled(game.isBusy)
                     }
                     .paperCard()
-                }
-                VStack(alignment: .leading, spacing: 12) {
-                    Text(game.envelope == nil ? "Yeni hikâye" : "Baştan başla")
-                        .font(Theme.heading(.title3))
-                    TextField("Adın (isteğe bağlı)", text: $name)
-                        .textInputAutocapitalization(.words)
-                        .padding(12)
-                        .frame(minHeight: 44)
-                        .background(Theme.card, in: RoundedRectangle(cornerRadius: 10))
-                    Button(game.envelope == nil ? "Karaçam'a git" : "Yeni oyun başlat") {
-                        if game.envelope == nil { start() } else { confirmNew = true }
+                    Button {
+                        showSettings = true
+                    } label: {
+                        Label("Ayarlar", systemImage: "gearshape")
                     }
-                    .buttonStyle(ActionButtonStyle(prominent: game.envelope == nil))
-                    .disabled(game.isBusy)
+                    .buttonStyle(ActionButtonStyle(prominent: false))
                 }
-                .paperCard()
-                Button("Ayarlar") { showSettings = true }
-                    .frame(minHeight: 44)
+                .padding(20)
             }
-            .padding(20)
         }
+        .ignoresSafeArea(edges: .top)
         .alert("Yeni oyun başlasın mı?", isPresented: $confirmNew) {
             Button("Başlat", role: .destructive) { start() }
             Button("Vazgeç", role: .cancel) {}
@@ -113,14 +136,35 @@ struct TitleView: View {
 // MARK: Sekmeler
 
 struct MainTabs: View {
+    @Environment(GameStore.self) private var game
+    @State private var router = TabRouter()
+    /// Defter en son açıldığında kaç kanıt vardı; fazlası sekmede rozet olur.
+    @State private var seenEvidence: Int?
+
+    private var evidenceCount: Int { game.presentation?.notebook.evidence.count ?? 0 }
+
     var body: some View {
-        TabView {
+        @Bindable var router = router
+        TabView(selection: $router.tab) {
             NavigationStack { MasaView() }
                 .tabItem { Label("Masa", systemImage: "rectangle.and.pencil.and.ellipsis") }
+                .tag(TabRouter.Tab.masa)
             NavigationStack { KasabaView() }
-                .tabItem { Label("Kasaba", systemImage: "map") }
+                .tabItem { Label("Köy", systemImage: "map") }
+                .tag(TabRouter.Tab.koy)
             NavigationStack { DefterView() }
                 .tabItem { Label("Defter", systemImage: "book.closed") }
+                .badge(max(0, evidenceCount - (seenEvidence ?? evidenceCount)))
+                .tag(TabRouter.Tab.defter)
+        }
+        .environment(router)
+        .onAppear { if seenEvidence == nil { seenEvidence = evidenceCount } }
+        .onChange(of: router.tab) { _, tab in
+            if tab == .defter { seenEvidence = evidenceCount }
+        }
+        .onChange(of: evidenceCount) { old, new in
+            // Geri sarma kanıtı azaltırsa rozet eksiye düşmesin.
+            if new < (seenEvidence ?? new) || router.tab == .defter { seenEvidence = new }
         }
     }
 }

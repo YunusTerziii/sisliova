@@ -2,40 +2,58 @@ import SwiftUI
 import KaracamCore
 import KaracamAppModel
 
-/// Masa: kompakt kasa/güven/baskı, portre, başlık, metin ve iki büyük somut eylem.
+/// Masa: üstte köyün durumu, altında o anki sahne. Sahne büyük bir dekor ve portreyle açılır;
+/// gece sahneleri karanlık karttadır. Akşam hesabı kendiliğinden kapanır, gün sonunda okunur.
 struct MasaView: View {
     @Environment(GameStore.self) private var game
     @Environment(Preferences.self) private var preferences
     @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
     @State private var showSettings = false
     @State private var rewind: RewindKind?
+    @State private var letter: Outcome?
+    @State private var shownLetterRevision: Int?
 
     enum RewindKind {
         case day, chapter
     }
 
+    static let letterSceneID = "d07.night.letter"
+
     var body: some View {
         if let p = game.presentation {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    HUDView(p: p)
-                    if let ending = p.ending {
-                        EndingView(ending: ending, canRewindChapter: p.canRewindChapter) { rewind = .chapter }
-                    } else {
-                        if let last = p.lastOutcome, p.phase != .recap {
-                            OutcomeCard(outcome: last)
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 18) {
+                        HUDView(p: p).id("top")
+                        if let ending = p.ending {
+                            EndingView(ending: ending, canRewindChapter: p.canRewindChapter) { rewind = .chapter }
+                        } else {
+                            if let last = p.lastOutcome, p.phase != .recap, p.phase != .evening {
+                                OutcomeCard(outcome: last)
+                                    .transition(.opacity.combined(with: .move(edge: .top)))
+                            }
+                            phaseContent(p)
                         }
-                        phaseContent(p)
                     }
+                    .padding(16)
+                    .animation(reduceMotion ? nil : .easeOut(duration: 0.3), value: p.revision)
                 }
-                .padding(16)
-                .animation(reduceMotion ? nil : .easeOut(duration: 0.25), value: p.revision)
+                .onChange(of: p.revision) { _, _ in
+                    withAnimation(reduceMotion ? nil : .easeOut(duration: 0.3)) { proxy.scrollTo("top", anchor: .top) }
+                }
             }
             .scrollDismissesKeyboard(.immediately)
             .background(Theme.paper)
-            .navigationTitle("\(p.day). gün · \(p.dayTitle)")
             .navigationBarTitleDisplayMode(.inline)
+            .paperNavigationBar()
             .toolbar {
+                ToolbarItem(placement: .principal) {
+                    VStack(spacing: 0) {
+                        Text("\(p.day). GÜN").font(.caption2.weight(.bold)).foregroundStyle(Theme.secondary)
+                        Text(p.dayTitle).font(.system(.headline, design: .serif)).lineLimit(1)
+                    }
+                    .accessibilityElement(children: .combine)
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Button("Günün başına dön", systemImage: "arrow.uturn.backward") { rewind = .day }
@@ -53,6 +71,10 @@ struct MasaView: View {
                 }
             }
             .sheet(isPresented: $showSettings) { SettingsView() }
+            .fullScreenCover(item: $letter) { outcome in
+                LetterScreen(outcome: outcome) { letter = nil }
+            }
+            .task(id: p.revision) { await advance(p) }
             .alert(rewind == .chapter ? "Bölüm başına dönülsün mü?" : "Günün başına dönülsün mü?",
                    isPresented: Binding(get: { rewind != nil }, set: { if !$0 { rewind = nil } }),
                    presenting: rewind) { kind in
@@ -70,12 +92,26 @@ struct MasaView: View {
 
     private var reduceMotion: Bool { preferences.reduceMotion || systemReduceMotion }
 
+    /// Akşam hesabında karar yok: kısa bir an gösterilir ve kendiliğinden kapanır.
+    /// Halanın mektubu okunduğunda bir kez tam ekran açılır.
+    private func advance(_ p: PlayPresentation) async {
+        if p.phase == .evening {
+            try? await Task.sleep(for: .milliseconds(reduceMotion ? 150 : 900))
+            guard !Task.isCancelled else { return }
+            await game.send(.settleEvening, revision: p.revision)
+        } else if p.phase == .recap, let last = p.lastOutcome, last.sceneID == Self.letterSceneID,
+                  shownLetterRevision != p.revision {
+            shownLetterRevision = p.revision
+            letter = last
+        }
+    }
+
     @ViewBuilder
     private func phaseContent(_ p: PlayPresentation) -> some View {
         switch p.phase {
         case .morning, .anchor, .night:
             if let scene = p.scene {
-                SceneCard(scene: scene) { choice in
+                SceneCard(scene: scene, night: p.phase == .night) { choice in
                     guard let id = scene.instanceID else { return }
                     Task {
                         await game.send(.choose(sceneID: scene.sceneID, instanceID: id, choiceID: choice.id),
@@ -87,12 +123,19 @@ struct MasaView: View {
             if let agenda = p.agenda { AgendaView(agenda: agenda, revision: p.revision) }
         case .evening:
             if let evening = p.evening {
-                EveningCard(evening: evening)
-                Button("Akşam hesabını kapat") {
-                    Task { await game.send(.settleEvening, revision: p.revision) }
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 10) {
+                        ProgressView()
+                        Text("Akşam oluyor, Sevim kasayı sayıyor…")
+                            .font(.system(.body, design: .serif).italic())
+                    }
+                    EveningCard(evening: evening)
+                    Button("Akşam hesabını kapat") {
+                        Task { await game.send(.settleEvening, revision: p.revision) }
+                    }
+                    .buttonStyle(ActionButtonStyle(prominent: false))
+                    .disabled(game.isBusy)
                 }
-                .buttonStyle(ActionButtonStyle())
-                .disabled(game.isBusy)
             }
         case .recap:
             if let recap = p.recap { RecapView(p: p, recap: recap) }
@@ -106,63 +149,114 @@ struct MasaView: View {
 
 struct HUDView: View {
     let p: PlayPresentation
+    @State private var showNotes = false
+
+    private let installment: Double = 15_000_000
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .firstTextBaseline) {
                 Text(p.chapterTitle)
-                    .font(.footnote.weight(.medium))
+                    .font(.footnote.weight(.semibold))
                     .foregroundStyle(Theme.secondary)
                 Spacer()
-                Text("\(p.finalDay - p.day) gün kaldı")
-                    .font(.footnote)
-                    .foregroundStyle(Theme.secondary)
+                Text(p.finalDay - p.day == 0 ? "Ödeme günü" : "Ödemeye \(p.finalDay - p.day) gün")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(p.finalDay - p.day <= 3 ? Theme.rust : Theme.secondary)
             }
-            ViewThatFits(in: .horizontal) {
-                HStack(spacing: 12) { stats }
-                VStack(alignment: .leading, spacing: 6) { stats }
+            DayStrip(day: p.day, finalDay: p.finalDay)
+            HStack(alignment: .top, spacing: 14) { stats }
+            Button {
+                withAnimation(.easeOut(duration: 0.2)) { showNotes.toggle() }
+            } label: {
+                HStack(spacing: 6) {
+                    Label(p.businessLabel, systemImage: "storefront")
+                    Spacer()
+                    Image(systemName: showNotes ? "chevron.up" : "info.circle")
+                }
+                .contentShape(Rectangle())
             }
-            Text(p.businessLabel)
-                .font(.footnote)
-                .foregroundStyle(Theme.secondary)
+            .buttonStyle(.plain)
+            if showNotes {
+                VStack(alignment: .leading, spacing: 3) {
+                    Label("Güven: \(p.trustNote.lowercasedFirstLetter)", systemImage: "person.3")
+                    Label(p.pressureNote, systemImage: "exclamationmark.triangle")
+                }
+                .transition(.opacity)
+            }
         }
-        .paperCard()
+        .font(.caption)
+        .foregroundStyle(Theme.secondary)
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Theme.card, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 16, style: .continuous).strokeBorder(Theme.charcoal.opacity(0.12)))
         .accessibilityElement(children: .combine)
     }
 
     @ViewBuilder private var stats: some View {
-        stat("Kasa", p.cash, note: nil, color: p.cashValue < 0 ? Theme.rust : Theme.charcoal)
-        stat("Güven", "\(p.trust)", note: p.trustNote, color: p.trust < 25 ? Theme.rust : (p.trust >= 60 ? Theme.moss : Theme.charcoal))
-        stat("Baskı", "\(p.pressure)", note: p.pressureNote, color: p.pressure >= 50 ? Theme.rust : Theme.charcoal)
+        stat("Kasa", p.cash, note: "taksitin %\(Int(max(0, min(1, Double(p.cashValue) / installment)) * 100))'i",
+             fill: Double(p.cashValue) / installment, color: p.cashValue < 0 ? Theme.rust : Theme.charcoal)
+        stat("Güven", "\(p.trust)", note: nil, fill: Double(p.trust) / 100,
+             color: p.trust < 25 ? Theme.rust : (p.trust >= 70 ? Theme.moss : Theme.charcoal))
+        stat("Baskı", "\(p.pressure)", note: nil,
+             fill: Double(p.pressure) / 100, color: p.pressure >= 35 ? Theme.rust : Theme.charcoal)
     }
 
-    private func stat(_ label: String, _ value: String, note: String?, color: Color) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(label).font(.caption).foregroundStyle(Theme.secondary)
-            Text(value).font(.title3.monospacedDigit().weight(.semibold)).foregroundStyle(color)
+    private func stat(_ label: String, _ value: String, note: String?, fill: Double,
+                      color: Color) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(label)
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(Theme.secondary)
+            Text(value)
+                .font(.headline.monospacedDigit().weight(.bold))
+                .foregroundStyle(color)
+                .contentTransition(.numericText())
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            Capsule().fill(Theme.charcoal.opacity(0.1))
+                .frame(height: 5)
+                .overlay(alignment: .leading) {
+                    GeometryReader { g in
+                        Capsule().fill(color.opacity(0.8))
+                            .frame(width: g.size.width * max(0, min(1, fill)))
+                    }
+                }
             if let note, !note.isEmpty {
                 Text(note).font(.caption2).foregroundStyle(Theme.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .topLeading)
     }
 }
 
-struct OutcomeCard: View {
-    let outcome: Outcome
+/// 30 günlük şerit: geçen günler dolu, bugün vurgulu, ödeme günü işaretli.
+extension String {
+    var lowercasedFirstLetter: String {
+        guard let f = first else { return self }
+        return String(f).lowercased(with: Locale(identifier: "tr_TR")) + dropFirst()
+    }
+}
+
+struct DayStrip: View {
+    let day: Int
+    let finalDay: Int
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(outcome.sceneTitle)
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(Theme.secondary)
-            Text(outcome.text).font(.callout)
+        HStack(spacing: 2) {
+            ForEach(1...finalDay, id: \.self) { d in
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(d < day ? Theme.charcoal.opacity(0.55) : (d == day ? Theme.moss : Theme.charcoal.opacity(0.1)))
+                    .frame(height: d == day ? 10 : 6)
+                    .overlay {
+                        if d == finalDay { RoundedRectangle(cornerRadius: 2).strokeBorder(Theme.rust, lineWidth: 1.5) }
+                    }
+            }
         }
-        .padding(12)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Theme.moss.opacity(0.10), in: RoundedRectangle(cornerRadius: 10))
-        .accessibilityElement(children: .combine)
+        .frame(height: 10)
+        .accessibilityLabel("\(finalDay) günün \(day). günü")
     }
 }
 
@@ -171,111 +265,113 @@ struct OutcomeCard: View {
 struct SceneCard: View {
     @Environment(GameStore.self) private var game
     let scene: ScenePresentation
+    var night = false
     let onChoose: (ChoicePresentation) -> Void
     @State private var pendingConfirm: ChoicePresentation?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack(alignment: .center, spacing: 12) {
-                if let portrait = scene.speaker.portrait {
-                    Image(portrait)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 72, height: 72)
-                        .clipShape(Circle())
-                        .overlay(Circle().strokeBorder(Theme.charcoal.opacity(0.15)))
-                        .accessibilityHidden(true)
-                }
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(scene.slotLabel.uppercased())
-                        .font(.caption2.weight(.semibold))
-                        .foregroundStyle(Theme.secondary)
-                    Text(scene.speaker.name).font(.headline)
-                    if !scene.speaker.role.isEmpty {
-                        Text(scene.speaker.role).font(.footnote).foregroundStyle(Theme.secondary)
+        VStack(alignment: .leading, spacing: 16) {
+            SceneStage(scene: scene, night: night)
+            VStack(alignment: .leading, spacing: 16) {
+                Text(scene.title).font(Theme.heading(.title))
+                Text(scene.body)
+                    .font(Theme.story)
+                    .lineSpacing(4)
+                    .fixedSize(horizontal: false, vertical: true)
+                VStack(spacing: 12) {
+                    ForEach(scene.choices) { choice in
+                        ChoiceButton(choice: choice, night: night) {
+                            if choice.confirm != nil { pendingConfirm = choice } else { onChoose(choice) }
+                        }
+                        .disabled(!choice.enabled || game.isBusy)
                     }
                 }
+                .padding(.top, 4)
             }
-            Text(scene.title).font(Theme.heading())
-            if scene.speaker.portrait == nil || scene.illustration != nil {
-                IllustrationRow(assets: Theme.illustrationAssets(scene.illustration ?? fallbackIllustration))
-            }
-            Text(scene.body)
-                .font(.body)
-                .fixedSize(horizontal: false, vertical: true)
-            VStack(spacing: 10) {
-                ForEach(Array(scene.choices.enumerated()), id: \.element.id) { index, choice in
-                    ChoiceButton(choice: choice, prominent: index == 0) {
-                        if choice.confirm != nil { pendingConfirm = choice } else { onChoose(choice) }
-                    }
-                    .disabled(!choice.enabled || game.isBusy)
-                }
-            }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 18)
         }
-        .paperCard()
+        .foregroundStyle(night ? Theme.nightText : Theme.charcoal)
+        .background(night ? Theme.nightCard : Color.white.opacity(0.6),
+                    in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous)
+            .strokeBorder(Theme.charcoal.opacity(night ? 0.4 : 0.12)))
+        .shadow(color: .black.opacity(night ? 0.25 : 0.06), radius: 12, y: 6)
         .alert("Emin misin?", isPresented: Binding(get: { pendingConfirm != nil }, set: { if !$0 { pendingConfirm = nil } }),
                presenting: pendingConfirm) { choice in
-            Button("Evet") { onChoose(choice) }
+            Button("Evet", role: .destructive) { onChoose(choice) }
             Button("Vazgeç", role: .cancel) {}
         } message: { choice in
             Text(choice.confirm ?? "")
         }
     }
-
-    /// Portresi olmayan konuşmacı için harfli daire yerine yer çizimi (ör. Derya → kaplıca).
-    private var fallbackIllustration: String? {
-        switch scene.speaker.id {
-        case "derya": return "kaplica"
-        case "kamyon": return "kamyon"
-        case "araba": return "araba"
-        default: return nil
-        }
-    }
 }
 
-struct IllustrationRow: View {
-    let assets: [String]
-
-    var body: some View {
-        if !assets.isEmpty {
-            HStack(spacing: 8) {
-                ForEach(assets, id: \.self) { name in
-                    Image(name)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxHeight: 150)
-                        .frame(maxWidth: .infinity)
-                }
-            }
-            .accessibilityHidden(true)
-        }
-    }
-}
-
+/// Bütün seçenekler eşit görünür; geri dönüşü olmayanlar kırmızı çerçeve ve kilitle işaretlenir.
 struct ChoiceButton: View {
     let choice: ChoicePresentation
-    var prominent: Bool
+    var night = false
     let action: () -> Void
+    @Environment(\.isEnabled) private var isEnabled
+
+    private var irreversible: Bool { choice.confirm != nil }
 
     var body: some View {
         Button(action: action) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(choice.label)
-                if !choice.badges.isEmpty {
-                    Text(choice.badges.joined(separator: " · "))
-                        .font(.footnote.weight(.regular))
-                        .opacity(0.85)
+            HStack(alignment: .top, spacing: 12) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(choice.label)
+                        .font(.system(.title3, design: .serif).weight(.semibold))
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                    if !choice.badges.isEmpty {
+                        BadgeChips(badges: choice.badges, night: night)
+                    }
+                    ForEach(choice.preview, id: \.self) { line in
+                        Text(line).font(.footnote).opacity(0.8)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    if irreversible {
+                        Label("Geri dönüşü yok", systemImage: "lock.fill")
+                            .font(.caption.weight(.bold))
+                            .foregroundStyle(night ? Color(red: 0.92, green: 0.55, blue: 0.48) : Theme.rust)
+                    }
+                    if let reason = choice.disabledReason, !choice.enabled {
+                        Label(reason, systemImage: "xmark.circle").font(.footnote.weight(.medium))
+                    }
                 }
-                ForEach(choice.preview, id: \.self) { line in
-                    Text(line).font(.footnote.weight(.regular)).opacity(0.85)
-                }
-                if let reason = choice.disabledReason, !choice.enabled {
-                    Text(reason).font(.footnote.weight(.regular))
-                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .font(.body.weight(.semibold))
+                    .opacity(0.35)
+                    .padding(.top, 4)
             }
+            .padding(16)
+            .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(night ? Color.white.opacity(0.06) : Theme.paper)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .strokeBorder(irreversible ? (night ? Color(red: 0.92, green: 0.55, blue: 0.48) : Theme.rust)
+                                  : (night ? Theme.nightText.opacity(0.3) : Theme.charcoal.opacity(0.22)),
+                                  lineWidth: irreversible ? 2 : 1)
+            )
+            .contentShape(RoundedRectangle(cornerRadius: 16))
+            .opacity(isEnabled ? 1 : 0.5)
         }
-        .buttonStyle(ActionButtonStyle(prominent: prominent && choice.enabled))
-        .accessibilityHint(choice.confirm != nil ? "Onay ister" : "")
+        .buttonStyle(PressScaleStyle())
+        .accessibilityHint(irreversible ? "Geri dönüşü yok; onay ister" : "")
+    }
+}
+
+struct PressScaleStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.98 : 1)
+            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
     }
 }
 
@@ -289,23 +385,34 @@ struct AgendaView: View {
     @State private var showAll = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Bu sabah ne yapacaksın?").font(Theme.heading())
-            Text("Bir işi açmak sabahı harcamaz; seçim yapınca sabah kullanılır.")
+        VStack(alignment: .leading, spacing: 14) {
+            ZStack(alignment: .bottomLeading) {
+                MapCrop(spot: .square, height: 150)
+                    .overlay(LinearGradient(colors: [.clear, Theme.paper], startPoint: .center, endPoint: .bottom))
+                    .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                VStack(alignment: .leading, spacing: 4) {
+                    Label("SABAH", systemImage: "sunrise.fill").font(.caption.weight(.bold))
+                    Text("Bu sabah ne yapacaksın?").font(Theme.heading(.title))
+                }
+                .padding(14)
+            }
+            Text("Bir işe bakmak sabahı harcamaz; karar verince sabah kullanılır.")
                 .font(.footnote).foregroundStyle(Theme.secondary)
             if let due = agenda.dueNote {
                 Label(due, systemImage: "calendar.badge.exclamationmark")
-                    .font(.callout)
-                    .padding(10)
+                    .font(.callout.weight(.medium))
+                    .padding(12)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Theme.rust.opacity(0.08), in: RoundedRectangle(cornerRadius: 10))
+                    .background(Theme.rust.opacity(0.1), in: RoundedRectangle(cornerRadius: 12))
             }
-            ForEach(agenda.suggested) { entry in row(entry) }
-            DisclosureGroup("Bütün gündem (\(agenda.all.count))", isExpanded: $showAll) {
-                VStack(spacing: 8) {
-                    ForEach(agenda.all) { entry in row(entry) }
+            ForEach(agenda.suggested) { entry in row(entry, large: true) }
+            DisclosureGroup(isExpanded: $showAll) {
+                VStack(spacing: 10) {
+                    ForEach(agenda.all) { entry in row(entry, large: false) }
                 }
                 .padding(.top, 8)
+            } label: {
+                Text("Bütün gündem (\(agenda.all.count))").font(.headline)
             }
             .frame(minHeight: 44)
         }
@@ -324,38 +431,61 @@ struct AgendaView: View {
                 .background(Theme.paper)
                 .navigationTitle(entry.title)
                 .navigationBarTitleDisplayMode(.inline)
+                .paperNavigationBar()
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) { Button("Kapat") { open = nil } }
                 }
             }
+            .presentationDragIndicator(.visible)
         }
     }
 
-    private func row(_ entry: AgendaEntry) -> some View {
-        Button { open = entry } label: {
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text(entry.title).font(.headline)
-                    if entry.isNew { tag("Yeni", Theme.moss) }
-                    if entry.closesToday { tag("Bugün son", Theme.rust) }
+    private func symbol(_ c: AgendaItemDefinition.Category) -> (String, Color) {
+        switch c {
+        case .business: ("storefront.fill", Theme.moss)
+        case .investigation: ("magnifyingglass", Color(red: 0.25, green: 0.33, blue: 0.5))
+        case .people: ("person.2.fill", Color(red: 0.6, green: 0.42, blue: 0.2))
+        case .finance: ("banknote.fill", Theme.rust)
+        case .rest: ("cup.and.saucer.fill", Theme.secondary)
+        }
+    }
+
+    private func row(_ entry: AgendaEntry, large: Bool) -> some View {
+        let (icon, tint) = symbol(entry.category)
+        return Button { open = entry } label: {
+            HStack(alignment: .top, spacing: 14) {
+                Image(systemName: icon)
+                    .font(.system(size: large ? 22 : 18, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .frame(width: large ? 48 : 40, height: large ? 48 : 40)
+                    .background(tint, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                VStack(alignment: .leading, spacing: 5) {
+                    HStack(spacing: 6) {
+                        Text(entry.title).font(large ? .system(.headline, design: .serif) : .headline)
+                        if entry.isNew { tag("Yeni", Theme.moss) }
+                        if entry.closesToday { tag("Bugün son", Theme.rust) }
+                    }
+                    Text(entry.summary).font(.callout).foregroundStyle(Theme.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text(entry.windowNote).font(.caption).foregroundStyle(Theme.secondary)
                 }
-                Text(entry.summary).font(.callout).foregroundStyle(Theme.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                Text(entry.windowNote).font(.caption).foregroundStyle(Theme.secondary)
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right").font(.footnote.weight(.bold)).foregroundStyle(Theme.secondary)
             }
             .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-            .padding(12)
-            .background(Theme.card, in: RoundedRectangle(cornerRadius: 12))
+            .padding(14)
+            .background(Color.white.opacity(large ? 0.7 : 0.45), in: RoundedRectangle(cornerRadius: 16))
+            .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(Theme.charcoal.opacity(0.1)))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(PressScaleStyle())
     }
 
     private func tag(_ text: String, _ color: Color) -> some View {
         Text(text)
-            .font(.caption2.weight(.semibold))
-            .padding(.horizontal, 6).padding(.vertical, 2)
+            .font(.caption2.weight(.bold))
+            .padding(.horizontal, 7).padding(.vertical, 3)
             .foregroundStyle(color)
-            .overlay(Capsule().strokeBorder(color.opacity(0.6)))
+            .background(color.opacity(0.12), in: Capsule())
     }
 }
 
@@ -363,27 +493,45 @@ struct AgendaView: View {
 
 struct EveningCard: View {
     let evening: EveningPresentation
+    var compact = false
+    @State private var expanded = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("\(evening.day). akşam hesabı").font(Theme.heading())
-            ForEach(evening.incomeLines) { LineRow(line: $0) }
-            Divider()
-            LineRow(label: "Brüt", amount: evening.gross, note: evening.multiplierNote)
-            LineRow(label: "Kasaya giren brüt", amount: evening.adjustedGross)
-            ForEach(evening.expenseLines) { LineRow(line: $0) }
-            if let fee = evening.pressureFee {
-                LineRow(label: "Alacaklı baskı kesintisi", amount: fee)
-            }
-            Divider()
             HStack {
-                Text(evening.settled ? "Net" : "Tahmini net").font(.headline)
+                Label("\(evening.day). akşam hesabı", systemImage: "moon.haze")
+                    .font(Theme.heading(.headline))
                 Spacer()
                 Text(evening.net)
-                    .font(.headline.monospacedDigit())
+                    .font(.title3.monospacedDigit().weight(.bold))
                     .foregroundStyle(evening.netValue < 0 ? Theme.rust : Theme.moss)
             }
             .accessibilityElement(children: .combine)
+            if !compact || expanded {
+                ForEach(evening.incomeLines) { LineRow(line: $0) }
+                Divider()
+                LineRow(label: "Brüt", amount: evening.gross, note: evening.multiplierNote)
+                LineRow(label: "Kasaya giren", amount: evening.adjustedGross)
+                ForEach(evening.expenseLines) { LineRow(line: $0) }
+                if let fee = evening.pressureFee {
+                    LineRow(label: "Alacaklı kesintisi", amount: fee)
+                }
+                Divider()
+                HStack {
+                    Text(evening.settled ? "Net" : "Tahmini net").font(.headline)
+                    Spacer()
+                    Text(evening.net)
+                        .font(.headline.monospacedDigit())
+                        .foregroundStyle(evening.netValue < 0 ? Theme.rust : Theme.moss)
+                }
+                .accessibilityElement(children: .combine)
+            }
+            if compact {
+                Button(expanded ? "Ayrıntıyı gizle" : "Ayrıntıyı göster") {
+                    withAnimation { expanded.toggle() }
+                }
+                .font(.footnote.weight(.semibold))
+            }
         }
         .paperCard()
     }
@@ -426,18 +574,44 @@ struct RecapView: View {
     let recap: RecapPresentation
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            Text("\(recap.day). günün sonu").font(Theme.heading())
+        VStack(alignment: .leading, spacing: 16) {
+            ZStack(alignment: .bottomLeading) {
+                MapCrop(spot: .whole, height: 160)
+                    .overlay(LinearGradient(colors: [Color(red: 0.08, green: 0.1, blue: 0.2).opacity(0.65), Theme.paper],
+                                            startPoint: .top, endPoint: .bottom))
+                    .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                VStack(alignment: .leading, spacing: 4) {
+                    Label("GÜN BİTİYOR", systemImage: "moon.stars.fill").font(.caption.weight(.bold))
+                    Text("\(recap.day). günün sonu").font(Theme.heading(.largeTitle))
+                }
+                .padding(14)
+            }
+            if let last = p.lastOutcome, last.day == recap.day {
+                if last.sceneID == MasaView.letterSceneID {
+                    LetterSheet(title: "Halanın mektubu", text: last.text)
+                        .padding(.vertical, 6)
+                } else {
+                    OutcomeCard(outcome: last, large: true)
+                }
+            }
             if !recap.memories.isEmpty {
-                VStack(alignment: .leading, spacing: 6) {
-                    ForEach(recap.memories, id: \.self) { Text("• " + $0).font(.callout) }
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Bugün").font(Theme.heading(.headline))
+                    ForEach(recap.memories, id: \.self) { m in
+                        HStack(alignment: .firstTextBaseline, spacing: 8) {
+                            Image(systemName: "circle.fill").font(.system(size: 6)).foregroundStyle(Theme.moss)
+                            Text(m).font(.callout)
+                        }
+                    }
                 }
                 .paperCard()
             }
-            if let evening = recap.evening { EveningCard(evening: evening) }
+            if let evening = recap.evening { EveningCard(evening: evening, compact: true) }
             if let chapter = recap.chapter {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(chapter.title).font(Theme.heading(.title3))
+                VStack(alignment: .leading, spacing: 10) {
+                    Label("BÖLÜM KAPANDI", systemImage: "bookmark.fill")
+                        .font(.caption.weight(.bold)).foregroundStyle(Theme.moss)
+                    Text(chapter.title).font(Theme.heading(.title2))
                     ForEach(chapter.lines, id: \.self) { Text($0).font(.callout) }
                     if !chapter.changes.isEmpty {
                         Text("Bu bölümde değişenler").font(.subheadline.weight(.semibold)).padding(.top, 4)
@@ -449,18 +623,34 @@ struct RecapView: View {
             if p.guessPrompt {
                 GuessView(revision: p.revision)
             } else {
+                if let guess = p.notebook.firstGuessLine, recap.day == 7 {
+                    Label(guess, systemImage: "checkmark.seal")
+                        .font(.callout)
+                        .foregroundStyle(Theme.secondary)
+                }
                 if let next = recap.nextDayNote {
-                    Text(next).font(.callout).foregroundStyle(Theme.secondary)
+                    HStack(alignment: .top, spacing: 10) {
+                        Image(systemName: "calendar").foregroundStyle(Theme.rust)
+                        Text(next).font(.system(.body, design: .serif).italic())
+                    }
+                    .padding(12)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Theme.rust.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
                 }
                 if p.gateAhead && !entitlements.isUnlocked {
-                    Text("İlk bölüm burada bitiyor. Hikâyenin kalanı tek seferlik satın almayla açılır; kaydın korunur.")
-                        .font(.callout)
-                        .paperCard()
-                    Button("Tam oyunu aç") { game.paywallRequested = true }
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("İlk hafta burada bitiyor.").font(Theme.heading(.title3))
+                        Text("Mektuptaki soru açıkta: mühür nerede, imzayı kim attı? Hikâyenin kalanı tek seferlik satın almayla açılır; kaydın korunur.")
+                            .font(.callout)
+                    }
+                    .paperCard()
+                    Button("Hikâyeye devam et") { game.paywallRequested = true }
                         .buttonStyle(ActionButtonStyle())
                 } else {
-                    Button("Günü bitir") {
+                    Button {
                         Task { await game.send(.finishDay, revision: p.revision) }
+                    } label: {
+                        Label("Günü bitir", systemImage: "moon.zzz.fill")
                     }
                     .buttonStyle(ActionButtonStyle())
                     .disabled(game.isBusy)
@@ -475,14 +665,36 @@ struct GuessView: View {
     @Environment(GameStore.self) private var game
     let revision: Int
 
+    private var suspects: [PersonPresentation] {
+        game.presentation?.notebook.people.filter { $0.eliminated != nil } ?? []
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("İlk tahminin").font(Theme.heading(.title3))
-            Text("Satış yetkisini kim imzaladı sence? Tahminin yalnız kayda geçer; kimseyi suçlamaz, sonradan fikrini değiştirebilirsin.")
+        VStack(alignment: .leading, spacing: 12) {
+            Text("İlk tahminin").font(Theme.heading(.title2))
+            Text("Satış yetkisini kim imzaladı sence? Tahminin yalnız deftere yazılır; kimseyi suçlamaz, sonra fikrini değiştirebilirsin.")
                 .font(.callout)
-            ForEach(game.presentation?.notebook.people.filter { $0.eliminated != nil } ?? []) { person in
-                Button(person.name) { guess(SuspectID(rawValue: person.id)) }
-                    .buttonStyle(ActionButtonStyle(prominent: false))
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                ForEach(suspects) { person in
+                    Button { guess(SuspectID(rawValue: person.id)) } label: {
+                        VStack(spacing: 8) {
+                            if let portrait = person.portrait {
+                                Image(portrait).resizable().scaledToFill()
+                                    .frame(width: 88, height: 88)
+                                    .background(Theme.paper)
+                                    .clipShape(Circle())
+                                    .overlay(Circle().strokeBorder(Theme.charcoal.opacity(0.15)))
+                            }
+                            Text(person.name).font(.footnote.weight(.semibold))
+                                .multilineTextAlignment(.center)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(Theme.paper, in: RoundedRectangle(cornerRadius: 14))
+                        .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(Theme.charcoal.opacity(0.2)))
+                    }
+                    .buttonStyle(PressScaleStyle())
+                }
             }
             Button("Henüz bilmiyorum") { guess(nil) }
                 .buttonStyle(ActionButtonStyle(prominent: false))
