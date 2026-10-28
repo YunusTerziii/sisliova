@@ -1,0 +1,8 @@
+{
+  "grievances": [
+    {"flag": "grievance.hiddenIncome", "label": "Saklanan gelir hâlâ açıklanmadı"},
+    {"flag": "grievance.overtime", "label": "İlk haftanın fazla mesaisi ödenmedi"},
+    {"flag": "grievance.localProgram", "label": "Verilen yerel program sözü bozuldu"},
+    {"flag": "grievance.workload", "label": "Son siparişin ek yükü karşılanmadı"}
+  ]
+}

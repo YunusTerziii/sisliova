@@ -1,0 +1,416 @@
+{
+ "sections": [
+  {
+   "id": "business",
+   "heading": "Ana işletme",
+   "entries": [
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "sale.day7"
+      }
+     ],
+     "text": "Kaplıca da arı evi de şirketin planına girdi. İlk üç ay aynı insanlar çalıştı; sonrasını şirket belirleyecek."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "spaRebuilt"
+      }
+     ],
+     "text": "Yeni kazan ilk kışını çıkardı. Kaplıcanın bacası, satılan eski kazanın yerine tütüyor."
+    },
+    {
+     "when": [
+      {
+       "kind": "business",
+       "value": "spa"
+      },
+      {
+       "kind": "incomeActive",
+       "target": "spa.group"
+      }
+     ],
+     "text": "Kaplıca hafta içi gündüz gruplarıyla, akşamları köylülerle doluyor. Halil'in fenerinin yandığı saat değişmedi."
+    },
+    {
+     "when": [
+      {
+       "kind": "business",
+       "value": "spa"
+      }
+     ],
+     "text": "Kaplıca açık. Taş duvarlar ısınıyor; köylüler pazar günleri hâlâ gelebiliyor."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "business.beesNetwork"
+      }
+     ],
+     "text": "Kazanın yerine kurulan arıcı ağı yedi haneyi aynı etikete topladı. Kovanlar bu kış ilk kez ortak bir depoda."
+    },
+    {
+     "when": [
+      {
+       "kind": "business",
+       "value": "bees"
+      },
+      {
+       "kind": "incomeActive",
+       "target": "bees.brand"
+      }
+     ],
+     "text": "Karaçam etiketli kavanozlar Sisliova'nın raflarında. Elif'in çizdiği etiket değişmedi."
+    },
+    {
+     "when": [
+      {
+       "kind": "business",
+       "value": "bees"
+      }
+     ],
+     "text": "Arı evi kışa hazır. Kovanların yeri Hatice Nine'nin gösterdiği yer."
+    },
+    {
+     "when": [
+      {
+       "kind": "business",
+       "value": "closed"
+      }
+     ],
+     "text": "Kaplıca kapalı kaldı. Kooperatif geliri küçük işlerden ve ortak tezgâhtan topladı."
+    }
+   ]
+  },
+  {
+   "id": "case",
+   "heading": "Satış yetkisi ve mühür",
+   "entries": [
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "caseResolved"
+      },
+      {
+       "kind": "flag",
+       "target": "culpritRepair"
+      }
+     ],
+     "text": "{culprit} yetkisiz ve denetimli çalışıyor. Açtığı deliği kapatmak için her ay kurula hesap veriyor. Mühür kooperatif kasasında."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "caseResolved"
+      },
+      {
+       "kind": "flag",
+       "target": "culpritRemoved"
+      }
+     ],
+     "text": "{culprit} kooperatifteki bütün yetkilerinden çekildi; dış denetim raporu panoda. Mühür kooperatif kasasında."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "caseResolved"
+      }
+     ],
+     "text": "Satış yetkisi kendi dosyanla iptal edildi. {culprit} imzasının sorumluluğunu taşıyor. Mühür kooperatif kasasında."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "otherOrder"
+      }
+     ],
+     "text": "Yetki hiç dondurulmadı. Şirket elindeki imzayla geldi; mührün kimde olduğu artık önemli değildi."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "authorityRevoked"
+      }
+     ],
+     "text": "Şüpheli yetki kurulda iptal edildi. İmzanın sahibi resmî kayıtla açıklandı; araştırma başarısı olarak değil, köyün öğrendiği bir gerçek olarak."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "authorityFrozen"
+      }
+     ],
+     "text": "Mühür kaybı bildirimi yetkiyi dondurdu. İmzanın sahibi son resmî kayıtla açıklandı; dosya senin kanıtınla değil, zamanla kapandı."
+    },
+    {
+     "when": [],
+     "text": "Kopuk sayfanın hikâyesi bitti. Kimin imzaladığı köyde konuşulmaya devam ediyor."
+    }
+   ]
+  },
+  {
+   "id": "relationship",
+   "heading": "İnsanlar",
+   "entries": [
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "deryaInterest"
+      }
+     ],
+     "text": "Derya restorasyon raporunu bitirdi ve kalmaya karar verdi; kendi işi için. Akşamları köprünün başında ikiniz oluyorsunuz."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "deryaFriend"
+      }
+     ],
+     "text": "Derya başka bir köyün taşlarına gitti; her ay bir fotoğraf gönderiyor. İyi bir dostluk, uzak ama sağlam."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "nineHelped"
+      }
+     ],
+     "text": "Hatice Nine'nin bacası tütüyor. Kapısı sana hep açık; ilk geldiğin günü herkese anlatıyor."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "elifPeople"
+      }
+     ],
+     "text": "Elif'in videolarında artık köyün insanları var: Nine'nin elleri, Halil'in feneri, Rauf'un kaynağı."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "elifProduct"
+      }
+     ],
+     "text": "Elif kendi küçük tasarım işini kurdu; ilk müşterisi kooperatif."
+    },
+    {
+     "when": [],
+     "text": "Halil gece turunu sürdürüyor; Sevim defteri, Selim muhtarlığı. Otuz gün önce yabancıydın; şimdi selam veriliyor."
+    }
+   ]
+  },
+  {
+   "id": "management",
+   "heading": "Yönetim",
+   "entries": [
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "sale.day7"
+      }
+     ],
+     "text": "Kooperatifin kurulu şirketin danışma masasına dönüştü."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "sale.day27"
+      }
+     ],
+     "text": "Kooperatifin kurulu şirketin danışma masasına dönüştü."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "futureShared"
+      },
+      {
+       "kind": "flag",
+       "target": "intendHandover"
+      }
+     ],
+     "text": "Yetki yedi imzalık kurulda. Sen düzeni kurdun ve devrettin; köy artık bir kişinin omzunda değil."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "futureShared"
+      }
+     ],
+     "text": "Yetki yedi imzalık kurulda. Sen köyde kaldın, ama artık tek başına değilsin."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "futureLead"
+      },
+      {
+       "kind": "flag",
+       "target": "intendHandover"
+      }
+     ],
+     "text": "Bir dönem daha sorumluluğu üstlendin; sonra devretmek için bir takvim yazdın."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "futureLead"
+      }
+     ],
+     "text": "Bir dönem daha sorumluluk sende. Kayıtlar açık; halanın tek başına taşıdığı yükü sen de tek başına taşımamaya söz verdin."
+    },
+    {
+     "when": [],
+     "text": "Kooperatifin yönetimi bir sonraki kurul toplantısını bekliyor."
+    }
+   ]
+  },
+  {
+   "id": "commons",
+   "heading": "Ortak varlıklar",
+   "entries": [
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "minibusSold"
+      },
+      {
+       "kind": "flag",
+       "target": "bridgeFixed"
+      }
+     ],
+     "text": "Köprü sağlam; kamyonlar geçiyor. Minibüs satıldı; pazar günleri Sisliova'ya dış taşımayla gidiliyor."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "minibusSold"
+      }
+     ],
+     "text": "Minibüs satıldı. Köprü hâlâ çürük; kamyonet ve dış taşıma iki ayrı masraf olarak sürüyor."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "bridgeFixed"
+      },
+      {
+       "kind": "flag",
+       "target": "stallBuilt"
+      }
+     ],
+     "text": "Köprü sağlam, minibüs köyde, meydandaki ortak tezgâh her cumartesi kuruluyor."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "bridgeFixed"
+      }
+     ],
+     "text": "Köprü sağlam, minibüs köyde. Ortak varlıkların hiçbiri satılmadı."
+    },
+    {
+     "when": [],
+     "text": "Köprü hâlâ çürük; mallar kamyonetle taşınıyor. Minibüs köyde duruyor."
+    }
+   ]
+  },
+  {
+   "id": "future",
+   "heading": "Köyün geleceği",
+   "entries": [
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "sale.day7"
+      }
+     ],
+     "text": "Evler ilk on iki ay güvencede. Sonrası şirketin planlarına bağlı."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "sale.day27"
+      }
+     ],
+     "text": "Evler ilk on iki ay güvencede. Sonrası şirketin planlarına bağlı."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "otherOrder"
+      }
+     ],
+     "text": "Köy şirketin kararlarını bekliyor. Kurul yeniden toplanmak için bir yol arıyor."
+    },
+    {
+     "when": [
+      {
+       "kind": "endingIs",
+       "value": "cash"
+      }
+     ],
+     "text": "Alacaklı takvim açmadı; kooperatifin varlıkları icra listesine girdi. Ama köy bu otuz günde neyi birlikte yapabildiğini gördü. Bir sonraki kurul toplantısı yine çınarın altında."
+    },
+    {
+     "when": [
+      {
+       "kind": "endingIs",
+       "value": "pressure"
+      }
+     ],
+     "text": "Erken tahsilat kooperatifin hesaplarını dondurdu. Köy evlerinde kaldı; ortak işler durdu. Kurul, borcun nasıl bu noktaya geldiğini kayıtlardan yeniden okuyor."
+    },
+    {
+     "when": [
+      {
+       "kind": "endingIs",
+       "value": "trust"
+      }
+     ],
+     "text": "Kurul yeni bir yönetici arıyor. Kurduğun işler duruyor; onları kimin sürdüreceğine köy karar verecek."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "winterStock"
+      }
+     ],
+     "text": "Kışlık stok depoda. Kalan borç için alacaklıyla aylık bir takvim imzalandı; bir sonraki taksit bahara."
+    },
+    {
+     "when": [],
+     "text": "Kalan borç için alacaklıyla aylık bir takvim imzalandı. Karaçam bir kışı daha kendi kararıyla geçirecek."
+    }
+   ]
+  }
+ ]
+}

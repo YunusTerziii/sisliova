@@ -1,0 +1,22 @@
+{
+  "portraits": [
+    {"id": "selim", "asset": "portrait-selim", "status": "final", "note": "K02, 1024 px"},
+    {"id": "halil", "asset": "portrait-halil", "status": "final", "note": "K04, 1024 px"},
+    {"id": "sevim", "asset": "portrait-sevim", "status": "final", "note": "K08, 1024 px"},
+    {"id": "elif", "asset": "portrait-elif", "status": "final", "note": "K03, 1024 px"},
+    {"id": "rauf", "asset": "portrait-rauf", "status": "final", "note": "K05, 1024 px"},
+    {"id": "nine", "asset": "portrait-nine", "status": "final", "note": "K06, 1024 px"},
+    {"id": "avukat", "asset": "portrait-avukat", "status": "final", "note": "K07, 1024 px"},
+    {"id": "nermin", "asset": "portrait-nermin", "status": "interim", "note": "Web demosundaki 159×300 çizim; 1024 px kaynak üretilmeli"},
+    {"id": "derya", "asset": null, "status": "missing", "note": "Portre yok. Sahnelerinde köprü/kaplıca çizimi gösterilir; harfli daire kullanılmaz. Üretim komutu docs/derya-gorsel-komutu.md"}
+  ],
+  "illustrations": [
+    {"id": "kaplica", "asset": "illus-kaplica", "status": "final", "note": "K09"},
+    {"id": "ari", "asset": "illus-ari", "status": "final", "note": "K10"},
+    {"id": "araba", "asset": "illus-araba", "status": "interim", "note": "Web demosu, 320 px"},
+    {"id": "kamyon", "asset": "illus-kamyon", "status": "interim", "note": "Web demosu, 300 px"}
+  ],
+  "map": [
+    {"id": "harita", "asset": "map-karacam", "status": "final", "note": "K01, dikey 2:3; durum katmanları SwiftUI işaretleriyle çiziliyor, ayrı katman görselleri yok"}
+  ]
+}
