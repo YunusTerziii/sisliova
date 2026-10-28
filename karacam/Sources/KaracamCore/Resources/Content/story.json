@@ -171,12 +171,12 @@
   {
    "id": "rauf",
    "name": "Rauf",
-   "role": "Sisliova'dan, tamirci",
+   "role": "Kooperatifin tamircisi, Sisliova'dan",
    "portrait": "portrait-rauf",
    "notes": [
     {
      "when": [],
-     "text": "Fiziksel iş ve açık maliyet. Faturayı hep masaya koyar."
+     "text": "Fiziksel iş ve açık maliyet. Faturayı hep masaya koyar. Halanın zamanından beri kooperatifte düzenli çalışıyor; ekibin sözcüsü o."
     }
    ]
   },
@@ -212,12 +212,12 @@
   {
    "id": "avukat",
    "name": "Şirket avukatı",
-   "role": "Şehirden geldi",
+   "role": "Köyü satın almak isteyen şirketten",
    "portrait": "portrait-avukat",
    "notes": [
     {
      "when": [],
-     "text": "Kooperatifi satın almak isteyen şirketi temsil ediyor. Alacaklıyla aynı kişi değil."
+     "text": "Kooperatifi satın almak isteyen şirketi temsil ediyor. Borcun sahibi değil; alacaklı ayrı bir taraf."
     }
    ]
   },
@@ -242,13 +242,13 @@
   {
    "id": "haber",
    "name": "Sisliova'dan haber",
-   "role": "Komşu kasaba",
+   "role": "Komşu kasabadan",
    "person": false
   },
   {
    "id": "mektup",
    "name": "Alacaklının avukatı",
-   "role": "Resmî ihtar",
+   "role": "Borcun sahibi adına yazar",
    "person": false
   },
   {
@@ -271,8 +271,8 @@
   },
   {
    "id": "sicil",
-   "name": "İlçe sicil memurluğu",
-   "role": "Bağımsız kayıt",
+   "name": "İlçe kayıt dairesi",
+   "role": "Resmî kayıtlar",
    "person": false
   }
  ],
@@ -285,7 +285,7 @@
    "speakerID": "anlatici",
    "title": "Karaçam'a iniş",
    "illustration": "harita",
-   "body": "Halan öldüğünde Karaçam kooperatifindeki payı ve geçici yönetim sorumluluğu sana kaldı. Kooperatifin üç milyon lira borcu var. Alacaklı otuz gün verdi: otuzuncu gün 150.000 TL ilk taksit ve arkanda duracak bir köy. Borcun tamamı bir anda bitmez; ilk taksit ödenirse kalanına takvim açılır.\n\nKasada 30.000 TL var. Köy seni henüz tanımıyor.",
+   "body": "Halan öldüğünde Karaçam kooperatifindeki payı ve geçici yönetimi sana kaldı. Kooperatifin 3.000.000 TL borcu var. Alacaklı otuz gün verdi: otuzuncu akşam 150.000 TL ilk taksit. Bir şartı daha var: ödeme planını kooperatif kurulu, yani köyün yedi ortağı, senin arkanda durarak onaylamalı. İlk taksit ödenirse kalan borç bir takvime bağlanır.\n\nKasada 30.000 TL var. Köy seni henüz tanımıyor.",
    "emotionalBeat": "Hedefi tek cümleyle anlamak.",
    "choices": [
     {
@@ -308,7 +308,7 @@
     {
      "id": "come",
      "label": "Gelirim",
-     "resultText": "Selim seni toplantıda herkese tanıttı. İlk kez biri sana \"kooperatifin başı\" dedi.",
+     "resultText": "Akşam Selim seni toplantıda herkese tanıttı. İlk kez biri sana \"kooperatifin başı\" dedi.",
      "effects": [
       {
        "kind": "trust",
@@ -320,7 +320,7 @@
     {
      "id": "ledger",
      "label": "Önce defterlere bakarım",
-     "resultText": "Toplantıya gitmedin. Defterde bir sayfanın koparılmış olduğunu fark ettin.",
+     "resultText": "Selim'e akşam gelemeyeceğini söyledin ve ofiste defterlere oturdun. Defterin 12. sayfası yerinde yok; biri onu dipten koparmış. Sayfaları Sevim numaralıyormuş.",
      "effects": [
       {
        "kind": "trust",
@@ -346,7 +346,7 @@
    "speakerID": "elif",
    "title": "Bir iş seçmek",
    "illustration": "kaplica,ari",
-   "body": "\"Bu hafta ancak bir işi ayağa kaldırabiliriz, elimiz ikisine yetmez. Kaplıca mı, arı evi mi?\"\n\nElif iki çizim gösterdi: eski kaplıca oteli ve yamaçtaki beş kovan. Rutin giderler ilk tam çalışma haftası olan 8. günden başlar; şimdiden yazıyorum ki sonra sürpriz olmasın.",
+   "body": "\"Bu hafta ancak bir işi ayağa kaldırabiliriz, elimiz ikisine yetmez. Kaplıca mı, arı evi mi?\"\n\nElif iki çizim gösterdi: eski kaplıca oteli ve yamaçtaki beş kovan. \"İlk hafta açılış telaşıyla geçer, kimse maaş sormaz. Asıl masraf gelecek hafta başlar: ücret, yakıt, kavanoz. Onu da hesaba kat.\"",
    "emotionalBeat": "İlk büyük karar: hangi köy olacağız?",
    "choices": [
     {
@@ -526,12 +526,12 @@
    "slot": "anchor",
    "speakerID": "rauf",
    "title": "Çürük köprü",
-   "body": "\"Köprünün demirleri çürümüş. Otomobil geçer ama kamyon geçemez. Tamiri 12 bin.\"",
+   "body": "\"Köprünün demirleri çürümüş. Otomobil geçer ama kamyon geçemez. Gündüz, acele etmeden yaparsam on iki bin.\"",
    "choices": [
     {
      "id": "repair",
      "label": "Tamir et",
-     "resultText": "Rauf'un faturası alacaklıya da gitti: köy yatırım yapıyor, demek ki ciddi.",
+     "resultText": "Rauf demirleri değiştirdi. Kooperatifin bütün harcamaları alacaklının dosyasına da gidiyor; köprü faturası orada iyi bir işaret oldu: köy işini ayakta tutmaya çalışıyor.",
      "effects": [
       {
        "kind": "cash",
@@ -546,7 +546,7 @@
        "target": "bridgeFixed"
       }
      ],
-     "memory": "2. gün köprüyü tamir ettirdin."
+     "memory": "Köprüyü erkenden tamir ettirdin."
     },
     {
      "id": "wait",
@@ -583,7 +583,7 @@
     {
      "id": "ask",
      "label": "Tanıdıklara sor",
-     "resultText": "Plakayı tanıdıklara sordunuz. Haber şehirdeki aracıya kadar gitti.",
+     "resultText": "Halil plakayı Sisliova'daki tanıdıklarına sordu. Araba şehirde bir hukuk bürosuna kayıtlı; köyü almak isteyen şirketin avukatları orada çalışıyor. Sorduğun da onların kulağına gitti.",
      "effects": [
       {
        "kind": "pressure",
@@ -646,7 +646,7 @@
    "slot": "anchor",
    "speakerID": "sevim",
    "title": "Aidat",
-   "body": "\"Ben Sevim, kooperatifin saymanı. Aidatları artırırsak kasaya her akşam 2 bin girer; bu süreli bir katkı, 14. akşam biter. Tahsilata ben çıkarım. Ama köylü kızar.\"",
+   "body": "\"Ben Sevim, kooperatifin saymanı. Aidatı artırırsak kasaya her akşam biraz para girer. Ama bunu sonsuza dek isteyemeyiz; iki hafta, ayın ortasına kadar. Parayı kapı kapı ben toplarım. Köylü kızar, söyleyeyim.\"",
    "choices": [
     {
      "id": "raise",
@@ -668,7 +668,7 @@
        "expiresAfterDay": 14
       }
      ],
-     "memory": "Aidatı artırdın; katkı 14. akşam bitecek."
+     "memory": "Aidatı artırdın; katkı ayın ortasına kadar sürecek."
     },
     {
      "id": "keep",
@@ -720,7 +720,7 @@
     {
      "id": "keep",
      "label": "Sakla",
-     "resultText": "Notu katlayıp cüzdanına koydun. Yazısı bir yerden tanıdık.",
+     "resultText": "Notu katlayıp cüzdanına koydun. Kurşun kalemle yazılmış, eğik harfler; bir yerden tanıdık geliyor.",
      "effects": [
       {
        "kind": "setFlag",
@@ -880,7 +880,8 @@
      ],
      "memory": "Hatice Nine'nin odun isteğini geri çevirdin."
     }
-   ]
+   ],
+   "group": "nine"
   },
   {
    "id": "d04.noon.truck",
@@ -900,7 +901,7 @@
     {
      "id": "emergency",
      "label": "Acil tamir",
-     "resultText": "Rauf gece yarısına kadar çalıştı. Acil tamir pahalıya patladı.",
+     "resultText": "Rauf iki kişiyle gece yarısına kadar çalıştı. Faturayı uzatırken omuz silkti: \"Gündüz yapsaydık on iki bindi. Gece işi, acil demir; on sekiz oldu.\"",
      "effects": [
       {
        "kind": "cash",
@@ -911,12 +912,12 @@
        "target": "bridgeFixed"
       }
      ],
-     "memory": "Köprüyü 4. gün acil tamirle onarttın."
+     "memory": "Köprüyü kamyon kapıdayken acil tamirle onarttın."
     },
     {
      "id": "van",
      "label": "Malları kamyonetle taşı",
-     "resultText": "Odun Rauf'un kamyonetiyle iki seferde gitti, sipariş gecikti. Köprü onarılana kadar her akşam taşıma farkı var; kalıcı onarım 9. günden itibaren gündemde.",
+     "resultText": "Odun Rauf'un kamyonetiyle iki seferde gitti, sipariş gecikti. Köprü onarılana kadar her taşıma için Rauf'a fark ödenecek. \"Kalıcı onarımı sonra konuşuruz,\" dedi Rauf. \"Acelesi yok, ama unutma.\"",
      "effects": [
       {
        "kind": "trust",
@@ -987,7 +988,7 @@
     {
      "id": "search",
      "label": "Dolapları ara",
-     "resultText": "Dolapları açman köylünün hoşuna gitmedi.",
+     "resultText": "Bütün dolapları açtın. Kopuk sayfa hiçbirinde yok; biri onu yanında taşıyor ya da başka bir yere saklamış. Dolapları karıştırman köylünün hoşuna gitmedi.",
      "effects": [
       {
        "kind": "trust",
@@ -1027,12 +1028,45 @@
         }
        ]
       }
+     ],
+     "resultVariants": [
+      {
+       "when": [
+        {
+         "kind": "flag",
+         "target": "sawLedger"
+        },
+        {
+         "kind": "flag",
+         "target": "noteKept"
+        }
+       ],
+       "text": "Dolapları tek tek açtın. Kopuk sayfadan sonraki sayfada kalem bastırma izi okunuyor: \"Kooperatif adına satış yetkisi.\" Kapının altındaki notun kâğıdını da ofisteki kâğıtlarla yan yana koydun; gördüğünü deftere yazdın. Dolapları açman köylünün hoşuna gitmedi."
+      },
+      {
+       "when": [
+        {
+         "kind": "flag",
+         "target": "sawLedger"
+        }
+       ],
+       "text": "Dolapları tek tek açtın. Kopuk sayfa yok, ama ondan sonraki sayfada kalem bastırma izi okunuyor: \"Kooperatif adına satış yetkisi.\" Biri kopardığı sayfaya bunu yazmış. Dolapları açman köylünün hoşuna gitmedi."
+      },
+      {
+       "when": [
+        {
+         "kind": "flag",
+         "target": "noteKept"
+        }
+       ],
+       "text": "Dolapları açtın. Kopuk sayfa hiçbir yerde yok. Kapının altındaki notun kâğıdını ofisteki makbuzlarla, eski biletlerle yan yana koydun; kâğıdın nereden geldiğine dair gördüğünü deftere yazdın. Dolapları açman köylünün hoşuna gitmedi."
+      }
      ]
     },
     {
      "id": "ask",
      "label": "Yarın herkese soralım",
-     "resultText": "Kopuk sayfa bütün köyün ağzında. Haber köprüyü de geçti.",
+     "resultText": "Kopuk 12. sayfa ertesi sabah bütün köyün ağzındaydı. Haber köprüyü de geçti.",
      "effects": [
       {
        "kind": "trust",
@@ -1056,12 +1090,12 @@
    "slot": "morning",
    "speakerID": "haber",
    "title": "Sisliova'dan haber",
-   "body": "\"Komşu Sisliova'da düğün salonunun ışıkları sönmüş, herkes telefonunu yakıp düğünü kurtarmış.\" Dönen Karaçamlı aile hâlâ anlatıyor.",
+   "body": "Sisliova'dan dönen bir Karaçamlı aile anlatıyor: \"Kasabada meydan şenliği vardı. Elektrik kesildi, herkes telefonunun ışığını yaktı, davul hiç susmadı. Sabaha kadar sürdü.\" Çay ocağında biri iç çekti: \"Bizim köyde en son ne zaman böyle bir gece oldu?\"",
    "choices": [
     {
      "id": "wedding",
-     "label": "Biz de köy düğünü yapalım",
-     "resultText": "Düğün gecesi Halil bile oynadı. Köy uzun zamandır böyle gülmemişti.",
+     "label": "Biz de köy şenliği yapalım",
+     "resultText": "Şenlik gecesi Halil bile oynadı. Köy uzun zamandır böyle gülmemişti.",
      "effects": [
       {
        "kind": "cash",
@@ -1076,7 +1110,7 @@
        "target": "wedding"
       }
      ],
-     "memory": "5. gün köy düğünü yaptınız."
+     "memory": "Köy şenliği yaptın; Halil bile oynadı."
     },
     {
      "id": "no",
@@ -1092,7 +1126,7 @@
    "slot": "anchor",
    "speakerID": "mektup",
    "title": "İlk ihtar",
-   "body": "\"İlk ihtar: 30. güne kadar kooperatifin bütün gelirlerini belgeleriyle bildirin.\" Belgeleri hazırlatmak için muhasebeciye 5 bin gerekiyor.",
+   "body": "Alacaklının avukatından resmî bir yazı geldi. Köyü almak isteyen şirketten değil, borcun sahibinden: \"Otuzuncu güne kadar kooperatifin bütün gelirlerini belgeleriyle bildirin.\" Sevim yazıyı iki kez okudu. \"Muhasebeciye hazırlatırsak beş bin ister.\"",
    "choices": [
     {
      "id": "report",
@@ -1153,7 +1187,7 @@
     {
      "id": "look",
      "label": "Kâğıda bak",
-     "resultText": "Halil yedek anahtarı sana uzattı: \"Bundan sonra ikimiz bakarız.\"",
+     "resultText": "Halil yedek anahtarı sana uzattı: \"Bundan sonra ikimiz bakarız.\" Kâğıt bir satış yetkisinin kopyası: \"Kooperatif adına. İmza atıldı.\" Altındaki ad okunmuyor. Halil arabayı nasıl izlediğini ve zarfın arka odaya nasıl bırakıldığını da anlattı; deftere yazdın.",
      "effects": [
       {
        "kind": "trust",
@@ -1199,8 +1233,21 @@
     {
      "id": "follow",
      "label": "Peşinden git",
-     "resultText": "Arka odanın kapısı kilitliydi, anahtar Halil'de. Arabadakiler seni gördü.",
+     "resultText": "Arka odanın kapısı kilitliydi, anahtar Halil'de. Pencerenin önünde bir zarf buldun; nasıl bırakıldığını gösteren izleri deftere yazdın. Arabadakiler seni gördü.",
      "resultVariants": [
+      {
+       "when": [
+        {
+         "kind": "flag",
+         "target": "key"
+        },
+        {
+         "kind": "caseIsNot",
+         "value": "halil"
+        }
+       ],
+       "text": "Anahtar sendeydi, arka odaya girdin. Masada kopuk sayfanın karbon kopyası duruyordu: \"Kooperatif adına satış yetkisi. İmza atıldı.\" Pencerenin önündeki zarfın izlerini de deftere yazdın. Çıkarken Halil'le karşılaştın; o da arabanın peşindeymiş. Arabadakiler ikinizi de gördü."
+      },
       {
        "when": [
         {
@@ -1208,7 +1255,16 @@
          "target": "key"
         }
        ],
-       "text": "Anahtar sendeydi, arka odaya girdin. Çıkarken arabadakiler seni gördü."
+       "text": "Anahtar sendeydi, arka odaya girdin. Masada kopuk sayfanın karbon kopyası duruyordu: \"Kooperatif adına satış yetkisi. İmza atıldı.\" Pencerenin önündeki zarfın izlerini de deftere yazdın. Çıkarken arabadakiler seni gördü."
+      },
+      {
+       "when": [
+        {
+         "kind": "caseIsNot",
+         "value": "halil"
+        }
+       ],
+       "text": "Arka odanın kapısı kilitliydi, anahtar Halil'de. Pencerenin önünde bir zarf buldun; nasıl bırakıldığını gösteren izleri deftere yazdın. Az sonra Halil karanlıktan çıktı: o da arabanın peşindeymiş. Arabadakiler ikinizi de gördü."
       }
      ],
      "effects": [
@@ -1272,7 +1328,7 @@
     {
      "id": "open",
      "label": "Defteri aç",
-     "resultText": "Saklanan gelir ortaya çıktı. Köylü açık sözlülüğünü sevdi ama haber şehre de gitti.",
+     "resultText": "Saklanan gelir ortaya çıktı. Sevim defteri elinden aldı, 12. sayfada durdu, sonra çantasından katlanmış bir kâğıt çıkardı: \"Kopuk sayfa bende. Biri üstüne satış yetkisi yazmıştı, kanıt olsun diye sakladım.\" Sayfada imza yerinde yalnız bir çizgi var. Köylü açık sözlülüğünü sevdi ama haber şehre de gitti.",
      "resultVariants": [
       {
        "when": [
@@ -1290,7 +1346,7 @@
          "target": "nineHelped"
         }
        ],
-       "text": "Saklanan gelir ortaya çıktı. Hatice Nine en öne oturdu: \"Bu çocuk bana odun verdi, dinleyin.\""
+       "text": "Saklanan gelir ortaya çıktı. Hatice Nine en öne oturdu: \"Bu çocuk bana odun verdi, dinleyin.\" Sonra Sevim çantasından katlanmış bir kâğıt çıkardı: \"Kopuk sayfa bende. Biri üstüne satış yetkisi yazmıştı, kanıt olsun diye sakladım.\""
       }
      ],
      "effects": [
@@ -1351,6 +1407,10 @@
       {
        "kind": "setFlag",
        "target": "grievance.hiddenIncome"
+      },
+      {
+       "kind": "setFlag",
+       "target": "today.ledgerClosed"
       }
      ],
      "memory": "Köy toplandığında defteri açmadın; saklanan gelir köyün aklında kaldı."
@@ -1368,7 +1428,7 @@
     {
      "id": "open",
      "label": "Defteri aç",
-     "resultText": "Sevim defteri senin elinden aldı ve sayfaları tek tek gösterdi.",
+     "resultText": "Sevim defteri elinden aldı, 12. sayfada durdu, sonra çantasından katlanmış bir kâğıt çıkardı: \"Kopuk sayfa bende. Biri üstüne satış yetkisi yazmıştı, kanıt olsun diye sakladım.\" Sayfada imza yerinde yalnız bir çizgi var.",
      "resultVariants": [
       {
        "when": [
@@ -1386,7 +1446,7 @@
          "target": "nineHelped"
         }
        ],
-       "text": "Hatice Nine en öne oturdu: \"Bu çocuk bana odun verdi, dinleyin.\" Sevim sayfaları tek tek gösterdi."
+       "text": "Hatice Nine en öne oturdu: \"Bu çocuk bana odun verdi, dinleyin.\" Sevim sayfaları tek tek gösterdi; 12. sayfada durup çantasından katlanmış bir kâğıt çıkardı: \"Kopuk sayfa bende. Biri üstüne satış yetkisi yazmıştı, kanıt olsun diye sakladım.\""
       }
      ],
      "effects": [
@@ -1435,8 +1495,23 @@
       {
        "kind": "trust",
        "amount": -6
+      },
+      {
+       "kind": "setFlag",
+       "target": "today.ledgerClosed"
       }
      ]
+    }
+   ],
+   "variants": [
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "reportedIncome"
+      }
+     ],
+     "body": "\"Köylü toplandı. Alacaklıya her şeyi bildirdiğini duyduk. Şimdi aynı açıklığı bize de göster: kasada ne var?\""
     }
    ]
   },
@@ -1453,7 +1528,7 @@
      "value": "spa"
     }
    ],
-   "body": "\"Kaplıcanın kazanı patlamak üzere. Tamiri 7 bin. Söküp hurdaya satarsan 25 bin eder.\"",
+   "body": "\"Kaplıcanın kazanı patlamak üzere. Kaynak yaparım, yedi bine çıkar. Ya da söküp hurdacıya veririz; yirmi beş bin verir, ama kaplıca kapanır.\"",
    "choices": [
     {
      "id": "repair",
@@ -1470,7 +1545,7 @@
      "id": "sell",
      "label": "Söküp sat",
      "resultText": "Kazan Sisliova'daki hurdacıya gitti. Kaplıcanın kapısına kilit vuruldu.",
-     "confirm": "Kaplıcanın bütün geliri ve ileride eklenecek bütün kaplıca kaynakları biter. 8. gün yeniden kurmak 25.000 TL tutar. Satıyor musun?",
+     "confirm": "Kaplıca kapanır; kaplıcanın bütün gelirleri biter. 8. gün yeniden kurmak 25.000 TL tutar. Satıyor musun?",
      "effects": [
       {
        "kind": "cash",
@@ -1506,7 +1581,7 @@
      "value": "bees"
     }
    ],
-   "body": "\"Bir kovana dadanmışlar; kalan toplu parti tehlikede. Köyden birine nöbet tutturursak toplu partiyi teslimata kadar korumanın bedeli 4 bin.\"",
+   "body": "\"Biri gece kovanlardan birini açıp peteklerini almış. Bu gidişle toplu partiden de bir şey kalmaz. Köyden birine nöbet tutturalım mı? Teslimata kadar dört bin verir.\"",
    "choices": [
     {
      "id": "guard",
@@ -1546,12 +1621,12 @@
    "slot": "anchor",
    "speakerID": "sevim",
    "title": "Kasayı saymak",
-   "body": "\"Kasayı birlikte sayalım mı? Kimse 'para nereye gitti' demesin.\"",
+   "body": "Toplantı dağıldıktan sonra Sevim yanına geldi. \"Köyün önünde açmak istemedin, anlıyorum. Bari ikimiz sayalım; yarın biri 'para nereye gitti' derse elimizde bir kâğıt olsun.\"",
    "choices": [
     {
      "id": "count",
      "label": "Sayalım",
-     "resultText": "Kasa kuruşu kuruşuna tuttu.",
+     "resultText": "Kasa kuruşu kuruşuna tuttu. Sevim tutanağı kahvenin duvarına astı.",
      "effects": [
       {
        "kind": "trust",
@@ -1562,13 +1637,20 @@
     {
      "id": "no",
      "label": "Gerek yok",
-     "resultText": "Sevim omuz silkti.",
+     "resultText": "Sevim omuz silkti ve defteri kilitledi.",
      "effects": [
       {
        "kind": "trust",
        "amount": -2
       }
      ]
+    }
+   ],
+   "group": "count",
+   "requirements": [
+    {
+     "kind": "flag",
+     "target": "today.ledgerClosed"
     }
    ]
   },
@@ -1583,7 +1665,7 @@
     {
      "id": "look",
      "label": "Birlikte arkaya bakalım",
-     "resultText": "Gece yarısı kooperatifin arkasında dolaşmanız köyde dedikodu oldu.",
+     "resultText": "Elif'le gece yarısı kooperatifin arkasında dolaştın. Elif durup o sesi bir daha düşündü; hatırladıklarını deftere yazdın. Dolaşmanız köyde dedikodu oldu.",
      "effects": [
       {
        "kind": "trust",
@@ -1602,7 +1684,7 @@
     {
      "id": "quiet",
      "label": "Şimdilik kimseye söyleme",
-     "resultText": "Elif başını salladı. Ama korktuğu belli.",
+     "resultText": "Elif başını salladı. \"'İmzaladım, gerisi sizde' dedi, aynen böyle.\" Duyduğunu deftere yazdın. Korktuğu belli.",
      "effects": [
       {
        "kind": "grantEvidence",
@@ -1618,7 +1700,7 @@
    "slot": "morning",
    "speakerID": "avukat",
    "title": "Teklif",
-   "body": "\"Kooperatifin hisselerine 400 bin veririz, borcu da şirket üstlenir. Köy şirketin olur. Bugün imzalarsan.\"",
+   "body": "Şehirden gelen şirket avukatı çantasını masaya koydu. \"Önce şunu bilin: borcunuzun sahibi biz değiliz; alacaklı ayrı bir taraf. Biz kooperatifi satın almak istiyoruz. Hisselere 400 bin veririz, borcu da biz üstleniriz. Köy şirketin olur. Ama bugün imzalarsanız.\"",
    "variants": [
     {
      "when": [
@@ -1627,7 +1709,7 @@
        "target": "wedding"
       }
      ],
-     "body": "\"Düğününüzü duyduk, köyünüz çok canlı. Kooperatifin hisselerine 400 bin veririz, borcu da şirket üstlenir. Köy şirketin olur. Bugün imzalarsan.\""
+     "body": "Şehirden gelen şirket avukatı çantasını masaya koydu. \"Şenliğinizi duyduk; köyünüz canlı. Önce şunu bilin: borcunuzun sahibi biz değiliz; alacaklı ayrı bir taraf. Biz kooperatifi satın almak istiyoruz. Hisselere 400 bin veririz, borcu da biz üstleniriz. Köy şirketin olur. Ama bugün imzalarsanız.\""
     }
    ],
    "choices": [
@@ -1656,7 +1738,7 @@
     {
      "id": "refuse",
      "label": "Reddet",
-     "resultText": "Avukat kartını masaya bıraktı: \"Fikrinizi değiştirirseniz.\"",
+     "resultText": "Avukat kartını masaya bıraktı: \"Fikrinizi değiştirirseniz.\" Kapıda durdu. \"Bir şeyi de bilin: imzalı bir yetkimiz zaten var. Mühür bulunursa, bir dahakine teklif getirmeyiz.\"",
      "effects": [
       {
        "kind": "trust",
@@ -1684,7 +1766,7 @@
      "value": "bees"
     }
    ],
-   "body": "\"Bu haftanın ek toplu bal partisi hazır!\"",
+   "body": "\"İlk toplu parti hazır! Kavanozlar dizildi, etiketler kurudu.\"",
    "variants": [
     {
      "when": [
@@ -1693,7 +1775,7 @@
        "target": "beesStolen"
       }
      ],
-     "body": "\"Bu haftanın ek toplu bal partisi hazır! Çalınan kovan yüzünden az ama güzel.\""
+     "body": "\"İlk toplu parti hazır! Çalınan kovan yüzünden az, ama güzel.\""
     },
     {
      "when": [
@@ -1702,7 +1784,7 @@
        "target": "beesGuarded"
       }
      ],
-     "body": "\"Bu haftanın ek toplu bal partisi hazır! Nöbet sayesinde kovanların hepsi dolu.\""
+     "body": "\"İlk toplu parti hazır! Nöbet sayesinde kovanların hepsi dolu.\""
     }
    ],
    "choices": [
@@ -1776,7 +1858,7 @@
      "value": "spa"
     }
    ],
-   "body": "\"Kaplıcaya gelen bir müşteri yorum yazmış: 'Suyu harika!' Akşamlara ek seans koyalım mı? Ama ilk tam haftadan itibaren ek personel ve çamaşır gideri olur.\"",
+   "body": "\"Kaplıcaya gelen bir müşteri yorum yazmış: 'Suyu harika!' Akşamlara ek seans koyalım mı? Ama gelecek haftadan itibaren bir kişi daha ve fazladan çamaşır demek.\"",
    "choices": [
     {
      "id": "extra",
@@ -1882,7 +1964,7 @@
     {
      "id": "take",
      "label": "Mektubu al",
-     "resultText": "Halanın eğik yazısı: \"Kooperatifin mührü kayıp. Mühür olmadan kimse köyü satamaz sanıyordum; şimdi emin değilim. Defterdeki sayfayı koparan, mührü de biliyor. Kimseye kızma; önce kayda bak.\"",
+     "resultText": "Halanın eğik yazısı:\n\n\"Bunu okuyorsan bir hafta dayandın; seninle gurur duyuyorum. Bu köyü otuz yıl tek başıma taşıdım, hatamı da öyle yaptım: yükümü kimseye söylemedim. Kooperatifin mührü kayıp. Mühür olmadan kimse köyü satamaz sanıyordum; artık emin değilim. Defterden o sayfayı koparan, mührün nerede olduğunu da biliyor. Kimseye kızma, önce kayda bak. Korkarım köyden biri bizi çoktan satmış olabilir.\"",
      "effects": [
       {
        "kind": "setFlag",
@@ -1893,7 +1975,7 @@
        "target": "letter"
       }
      ],
-     "memory": "Halanın mektubu: mühür kayıp."
+     "memory": "Halanın mektubu: mühür kayıp; köyden biri bir şey imzalamış olabilir."
     }
    ]
   },
@@ -1903,7 +1985,7 @@
    "slot": "morning",
    "speakerID": "elif",
    "title": "Kasanın gerçek resmi",
-   "body": "Elif ve Sevim ilk haftanın kâğıdını masaya koydu. Bugünden itibaren rutin giderler işliyor: ücret, yakıt ve sarf, işletmenin günlük giderinde. Süreli aidat katkısı varsa 14. akşam biter. Önümüzdeki iki kesin tarih: 16. gün ve 30. gün. Varlık listesinde bir de atıl kooperatif minibüsü duruyor.\n\nYarından itibaren sabahları gündemden bir iş seçeceksin. Kasaba haritasını ya da Defter'i açmak zaman harcamaz; bir karar verdiğinde o sabah kullanılmış olur.",
+   "body": "Sabah Elif ve Sevim kahvede seni bekliyordu. Sevim ilk haftanın kâğıdını önüne itti: \"Açılış haftası bitti. Bugünden itibaren maaşlar, yakıt, sarf; hepsi her akşam kasadan çıkar.\" Takvime iki halka çizdi: 16 ve 30. \"Biri Nermin'in yarın getireceği siparişin teslimi, öbürü taksit.\"\n\nElif ekledi: \"Bir de çınarın altında çürüyen eski minibüs var; biri sorarsa diye söylüyorum. Yarından sonra her sabah bir işe yetişirsin, fazlasına değil. Hangisi önce, sen seç.\"",
    "emotionalBeat": "Her şeyin para götürmediği, bir planın kurulabildiği an.",
    "choices": [],
    "variants": [
@@ -1914,7 +1996,7 @@
        "value": "spa"
       }
      ],
-     "body": "Elif ve Sevim ilk haftanın kâğıdını masaya koydu. Bugünden itibaren kaplıcanın rutin gideri işliyor: ücret, yakıt ve sarf, günlük 2.200 TL. Süreli aidat katkısı varsa 14. akşam biter. Önümüzdeki iki kesin tarih: 16. gün ve 30. gün. Varlık listesinde bir de atıl kooperatif minibüsü duruyor.\n\nRauf'un yalıtım teklifi masada: kaplıcanın yakıt gideri düşer. Yarından itibaren sabahları gündemden bir iş seçeceksin; teklif 14. güne kadar orada bekler. Haritayı ya da Defter'i açmak zaman harcamaz.",
+     "body": "Sabah Elif ve Sevim kahvede seni bekliyordu. Sevim ilk haftanın kâğıdını önüne itti: \"Açılış haftası bitti. Bugünden itibaren kaplıcanın maaşı, yakıtı, havlusu her akşam kasadan çıkar.\" Takvime iki halka çizdi: 16 ve 30. \"Biri Nermin'in yarın getireceği siparişin teslimi, öbürü taksit.\"\n\nKapıda Rauf belirdi, elinde bir teklif: \"Çatıyı yalıtırsam kazan daha az yakar. Acelesi yok; iki hafta beklerim.\" Elif ekledi: \"Bir de çınarın altında çürüyen eski minibüs var; biri sorarsa diye söylüyorum. Yarından sonra her sabah bir işe yetişirsin, fazlasına değil. Hangisi önce, sen seç.\"",
      "choices": [
       {
        "id": "insulate",
@@ -1945,7 +2027,7 @@
       {
        "id": "wait",
        "label": "Şimdilik mevcut düzenle devam",
-       "resultText": "Teklif Defter'e yazıldı; 14. güne kadar gündemde.",
+       "resultText": "Rauf teklifi masada bıraktı: \"İki hafta beklerim.\"",
        "effects": []
       }
      ]
@@ -1957,7 +2039,7 @@
        "value": "bees"
       }
      ],
-     "body": "Elif ve Sevim ilk haftanın kâğıdını masaya koydu. Bugünden itibaren arı evinin rutin gideri işliyor: ücret, kavanoz ve sarf, günlük 600 TL. Süreli aidat katkısı varsa 14. akşam biter. Önümüzdeki iki kesin tarih: 16. gün ve 30. gün. Varlık listesinde bir de atıl kooperatif minibüsü duruyor.\n\nElif bir paketleme düzeni öneriyor: aynı bal daha iyi fiyata gider. Yarından itibaren sabahları gündemden bir iş seçeceksin; teklif 14. güne kadar orada bekler. Haritayı ya da Defter'i açmak zaman harcamaz.",
+     "body": "Sabah Elif ve Sevim kahvede seni bekliyordu. Sevim ilk haftanın kâğıdını önüne itti: \"Açılış haftası bitti. Bugünden itibaren arı evinin maaşı, kavanozu, sarfı her akşam kasadan çıkar.\" Takvime iki halka çizdi: 16 ve 30. \"Biri Nermin'in yarın getireceği siparişin teslimi, öbürü taksit.\"\n\nElif elle çizilmiş etiketli bir kavanoz uzattı: \"Aynı bal, düzgün paketle daha iyi fiyata gider. İki hafta düşünebilirsin.\" Sonra güldü: \"Bir de çınarın altında çürüyen eski minibüs var. Yarından sonra her sabah bir işe yetişirsin, fazlasına değil.\"",
      "choices": [
       {
        "id": "packaging",
@@ -1986,7 +2068,7 @@
       {
        "id": "wait",
        "label": "Olağan satışla devam",
-       "resultText": "Teklif Defter'e yazıldı; 14. güne kadar gündemde.",
+       "resultText": "Elif kavanozu rafa koydu: \"İki hafta daha burada.\"",
        "effects": []
       }
      ]
@@ -1998,7 +2080,7 @@
        "value": "closed"
       }
      ],
-     "body": "Elif ve Sevim ilk haftanın kâğıdını masaya koydu. Kaplıca kapalı; kazanın parası kasada. Önümüzdeki iki kesin tarih: 16. gün ve 30. gün. Varlık listesinde bir de atıl kooperatif minibüsü duruyor.\n\nİki yol var: yeni bir kazanla kaplıcayı yeniden kurmak ya da köydeki arıcıları bir üretici ağında toplamak. Ağın geliri iki kalemdir: 2.500 TL satış ve 1.500 TL alıcı sözleşmesi. Para yetmiyorsa bugün evrakla başlanır; teklif 14. güne kadar gündemde bekler.",
+     "body": "Sabah Elif ve Sevim kahvede seni bekliyordu. Kaplıca kapalı; kazanın parası kasada. Sevim takvime iki halka çizdi: 16 ve 30. \"Biri Nermin'in yarın getireceği siparişin teslimi, öbürü taksit.\"\n\nElif iki yol saydı: \"Rauf yeni bir kazan bulabilir, kaplıca yeniden açılır. Ya da köydeki arıcıları bir üretici ağında toplarız; satışı da alıcıyı da birlikte götürürüz. Para yetmiyorsa bugün masaya oturalım, karar iki hafta bekler.\" Sonra ekledi: \"Bir de çınarın altında çürüyen eski minibüs var. Yarından sonra her sabah bir işe yetişirsin, fazlasına değil.\"",
      "choices": [
       {
        "id": "rebuild",
@@ -2049,7 +2131,7 @@
       {
        "id": "paper",
        "label": "Bugün evrak ve toplantıyla başla",
-       "resultText": "Arıcıların ve Rauf'un teklifleri Defter'e yazıldı. Yarın sipariş avansı ya da başka bir yol açılabilir.",
+       "resultText": "Arıcıların ve Rauf'un teklifleri deftere yazıldı. Karar için iki hafta var.",
        "effects": [
         {
          "kind": "trust",
@@ -2066,7 +2148,7 @@
    "slot": "agenda",
    "speakerID": "elif",
    "title": "İlk işletme yatırımı",
-   "body": "8. gün masaya gelen teklif hâlâ duruyor.",
+   "body": "Geçen hafta masaya gelen teklif hâlâ duruyor.",
    "choices": [],
    "variants": [
     {
@@ -2077,7 +2159,7 @@
       }
      ],
      "speakerID": "rauf",
-     "body": "Rauf'un yalıtım teklifi hâlâ geçerli: kaplıcanın günlük yakıt gideri 700 TL düşer.",
+     "body": "\"Yalıtım teklifim hâlâ geçerli,\" dedi Rauf. \"Çatıyı kaplarsam kazan daha az yakar; kış boyunca farkını görürsün.\"",
      "choices": [
       {
        "id": "insulate",
@@ -2125,7 +2207,7 @@
        "value": "bees"
       }
      ],
-     "body": "Elif'in paketleme önerisi hâlâ geçerli: aynı bal her akşam 1.500 TL daha getirir.",
+     "body": "Elif etiketli kavanozu yine masaya koydu. \"Paketleme önerim hâlâ geçerli. Aynı bal, daha iyi fiyat.\"",
      "choices": [
       {
        "id": "packaging",
@@ -2171,7 +2253,7 @@
        "value": "closed"
       }
      ],
-     "body": "Kaplıca hâlâ kapalı. Yeni kazan 25.000 TL, arı üretici ağı 9.000 TL. Ağın geliri 2.500 TL satış ve 1.500 TL alıcı sözleşmesi; ikinci kez alıcı eklenmez.",
+     "body": "Kaplıca hâlâ kapalı. Rauf yeni kazan için fiyat almış; arıcılar da ortak ağ için bekliyor. \"Ağın kendi alıcısı olur,\" dedi Elif. \"Ayrıca alıcı aramana gerek kalmaz.\"",
      "choices": [
       {
        "id": "rebuild",
@@ -2312,11 +2394,11 @@
        "amount": 2
       }
      ],
-     "requirementText": "Aynı anda en fazla iki açık taahhüt olabilir",
+     "requirementText": "Aynı anda en fazla iki açık sipariş alınabilir",
      "preview": [
-      "16. gün: 6.000 TL hazırlık, 14.000 TL tahsilat; o günün net farkı +8.000 TL.",
-      "Hazırlık nakdi yetmezse yerel üreticiyle tamamlama yolu var: avans sende kalır, o gün yeni para gelmez, güven −2.",
-      "Tam iptal: avans ve 2.000 TL cayma bedeli, toplam −10.000 TL."
+      "16. gün: 6.000 TL hazırlık, teslimde 14.000 TL ödeme; o günün net farkı +8.000 TL.",
+      "Hazırlığa nakit yetmezse komşu köyün üreticisiyle tamamlanır: avans sende kalır, o gün yeni para gelmez, güven −2.",
+      "Tam iptal: avansın iadesi ve 2.000 TL iptal cezası, toplam −10.000 TL."
      ],
      "effects": [
       {
@@ -2326,7 +2408,7 @@
       {
        "kind": "acceptCommitment",
        "target": "order9",
-       "label": "Nermin'in grup siparişi (hazırlık 6.000, tahsilat 14.000)",
+       "label": "Nermin'in grup siparişi (hazırlık 6.000, teslimde 14.000)",
        "expiresAfterDay": 16,
        "amount": 800000
       }
@@ -2343,7 +2425,7 @@
        "amount": 2
       }
      ],
-     "requirementText": "Aynı anda en fazla iki açık taahhüt olabilir",
+     "requirementText": "Aynı anda en fazla iki açık sipariş alınabilir",
      "preview": [
       "Bugün para yok.",
       "16. gün +3.000 TL ve güven +6: daha az gelir, daha güçlü yerel bağ."
@@ -2367,7 +2449,7 @@
    "slot": "night",
    "speakerID": "sevim",
    "title": "Kayıt başvurusu",
-   "body": "Sevim bir başvuru formu uzattı. \"İlçe sicilinden bağımsız kayıt nüshası istersek 1.000 TL; yarın elimizde olur. Ya da mührün kaybolduğunu kurula ve köye açıkça bildiririz: eski mühürle yapılmış ya da yapılacak işler donar. İkisi birbirini kapatmaz.\"",
+   "body": "Sevim bir başvuru formu uzattı. \"İlçe kayıt dairesinden 19 Eylül akşamının kaydını isteyebiliriz; bin lira, yarın elimizde olur. Ya da mührün kaybolduğunu kurula ve köye açıkça bildiririz; o zaman eski mühürle yapılmış ya da yapılacak her iş durur. Birini bu gece yaparız, öbürü bekleyebilir.\"",
    "variants": [
     {
      "when": [
@@ -2375,12 +2457,12 @@
        "kind": "authoritySafe"
       }
      ],
-     "body": "Sevim bir başvuru formu uzattı. \"Kayıp bildirimi yapıldı. Ama kimin imzaladığını bilmek istiyorsan ilçe sicilinden bağımsız kayıt nüshası 1.000 TL; yarın elimizde olur.\"",
+     "body": "Sevim bir başvuru formu uzattı. \"Mührün kaybını bildirdik, satış durdu. Ama kimin imzaladığını bilmek istiyorsan ilçeden 19 Eylül akşamının kaydını isteyebiliriz; bin lira, yarın gelir.\"",
      "choices": [
       {
        "id": "request",
-       "label": "Bağımsız kayıt nüshası iste",
-       "resultText": "Form ilçeye gitti. Yarın tarih kaydı gelecek.",
+       "label": "İlçeden tarih kaydını iste",
+       "resultText": "Form ilçeye gitti. Kayıt yarın gelecek.",
        "effects": [
         {
          "kind": "cash",
@@ -2394,7 +2476,7 @@
          "kind": "grantEvidence",
          "target": "timeline",
          "startsAfterDays": 1,
-         "label": "İlçe sicilinden istenen tarih kaydı geldi."
+         "label": "İlçe kayıt dairesinden istenen tarih kaydı geldi; deftere işlendi."
         }
        ]
       },
@@ -2410,8 +2492,8 @@
    "choices": [
     {
      "id": "request",
-     "label": "Bağımsız kayıt nüshası iste",
-     "resultText": "Form ilçeye gitti. Yarın tarih kaydı gelecek.",
+     "label": "İlçeden tarih kaydını iste",
+     "resultText": "Form ilçeye gitti. Kayıt yarın gelecek.",
      "effects": [
       {
        "kind": "cash",
@@ -2425,14 +2507,14 @@
        "kind": "grantEvidence",
        "target": "timeline",
        "startsAfterDays": 1,
-       "label": "İlçe sicilinden istenen tarih kaydı geldi."
+       "label": "İlçe kayıt dairesinden istenen tarih kaydı geldi; deftere işlendi."
       }
      ]
     },
     {
      "id": "declare",
      "label": "Kayıp bildirimini açıkla",
-     "resultText": "Kurul tutanağa yazdı: kooperatifin mührü kayıp, eski mühürle yapılan işlemler geçersiz sayılacak. Araştırma sürüyor.",
+     "resultText": "Kurul tutanağa yazdı: kooperatifin mührü kayıp; eski mühürle yapılan işler geçersiz sayılacak. Kimin ne yaptığını araştırmak sürüyor.",
      "effects": [
       {
        "kind": "setFlag",
@@ -2448,7 +2530,7 @@
     {
      "id": "later",
      "label": "İkisini de sonra düşünürüm",
-     "resultText": "Sevim formu dosyaya kaldırdı. Kayıp bildirimi gündemde açık.",
+     "resultText": "Sevim formu dosyaya kaldırdı. \"Kayıp bildirimi bekleyebilir, ama çok değil.\"",
      "effects": []
     }
    ]
@@ -2458,7 +2540,7 @@
    "slot": "agenda",
    "speakerID": "rauf",
    "title": "Açılış sonrası fazla mesai",
-   "body": "Rauf ekibin adına konuştu. \"Rutin maaşlar zaten günlük giderde. Bu başka: ilk hafta açılış için gece yarısına kadar çalıştık. Bir defalık fazla mesai, 4 bin.\"",
+   "body": "Rauf, açılıştan beri kooperatifte çalışan ekibin adına konuştu. \"Maaşlarımız artık her akşam kasadan çıkıyor, ona lafım yok. Ama açılış haftası gece yarısına kadar çalıştık; kimse saymadı. Bir defalık, dört bin.\"",
    "choices": [
     {
      "id": "pay",
@@ -2517,7 +2599,7 @@
        "target": "grievance.hiddenIncome"
       }
      ],
-     "body": "Çınarın altında köy toplandı. 6. gün açılmayan defter hâlâ konuşuluyor: alacaklıdan saklanan gelir köyden de saklandı mı?"
+     "body": "Çınarın altında köy toplandı. Geçen hafta açılmayan defter hâlâ konuşuluyor: alacaklıdan saklanan gelir köyden de saklandı mı?"
     }
    ],
    "choices": [
@@ -2580,14 +2662,14 @@
    "day": 10,
    "slot": "night",
    "speakerID": "elif",
-   "title": "İlk hedefli görüşme",
+   "title": "Elif'in tavsiyesi",
    "requirements": [
     {
      "kind": "flag",
      "target": "letterRead"
     }
    ],
-   "body": "Elif kapıda. \"Kimden şüpheleniyorsun bilmiyorum, ama bence önce kayıtlara bak. Kimsenin sözü yetmez.\" Özel görüşme, kayıt araştırması ve dosya gündemde duruyor.",
+   "body": "Elif kapıda. \"Kimden şüphelendiğini bilmiyorum. Ama ben olsam önce kâğıtlara bakardım; buradaki herkes birbirinin akrabası, kimse kimseye kötü söz söylemez. Ya da tek tek kapılarını çalarsın; en azından dinlendiklerini bilirler.\"",
    "variants": [
     {
      "when": [
@@ -2599,12 +2681,12 @@
        "target": "location"
       }
      ],
-     "body": "Elif kapıda. \"Kayıtların tek bir kişiyi gösteriyor, değil mi? Ona bu gece özel bir soru sorabilirsin. Ama kesin suçlama yapma; bu daha bir iz.\"",
+     "body": "Elif kapıda. \"Kâğıtların tek bir kişiyi gösteriyor, değil mi? Ona bu gece sessizce bir soru sorabilirsin. Ama kimseyi suçlama; bu daha bir iz.\"",
      "choices": [
       {
        "id": "ask",
-       "label": "{culpritAcc} özel olarak sor",
-       "resultText": "Kapıyı kapatıp konuştunuz. Kimse duymadı.",
+       "label": "{culpritAcc} bir kenara çekip sor",
+       "resultText": "Kapıyı kapatıp baş başa konuştun. Kimse duymadı.",
        "effects": [
         {
          "kind": "pressure",
@@ -2619,7 +2701,7 @@
       {
        "id": "wait",
        "label": "Bağımsız kaydı bekle",
-       "resultText": "Elif başını salladı: \"Daha geç ama daha sağlam.\" 12. gece tarih karşılaştırması ücretsiz olacak.",
+       "resultText": "Elif başını salladı: \"Daha geç ama daha sağlam. Sevim'e söylerim; arşivi sana parasız açar.\"",
        "effects": [
         {
          "kind": "setFlag",
@@ -2632,16 +2714,29 @@
    ],
    "choices": [
     {
-     "id": "records",
+     "id": "wait",
      "label": "Kayıtları beklerim",
-     "resultText": "Elif gülümsedi. \"Halan da böyle derdi.\"",
-     "effects": []
+     "resultText": "Elif gülümsedi. \"Halan da böyle derdi. Sevim'e söylerim; arşivi sana parasız açar.\"",
+     "effects": [
+      {
+       "kind": "setFlag",
+       "target": "waitedForRecord"
+      }
+     ],
+     "preview": [
+      "12. gece arşiv karşılaştırması ücretsiz olur."
+     ]
     },
     {
      "id": "talk",
      "label": "Herkesle tek tek konuşacağım",
-     "resultText": "\"Özel görüşme suçlama değil,\" dedi Elif. \"Ama yeni bir kayıt olmadan aynı soruyu iki kez sorma.\"",
-     "effects": []
+     "resultText": "\"Konuşmak suçlamak değil,\" dedi Elif. \"Ama aynı soruyu iki kez sorma; insanlar sayar.\" Ertesi gün kapı kapı dolaştın. Kimse yeni bir şey söylemedi, ama herkes sorulduğunu hatırlayacak.",
+     "effects": [
+      {
+       "kind": "trust",
+       "amount": 2
+      }
+     ]
     }
    ]
   },
@@ -2650,7 +2745,7 @@
    "slot": "agenda",
    "speakerID": "elif",
    "title": "Ortak satış alanı",
-   "body": "Elif meydandaki çınarın altını gösterdi. \"Köyün kendi tezgâhı olursa işletmeden ayrı bir gelir olur. Peynir, reçel, odun. Kurmak 12 bin. Ya da şimdilik küçük bir destekle başlarız.\"",
+   "body": "Elif meydandaki çınarın altını gösterdi. \"Köyün kendi tezgâhı olursa kaplıcadan, kovandan ayrı bir gelir olur. Peynir, reçel, odun. Kurmak on iki bin. Ya da şimdilik bir masa, bir tente; küçük başlarız.\"",
    "choices": [
     {
      "id": "build",
@@ -2682,7 +2777,7 @@
     {
      "id": "support",
      "label": "Küçük ortak destekle ilerle",
-     "resultText": "Üreticilere bir masa ve tente verildi. Gelir değil, bir başlangıç. Tezgâh 18. güne kadar yine kurulabilir.",
+     "resultText": "Üreticilere bir masa ve tente verildi. Gelir değil, bir başlangıç. Asıl tezgâhı ayın 18'ine kadar yine kurabilirsin.",
      "requirements": [
       {
        "kind": "notFlag",
@@ -2715,7 +2810,7 @@
    "slot": "night",
    "speakerID": "nine",
    "title": "Nine'nin küçük isteği",
-   "body": "\"Evladım, kızımın ilaçları Sisliova'da. Biri getirebilir mi? Taşıma 2 bin tutuyormuş.\"",
+   "body": "\"Evladım, kızımın ilaçları Sisliova'da. Biri getirebilir mi? Taşıma iki bin tutuyormuş.\"",
    "variants": [
     {
      "when": [
@@ -2724,7 +2819,7 @@
        "target": "nineHelped"
       }
      ],
-     "body": "\"Odunum sayende yandı evladım. Bir isteğim daha var: kızımın ilaçları Sisliova'da. Biri getirebilir mi? Taşıma 2 bin tutuyormuş.\""
+     "body": "\"Odunum sayende yandı evladım. Bir isteğim daha var: kızımın ilaçları Sisliova'da. Biri getirebilir mi? Taşıma iki bin tutuyormuş.\""
     },
     {
      "when": [
@@ -2733,7 +2828,7 @@
        "target": "nineRefused"
       }
      ],
-     "body": "Nine bu kez kapıda beklemedi, sen gittin. \"Kızımın ilaçları Sisliova'da. Kooperatif bir taşıma ayarlayabilir mi? 2 bin tutuyormuş. Olmazsa olmaz, ben bir yolunu bulurum.\""
+     "body": "Nine bu kez kapıda beklemedi, sen gittin. \"Kızımın ilaçları Sisliova'da. Kooperatif bir taşıma ayarlayabilir mi? İki bin tutuyormuş. Olmazsa olmaz, ben bir yolunu bulurum.\""
     }
    ],
    "choices": [
@@ -2775,7 +2870,7 @@
    "slot": "agenda",
    "speakerID": "nermin",
    "title": "Kimin müşterisi?",
-   "body": "Aynı cumartesi için iki talep var. Nermin'in şehirden getirdiği özel grup ya da köyün kendi yerel programı. İkisi aynı gün sığmıyor. Bu, olağan günlük gelirin dışında ek bir organizasyon.",
+   "body": "Nermin iki kâğıdı yan yana koydu: aynı cumartesi için şehirden özel bir grup ve köyün kendi programı. \"İkisi aynı güne sığmaz. Grup iyi para öder; ama köyün programı da senin sözün.\"",
    "choices": [
     {
      "id": "private",
@@ -2799,7 +2894,7 @@
        "target": "localProgramCancelled"
       }
      ],
-     "memory": "12. gün yerel programı özel grup için iptal ettin."
+     "memory": "Yerel programı özel grup için iptal ettin."
     },
     {
      "id": "local",
@@ -2815,7 +2910,7 @@
        "amount": 3
       }
      ],
-     "memory": "12. gün yerel programı korudun."
+     "memory": "Yerel programı korudun."
     }
    ]
   },
@@ -2831,7 +2926,7 @@
      "target": "letterRead"
     }
    ],
-   "body": "Sevim iki kâğıdı yan yana koydu. \"Şirket avukatının köye ilk geldiği gün ile defterdeki boş satır aynı: 19 Eylül. O akşam kim neredeydi? Arşiv kopyasını karşılaştırmak 1.000 TL. Ya da ziyaret saatini tanıdıklara sorarız; ama bu duyulur.\"\n\nBirinin kendi sözü ile bir kayıt aynı şey değil: biri iddia, öbürü belge.",
+   "body": "Sevim iki kâğıdı yan yana koydu. \"Şirket avukatının köye ilk geldiği gün ile defterdeki boş satır aynı: 19 Eylül. O akşam kim neredeydi? Arşiv kopyasını ilçenin kaydıyla karşılaştırmak bin lira tutar. Ya da tanıdıklara sorarız; ama sorduğumuz duyulur.\"\n\nSevim kalemi bıraktı. \"Biri bir şey söyler, kâğıt başka bir şey. Ben kâğıda inanırım.\"",
    "variants": [
     {
      "when": [
@@ -2840,7 +2935,7 @@
        "target": "timeline"
       }
      ],
-     "body": "Sevim tarih kaydını bir kez daha okudu. \"Bu kayıt bir iddia değil, belge. Kimin ne söylediğinden bağımsız.\" Elindeki tarih kaydıyla şüphelilerin kendi anlatımlarını özel görüşmede karşılaştırabilirsin.",
+     "body": "Sevim tarih kaydını bir kez daha okudu. \"Bu bir laf değil, kâğıt. Kim ne derse desin değişmez. Şüphelendiğin biriyle konuşursan bunu masaya koyabilirsin.\"",
      "choices": [
       {
        "id": "ok",
@@ -2855,7 +2950,7 @@
     {
      "id": "archive",
      "label": "Arşiv kopyasını karşılaştır",
-     "resultText": "Arşiv kopyası ile ilçe teslim kaydı aynı saati gösteriyor. Bu bir belge; kimsenin sözüne dayanmıyor.",
+     "resultText": "Arşiv kopyası ile ilçenin kaydı yan yana kondu. Kayıt geldi; deftere işledin. Kimsenin sözüne dayanmıyor.",
      "effects": [
       {
        "kind": "cash",
@@ -2880,7 +2975,7 @@
     {
      "id": "ask",
      "label": "Ziyaret saatini tanıdıklara sor",
-     "resultText": "Tanıdıklar bir isim söyledi. Bu destekli bir anlatım; ileride bir kayıtla tamamlanabilir.",
+     "resultText": "Tanıdıklar o akşamı hatırladı; söylediklerini deftere işledin. Bu bir anlatım; bir kayıtla tamamlanması gerekecek.",
      "effects": [
       {
        "kind": "pressure",
@@ -2916,7 +3011,7 @@
       }
      ],
      "illustration": "kaplica",
-     "body": "Nermin şehirden düzenli gündüz grupları getirebilir. Kaplıcada gündüz grup paketi 10.000 TL; her akşam 1.000 TL daha brüt. Ya da bu haftaki gündüz alanını başka bir işletmeye devredersin: bugün 2.000 TL, kalıcı büyüme yok.",
+     "body": "Nermin şehirden düzenli gündüz grupları getirebilir. \"Gündüz paketi için biraz hazırlık lazım; sonra her akşam fazladan gelir. Ya da bu haftaki gündüz saatlerini başka bir işletmeye kiralarsın: bugün biraz para, sonrası yok.\"",
      "choices": [
       {
        "id": "grow",
@@ -2945,7 +3040,7 @@
       {
        "id": "rent",
        "label": "Bu haftalık alan hakkını devret",
-       "resultText": "Bugünün nakdi için bu geliştirme penceresini devrettin.",
+       "resultText": "Gündüz saatlerini bu hafta başkasına verdin. Para bugün geldi; büyüme başka bahara.",
        "effects": [
         {
          "kind": "cash",
@@ -2971,7 +3066,7 @@
       }
      ],
      "illustration": "ari",
-     "body": "Elif etikete köyün adını yazmış. Etiketli ürün hattı 7.000 TL; her akşam 1.000 TL daha brüt. Ya da bu partiyi başka bir markaya devredersin: bugün 2.000 TL, kalıcı büyüme yok.",
+     "body": "Elif etikete köyün adını yazmış. \"Etiketli bir ürün hattı kurarsak Karaçam adı başka raflara da girer. Ya da bu partiyi başka bir markaya veririz: bugün biraz para, o kadar.\"",
      "choices": [
       {
        "id": "grow",
@@ -3000,7 +3095,7 @@
       {
        "id": "rent",
        "label": "Bu partiyi devret",
-       "resultText": "Bugünün nakdi için bu geliştirme penceresini devrettin.",
+       "resultText": "Parti başka bir markanın etiketiyle gitti. Para bugün geldi; Karaçam adı rafta yok.",
        "effects": [
         {
          "kind": "cash",
@@ -3032,7 +3127,7 @@
      "value": "overtimePaid,teamTired"
     }
    ],
-   "body": "Rauf kazan dairesinden çıktı. \"İlk haftanın fazla mesaisi konuşulmadı. Kimse bir şey demiyor ama herkes biliyor.\"",
+   "body": "Rauf elindeki alet çantasını yere bıraktı. \"Açılış haftasının mesaisi hâlâ konuşulmadı. Kimse bir şey demiyor, ama herkes biliyor.\"",
    "choices": [
     {
      "id": "noted",
@@ -3049,6 +3144,26 @@
       }
      ],
      "memory": "İlk haftanın fazla mesaisi konuşulmadan kaldı."
+    },
+    {
+     "id": "pay",
+     "label": "Şimdi öde",
+     "resultText": "Rauf parayı ekibe dağıttı. \"Geç oldu,\" dedi, \"ama oldu.\"",
+     "effects": [
+      {
+       "kind": "cash",
+       "amount": -400000
+      },
+      {
+       "kind": "trust",
+       "amount": 2
+      },
+      {
+       "kind": "setFlag",
+       "target": "overtimePaid"
+      }
+     ],
+     "memory": "Açılış haftasının mesaisini geç de olsa ödedin."
     }
    ]
   },
@@ -3092,7 +3207,7 @@
    "slot": "agenda",
    "speakerID": "sevim",
    "title": "Kışlık ortak stok",
-   "body": "Sevim kış listesini uzattı: un, yağ, gaz. \"Bu işletmenin yakıtı değil; hanelerin ortak kış ihtiyacı. Kooperatif toptan alırsa 5 bin. Ya da herkes kendi alır.\"",
+   "body": "Sevim kış listesini uzattı: un, yağ, gaz. \"Bu kaplıcanın, kovanın masrafı değil; evlerin kışı. Kooperatif toptan alırsa beş bine çıkar. Yoksa herkes kendi başının çaresine bakar.\"",
    "choices": [
     {
      "id": "coop",
@@ -3132,7 +3247,7 @@
    "day": 14,
    "slot": "night",
    "speakerID": "halil",
-   "title": "Mührün hareket izi",
+   "title": "Mührün izi",
    "requirements": [
     {
      "kind": "flag",
@@ -3143,7 +3258,7 @@
      "target": "sealRecovered"
     }
    ],
-   "body": "Halanın mektubundan beri mühür aranıyor. Güvendiğin biri mührün son görüldüğü yeri hatırlayabilir; ya da ilçedeki teslim kayıtlarını karşılaştırırsın. Rastgele dolap açmak yok: önce iz daralacak.",
+   "body": "Halil fenerini masaya koydu. \"Mühür aranıyor, biliyorum. Rastgele dolap açarsan köy kızar. Ya o akşamı hatırlayan birine sorarsın ya da ilçenin teslim defterine bakarsın.\"",
    "variants": [
     {
      "when": [
@@ -3152,12 +3267,12 @@
        "target": "location"
       }
      ],
-     "body": "Mührün yerini zaten biliyorsun. Bu gece onun yerine şirketin köyle bağlantısına bakılabilir: plakadaki büro, avukatın zarfı.",
+     "body": "Mührün yerini zaten biliyorsun. Halil başka bir şey hatırladı: köprüde duran arabanın plakası ve avukatın bıraktığı kart.",
      "choices": [
       {
        "id": "link",
        "label": "Şirket bağlantısını not et",
-       "resultText": "Plakadaki büro ile avukatın kartındaki adres aynı. Şirket ile alacaklı ayrı kişiler; ama şirket borcun peşinde.",
+       "resultText": "Plakadaki büro ile avukatın kartındaki adres aynı: şirketin avukatları orada çalışıyor. Şirket ile alacaklı ayrı taraflar; ama şirket, borcun açtığı fırsatın peşinde.",
        "effects": [
         {
          "kind": "grantEvidence",
@@ -3174,12 +3289,12 @@
        "target": "location.narrow"
       }
      ],
-     "body": "Mührün izi zaten iki yere inmişti. Bu gece yapılacak bir şey yok; yarın ya da gündemde tanıkla açılabilir.",
+     "body": "Mührün izi zaten iki yere daralmıştı: {placeA} ya da {placeB}. Halil omuz silkti: \"Bu gece yapacak bir şey yok. Açacaksan tanıkla aç.\"",
      "choices": [
       {
        "id": "ok",
        "label": "Yarına bırak",
-       "resultText": "İki yerin adı Defter'de.",
+       "resultText": "İki yerin adı defterde.",
        "effects": []
       }
      ]
@@ -3189,7 +3304,7 @@
     {
      "id": "witness",
      "label": "Güvendiğin birine sor",
-     "resultText": "Hatırlanan bir akşam, bir el feneri, bir kapı. İz iki yere daraldı.",
+     "resultText": "Hatırlanan bir akşam, bir el feneri, bir kapı. Mührün izi iki yere daraldı: {placeA} ya da {placeB}.",
      "requirements": [
       {
        "kind": "anyFlag",
@@ -3207,7 +3322,7 @@
     {
      "id": "compare",
      "label": "Bağımsız kayıtları karşılaştır",
-     "resultText": "İlçenin teslim defteri iki yer gösteriyor. İz daraldı.",
+     "resultText": "İlçenin teslim defteri iki yer gösteriyor: {placeA} ya da {placeB}. İz daraldı.",
      "effects": [
       {
        "kind": "cash",
@@ -3231,8 +3346,8 @@
    "id": "ag.declaration",
    "slot": "agenda",
    "speakerID": "mektup",
-   "title": "Beyan dosyası",
-   "body": "Alacaklının avukatı beyan dosyasını istiyor: gelirler, giderler, borcun takvimi. Belgeleri tamamlatmak 4.000 TL. Ya da eksik dosyayla süre istersin. Aidat katkısı varsa 14. akşam son kez tahsil edildi; bugünden itibaren o kaynak kapalı.",
+   "title": "Gelir bildirimi",
+   "body": "Alacaklının avukatı ikinci yazıyı gönderdi: gelirler, giderler, borcun takvimi; hepsi belgeli olacak. Sevim yazıyı okudu. \"Belgeleri muhasebeciye tamamlatırsak dört bin. Ya da eksik haliyle gönderip süre isteriz.\"",
    "choices": [
     {
      "id": "complete",
@@ -3256,7 +3371,7 @@
     {
      "id": "extend",
      "label": "Eksik dosyayla süre iste",
-     "resultText": "Avukat süre verdi ama not düştü: \"Eksik.\" Araştırmanın kopyaları sende kalıyor.",
+     "resultText": "Avukat süre verdi ama dosyaya \"eksik\" notu düştü.",
      "effects": [
       {
        "kind": "pressure",
@@ -3282,7 +3397,7 @@
      "target": "custodyVerified"
     }
    ],
-   "body": "Mührün yeri henüz bilinmiyor. Kurulla birlikte kayıtlı bir arama yapılabilir: eski dolaplar tek tek değil, kayıtlara göre açılır.",
+   "body": "Halil eski dolapların anahtarlarını şıngırdattı. \"Mührün yeri belli değil. Kurulla birlikte, kayıtlara bakarak arayalım; tek tek dolap kırmayalım.\"",
    "variants": [
     {
      "when": [
@@ -3291,12 +3406,12 @@
        "target": "sealSilent"
       }
      ],
-     "body": "Mühür sende, kilitli çekmecede. Ama nereden ve kimin önünde alındığı yazılı değil. Tanık zinciri olmadan kurul bunu kanıt saymaz.",
+     "body": "Mühür sende, kilitli çekmecede. Ama nereden ve kimin önünde aldığın yazılı değil. Halil: \"Tanıksız mühür, kurulun gözünde senin sözün. Tutanak lazım.\"",
      "choices": [
       {
        "id": "record",
        "label": "Tanıkla tutanağa geçir",
-       "resultText": "Halil ve Sevim'in önünde tutanak yazıldı. Mührün nereden çıktığı artık kayıtlı.",
+       "resultText": "Kurulun iki üyesinin önünde tutanak yazıldı. Mührün nereden çıktığı artık kayıtlı.",
        "effects": [
         {
          "kind": "cash",
@@ -3312,7 +3427,7 @@
       {
        "id": "later",
        "label": "Sonra",
-       "resultText": "Mühür çekmecede kaldı. Teslim zinciri gündemde açık.",
+       "resultText": "Mühür çekmecede kaldı. Tanıklı tutanak hâlâ yazılmadı.",
        "effects": []
       }
      ]
@@ -3323,7 +3438,7 @@
        "kind": "sealLocated"
       }
      ],
-     "body": "Mührün nerede olduğunu biliyorsun ya da iki yere indirdin. Tanıkla ve kayıtla teslim almak 1.500 TL. Sessizce alıp kilitlemek bedava ama tanık zincirini sonra tamamlamak gerekir.",
+     "body": "Mührün nerede olduğunu biliyorsun ya da iki yere daralttın. Halil: \"Tanıkla, tutanakla alırsak kimse itiraz edemez. Sessizce alırsak mühür bizde olur, ama kurul bunu kanıt saymaz.\"",
      "choices": [
       {
        "id": "witnessed",
@@ -3348,7 +3463,7 @@
       {
        "id": "silent",
        "label": "Sessizce alıp kilitle",
-       "resultText": "Mühür artık sende. Kimse görmedi; bu yüzden kurul için kanıt değil.",
+       "resultText": "Mühür artık sende. Kimse görmedi; kurul bunu senin sözün sayar.",
        "effects": [
         {
          "kind": "pressure",
@@ -3374,7 +3489,7 @@
     {
      "id": "search",
      "label": "Kurulla kayıtlı arama",
-     "resultText": "Kayıtlar iki yer gösterdi. Mührün izi daraldı; açmak için tanık gerekecek.",
+     "resultText": "Kayıtlar iki yer gösterdi: {placeA} ya da {placeB}. Açmak için tanık gerekecek.",
      "effects": [
       {
        "kind": "cash",
@@ -3400,7 +3515,7 @@
    "slot": "morning",
    "speakerID": "nermin",
    "title": "Verilen sözün günü",
-   "body": "9. gün sipariş de üretici günü de seçilmedi. Nermin yine de uğradı: \"Elinde fazla ürün varsa özel bir alıcım var. Yoksa köy pazarına kalsın.\"",
+   "body": "Nermin yine de uğradı; bu kez sipariş yoktu. \"Elinde fazla ürün varsa özel bir alıcım var. Yoksa köy pazarına kalsın.\"",
    "variants": [
     {
      "when": [
@@ -3410,14 +3525,14 @@
        "value": "accepted"
       }
      ],
-     "body": "Teslim günü. Nermin'in grubu yolda. Hazırlık için 6.000 TL nakit gerekiyor; teslimde 14.000 TL tahsil edilir. Nakit yetmezse yerel üretici işi ve kalan tahsilatı alır; avans kooperatifte kalır.",
+     "body": "Teslim günü. Nermin'in grubu yolda. Sevim hazırlık listesini uzattı: \"Önce altı bin harcayacağız, akşam on dört bin gelir. Kasada yoksa komşu köyün üreticisi işi alır; avans bizde kalır, gerisi onun.\"",
      "choices": [
       {
        "id": "deliver",
        "label": "Teslim et",
-       "resultText": "Kırk kavanoz, kırk misafir, tek bir eksik yok. Nermin kalan parayı saydı.",
+       "resultText": "Kırk kavanoz, tek bir eksik yok. Nermin kalan parayı saydı.",
        "preview": [
-        "Önce 6.000 TL hazırlık, sonra 14.000 TL tahsilat: bugünün net farkı +8.000 TL."
+        "Önce 6.000 TL hazırlık, sonra 14.000 TL ödeme: bugünün net farkı +8.000 TL."
        ],
        "effects": [
         {
@@ -3445,12 +3560,23 @@
          "target": "order9Delivered"
         }
        ],
-       "memory": "16. gün Nermin'in siparişini kendin teslim ettin."
+       "memory": "Nermin'in siparişini kendin teslim ettin.",
+       "resultVariants": [
+        {
+         "when": [
+          {
+           "kind": "business",
+           "value": "spa"
+          }
+         ],
+         "text": "Kırk misafir geldi, kırk havlu hazırdı; tek bir eksik yok. Nermin kalan parayı saydı."
+        }
+       ]
       },
       {
        "id": "partner",
        "label": "Yerel üreticiyle tamamla",
-       "resultText": "Komşu köyün üreticisi işi aldı. Avans sende kaldı; kalan tahsilat onun.",
+       "resultText": "Komşu köyün üreticisi işi aldı. Avans sende kaldı; kalan ödeme onun.",
        "effects": [
         {
          "kind": "trust",
@@ -3461,13 +3587,13 @@
          "target": "order9"
         }
        ],
-       "memory": "16. gün siparişi yerel üreticiyle tamamladın."
+       "memory": "Siparişi komşu köyün üreticisiyle tamamladın."
       },
       {
        "id": "cancel",
        "label": "Siparişi iptal et",
-       "resultText": "Nermin avansı ve cayma bedelini istedi. Kâğıt imzalandı.",
-       "confirm": "Tam iptal: 8.000 TL avans ve 2.000 TL cayma bedeli, toplam 10.000 TL kasadan çıkar. Kasa yetmezse eksi bakiye onaylı ekonomik kayıp olarak işlenir. Emin misin?",
+       "resultText": "Nermin avansı ve iptal cezasını istedi. Kâğıt imzalandı.",
+       "confirm": "Tam iptal: 8.000 TL avansın iadesi ve 2.000 TL iptal cezası, toplam 10.000 TL kasadan çıkar. Kasa yetmezse kasa eksiye düşer. Emin misin?",
        "allowDebt": true,
        "effects": [
         {
@@ -3483,7 +3609,67 @@
          "target": "order9"
         }
        ],
-       "memory": "16. gün Nermin'in siparişini iptal ettin."
+       "memory": "Nermin'in siparişini iptal ettin."
+      }
+     ]
+    },
+    {
+     "when": [
+      {
+       "kind": "commitmentIs",
+       "target": "local9",
+       "value": "accepted"
+      },
+      {
+       "kind": "flag",
+       "target": "localProgramCancelled"
+      }
+     ],
+     "body": "Yerel üretici günü. Cumartesi programı özel grup için iptal edilen üreticiler bu kez temkinli geldi; masalarını yarım kurdular. Nermin de geldi: \"Bu ürünleri özel bir alıcıya çevirirsen iki katı ederim.\"",
+     "choices": [
+      {
+       "id": "keep",
+       "label": "Sözünü tut",
+       "resultText": "Meydan doldu. Üreticiler ilk kez kendi tezgâhlarının arkasındaydı.",
+       "effects": [
+        {
+         "kind": "cash",
+         "amount": 300000
+        },
+        {
+         "kind": "trust",
+         "amount": 6
+        },
+        {
+         "kind": "fulfillCommitment",
+         "target": "local9"
+        }
+       ],
+       "memory": "Yerel üretici gününe verdiğin sözü tuttun."
+      },
+      {
+       "id": "private",
+       "label": "Ürünü özel alıcıya çevir",
+       "resultText": "Ürünler Nermin'in kamyonetine yüklendi. Üreticiler meydanda boş masalara baktı.",
+       "effects": [
+        {
+         "kind": "cash",
+         "amount": 600000
+        },
+        {
+         "kind": "trust",
+         "amount": -2
+        },
+        {
+         "kind": "fulfillCommitment",
+         "target": "local9"
+        },
+        {
+         "kind": "setFlag",
+         "target": "grievance.localProgram"
+        }
+       ],
+       "memory": "Yerel üretici gününü özel alıcıya çevirdin."
       }
      ]
     },
@@ -3515,7 +3701,7 @@
          "target": "local9"
         }
        ],
-       "memory": "16. gün yerel üretici gününe verdiğin sözü tuttun."
+       "memory": "Yerel üretici gününe verdiğin sözü tuttun."
       },
       {
        "id": "private",
@@ -3539,7 +3725,7 @@
          "target": "grievance.localProgram"
         }
        ],
-       "memory": "16. gün yerel üretici gününü özel alıcıya çevirdin."
+       "memory": "Yerel üretici gününü özel alıcıya çevirdin."
       }
      ]
     }
@@ -3573,7 +3759,7 @@
    "id": "d16.night.reason",
    "day": 16,
    "slot": "night",
-   "speakerID": "koy",
+   "speakerID": "anlatici",
    "title": "İmza sahibinin gerekçesi",
    "requirements": [
     {
@@ -3588,10 +3774,14 @@
       {
        "kind": "flag",
        "target": "caseResolved"
+      },
+      {
+       "kind": "caseIs",
+       "value": "selim"
       }
      ],
      "body": "Dosya kapandı ama {culprit} bir kez daha konuşmak istiyor. \"Neden yaptığımı bilmeni istiyorum. Affetmen için değil.\"",
-     "speakerID": "koy",
+     "speakerID": "selim",
      "choices": [
       {
        "id": "listen",
@@ -3615,16 +3805,85 @@
     {
      "when": [
       {
-       "kind": "hasAnyEvidence",
-       "value": "signature,location,timeline"
+       "kind": "flag",
+       "target": "caseResolved"
+      },
+      {
+       "kind": "caseIs",
+       "value": "halil"
       }
      ],
-     "body": "{culprit} akşam karşına oturdu. \"Kayıtları topladığını biliyorum. Sana gerekçemi anlatacağım. Bu bir af dilemesi değil.\"",
+     "body": "Dosya kapandı ama {culprit} bir kez daha konuşmak istiyor. \"Neden yaptığımı bilmeni istiyorum. Affetmen için değil.\"",
+     "speakerID": "halil",
      "choices": [
       {
        "id": "listen",
        "label": "Dinle ve kayda geçir",
-       "resultText": "Söylediklerini kelimesi kelimesine yazdın. Gerekçeyi duymak, işlemi silmiyor.",
+       "resultText": "{truthMotive} Gerekçe kayda geçti; sorumluluk yerinde duruyor.",
+       "effects": [
+        {
+         "kind": "grantEvidence",
+         "target": "statement.culprit"
+        }
+       ]
+      },
+      {
+       "id": "no",
+       "label": "Kayıtlar yeterli",
+       "resultText": "Kapıyı nazikçe kapattın.",
+       "effects": []
+      }
+     ]
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "caseResolved"
+      },
+      {
+       "kind": "caseIs",
+       "value": "sevim"
+      }
+     ],
+     "body": "Dosya kapandı ama {culprit} bir kez daha konuşmak istiyor. \"Neden yaptığımı bilmeni istiyorum. Affetmen için değil.\"",
+     "speakerID": "sevim",
+     "choices": [
+      {
+       "id": "listen",
+       "label": "Dinle ve kayda geçir",
+       "resultText": "{truthMotive} Gerekçe kayda geçti; sorumluluk yerinde duruyor.",
+       "effects": [
+        {
+         "kind": "grantEvidence",
+         "target": "statement.culprit"
+        }
+       ]
+      },
+      {
+       "id": "no",
+       "label": "Kayıtlar yeterli",
+       "resultText": "Kapıyı nazikçe kapattın.",
+       "effects": []
+      }
+     ]
+    },
+    {
+     "when": [
+      {
+       "kind": "singleCandidate"
+      },
+      {
+       "kind": "caseIs",
+       "value": "selim"
+      }
+     ],
+     "body": "{culprit} akşam karşına oturdu. \"Kâğıtları topladığını biliyorum. Sana gerekçemi anlatacağım. Bu bir af dilemesi değil.\"",
+     "choices": [
+      {
+       "id": "listen",
+       "label": "Dinle ve kayda geçir",
+       "resultText": "{truthMotive} Söylediklerini kelimesi kelimesine yazdın. Gerekçeyi duymak, yaptığını silmiyor.",
        "effects": [
         {
          "kind": "grantEvidence",
@@ -3636,28 +3895,99 @@
       {
        "id": "records",
        "label": "Yalnız kayıtları sor",
-       "resultText": "\"Gerekçen değil, kâğıtlar,\" dedin. Konuşma kısa sürdü. Dosyada eksik kalan: {missingParts}.",
+       "resultText": "\"Gerekçen değil, kâğıtlar,\" dedin. Konuşma kısa sürdü.",
        "effects": []
       }
-     ]
+     ],
+     "speakerID": "selim"
+    },
+    {
+     "when": [
+      {
+       "kind": "singleCandidate"
+      },
+      {
+       "kind": "caseIs",
+       "value": "halil"
+      }
+     ],
+     "body": "{culprit} akşam karşına oturdu. \"Kâğıtları topladığını biliyorum. Sana gerekçemi anlatacağım. Bu bir af dilemesi değil.\"",
+     "choices": [
+      {
+       "id": "listen",
+       "label": "Dinle ve kayda geçir",
+       "resultText": "{truthMotive} Söylediklerini kelimesi kelimesine yazdın. Gerekçeyi duymak, yaptığını silmiyor.",
+       "effects": [
+        {
+         "kind": "grantEvidence",
+         "target": "statement.culprit"
+        }
+       ],
+       "memory": "İmza sahibinin gerekçesini dinleyip kayda geçirdin."
+      },
+      {
+       "id": "records",
+       "label": "Yalnız kayıtları sor",
+       "resultText": "\"Gerekçen değil, kâğıtlar,\" dedin. Konuşma kısa sürdü.",
+       "effects": []
+      }
+     ],
+     "speakerID": "halil"
+    },
+    {
+     "when": [
+      {
+       "kind": "singleCandidate"
+      },
+      {
+       "kind": "caseIs",
+       "value": "sevim"
+      }
+     ],
+     "body": "{culprit} akşam karşına oturdu. \"Kâğıtları topladığını biliyorum. Sana gerekçemi anlatacağım. Bu bir af dilemesi değil.\"",
+     "choices": [
+      {
+       "id": "listen",
+       "label": "Dinle ve kayda geçir",
+       "resultText": "{truthMotive} Söylediklerini kelimesi kelimesine yazdın. Gerekçeyi duymak, yaptığını silmiyor.",
+       "effects": [
+        {
+         "kind": "grantEvidence",
+         "target": "statement.culprit"
+        }
+       ],
+       "memory": "İmza sahibinin gerekçesini dinleyip kayda geçirdin."
+      },
+      {
+       "id": "records",
+       "label": "Yalnız kayıtları sor",
+       "resultText": "\"Gerekçen değil, kâğıtlar,\" dedin. Konuşma kısa sürdü.",
+       "effects": []
+      }
+     ],
+     "speakerID": "sevim"
     }
    ],
    "choices": [
     {
      "id": "listen",
      "label": "Dinle ve kayda geçir",
-     "resultText": "{decoy} o akşamı anlattı. Kendi sözü; kayıtla karşılaştırılmadan bir şey kanıtlamaz.",
+     "resultText": "{decoy} o akşamı anlattı. Bir laf; kayıtla karşılaştırılmadan bir şey kanıtlamaz. Ama dinlenmiş olmak ona iyi geldi.",
      "effects": [
       {
        "kind": "remember",
        "value": "{decoy} kendi hesabını anlattı; bir kayıtla karşılaştırılması gerekiyor."
+      },
+      {
+       "kind": "trust",
+       "amount": 2
       }
      ]
     },
     {
      "id": "records",
      "label": "Yalnız kayıtları sor",
-     "resultText": "\"Kayıt getir, konuşalım,\" dedin. {decoy} başını salladı.",
+     "resultText": "\"Kayıt getir, konuşalım,\" dedin. {decoy} başını salladı ve kapıyı kendisi kapattı.",
      "effects": []
     }
    ]
@@ -3667,7 +3997,7 @@
    "slot": "agenda",
    "speakerID": "ekip",
    "title": "Bir kişinin üstünde bütün iş",
-   "body": "İşin bütün düzeni tek bir kişinin kafasında. Düzeni paylaşmak için 3.000 TL eğitim; her akşam 500 TL brüt artış. Ya da mevcut tempoyu korursun: insanlar büyüme baskısından uzak kalmayı da seçebilir.",
+   "body": "Ekip bir akşam çay ocağında konuştu: işin bütün düzeni tek bir kişinin kafasında. \"O hastalansa kapıyı açamayız. Düzeni herkese öğretmek üç bin tutar; biraz da hız kazanırız. Ya da böyle devam ederiz; kimse yeni bir şey öğrenmek zorunda kalmaz.\"",
    "variants": [
     {
      "when": [
@@ -3680,7 +4010,7 @@
        "target": "bees.buyer"
       }
      ],
-     "body": "Arı evinin düzenli alıcısı yok. Bu slotta ekip eğitimi yerine bir alıcı sözleşmesi de kurulabilir: 3.000 TL, her akşam 1.500 TL brüt. Ya da mevcut tempoyu korursun.",
+     "body": "Arı evinin düzenli bir alıcısı yok. Ekipten biri Sisliova'da haftalık bal isteyen bir market bulmuş. \"Anlaşmayı kurmak üç bin tutar. Ya da düzeni herkese öğretiriz. Ya da böyle devam ederiz.\"",
      "choices": [
       {
        "id": "buyer",
@@ -3816,19 +4146,19 @@
    "slot": "anchor",
    "speakerID": "rauf",
    "title": "Hava uyarısı",
-   "body": "Rauf radyoyu masaya koydu. \"20. gün sert hava geliyor; yol iki gün kapanabilir. O sabah ya korumalı, kapalı taşıma düzenleriz (4.000 TL; güven 60 ve üstündeyse gönüllüler sayesinde 2.000) ya da 21 ve 22. akşam işi durdururuz: o iki akşam brüt gelir yok, sabit giderler sürer.\"",
+   "body": "Rauf radyoyu masaya koydu. \"Ayın 20'sinde sert hava geliyor; yol iki gün kapanabilir. O sabah ya kamyonetleri brandalarız, zincir takarız, iş durmaz: dört bin tutar, köy arkamızdaysa gönüllüler gelir, yarısına iner. Ya da iki gün kapıyı kapatırız; o iki gün kimse gelmez ama maaşlar, yakıt yine gider.\"",
    "choices": [
     {
      "id": "noted",
      "label": "Not aldım",
-     "resultText": "20. gün Defter'e işaretlendi.",
+     "resultText": "Ayın 20'si deftere işaretlendi.",
      "effects": [
       {
        "kind": "setFlag",
        "target": "weatherWarned"
       }
      ],
-     "memory": "Rauf 20. gün için hava uyarısı yaptı."
+     "memory": "Rauf ayın 20'si için hava uyarısı yaptı."
     }
    ]
   },
@@ -3837,14 +4167,14 @@
    "day": 17,
    "slot": "night",
    "speakerID": "sicil",
-   "title": "Şirket nüshası",
+   "title": "İmzalı kopya",
    "requirements": [
     {
      "kind": "flag",
      "target": "letterRead"
     }
    ],
-   "body": "Şirketin dosyasındaki nüsha da istenebilir. Doğrudan kopya aldırmak 2.000 TL ve bugün elinde olur. Açık kayıt talebi bedava, ama belge 20. gün gelir ve şirket talebi duyar.",
+   "body": "İlçe kayıt dairesinden Sevim'e haber geldi: satış yetkisinin şirkete verilen imzalı kopyası onların dosyasında da duruyor. Kuryeyle hemen getirtmek mümkün, ama ücreti var. Resmî yoldan istemek bedava; kopya ayın 20'sinde gelir ve şirket istediğini öğrenir.",
    "variants": [
     {
      "when": [
@@ -3853,24 +4183,24 @@
        "target": "signature"
       }
      ],
-     "body": "İmza nüshası zaten elinde. Şirket nüshasına bakmak başka bir şey gösterebilir: imzalayana ne vaat edildiği.",
+     "body": "İmzalı kopya zaten elinde. Şirketin kendi kopyası başka bir şey gösterebilir: imzalayana karşılığında ne söz verildiği.",
      "choices": [
       {
        "id": "copy",
-       "label": "Şirket nüshasını karşılaştır",
-       "resultText": "Vaat edilen ile yazılan arasında boşluk var.",
+       "label": "Şirketin kopyasını karşılaştır",
+       "resultText": "Şirketin kopyasında, imzalayana verilen söz ile kâğıda yazılan arasındaki fark açıkça görülüyor; deftere işledin.",
        "effects": [
         {
          "kind": "grantEvidence",
          "target": "company.promise"
         }
        ],
-       "memory": "Şirket nüshasında imzalayana verilen sözün yazılmadığını gördün."
+       "memory": "Şirketin kopyasında imzalayana verilen sözün yazılmadığını gördün."
       },
       {
        "id": "skip",
        "label": "Gerek yok",
-       "resultText": "Nüsha istenmedi.",
+       "resultText": "Şirketin kopyası istenmedi.",
        "effects": []
       }
      ]
@@ -3879,8 +4209,8 @@
    "choices": [
     {
      "id": "fast",
-     "label": "Doğrudan kopya aldır",
-     "resultText": "Kurye akşam geldi. İmza nüshası elinde.",
+     "label": "Kuryeyle hemen getirt",
+     "resultText": "Kurye akşam geldi. İmzalı kopya elinde; deftere işledin.",
      "effects": [
       {
        "kind": "cash",
@@ -3895,14 +4225,14 @@
        "target": "signature"
       }
      ],
-     "memory": "Şirket nüshasından imza kaydını hızlı yoldan aldın."
+     "memory": "Satış yetkisinin imzalı kopyasını kuryeyle getirttin."
     },
     {
      "id": "open",
-     "label": "Açık kayıt iste",
-     "resultText": "Talep yazıldı. Belge 20. gün gelecek.",
+     "label": "Resmî yoldan iste",
+     "resultText": "Talep yazıldı. Kopya ayın 20'sinde gelecek.",
      "preview": [
-      "İmza nüshası 20. gün gelir."
+      "İmzalı kopya 20. gün gelir."
      ],
      "effects": [
       {
@@ -3913,14 +4243,14 @@
        "kind": "grantEvidence",
        "target": "signature",
        "startsAfterDays": 3,
-       "label": "Açık kayıt talebinin cevabı geldi: imza nüshası."
+       "label": "Resmî talebin cevabı geldi: satış yetkisinin imzalı kopyası. Deftere işlendi."
       }
      ]
     },
     {
      "id": "skip",
      "label": "Şimdilik isteme",
-     "resultText": "Nüsha istenmedi. Kayıt araştırması gündemde açık.",
+     "resultText": "Kopya istenmedi.",
      "effects": []
     }
    ]
@@ -3930,7 +4260,7 @@
    "slot": "agenda",
    "speakerID": "elif",
    "title": "Köyün başardığını görünür kılmak",
-   "body": "Elif köyün iki haftasını anlatan bir pano hazırladı. Küçük bir ortak buluşma 3.000 TL; ya da kısa bir açıklama asılır.",
+   "body": "Elif köyün iki haftasını anlatan bir pano hazırladı. \"Meydanda küçük bir sofra kurarız, herkes kendi adını panoda görür. Ya da panoyu kahveye asarız, o kadar.\"",
    "variants": [
     {
      "when": [
@@ -3939,7 +4269,7 @@
        "target": "wedding"
       }
      ],
-     "body": "Elif köyün iki haftasını anlatan bir pano hazırladı. \"Düğünü yapan ekip yine yardım eder; yeni bir düğün değil, onların bir akşamı.\" Küçük bir ortak buluşma 3.000 TL; ya da kısa bir açıklama asılır."
+     "body": "Elif köyün iki haftasını anlatan bir pano hazırladı. \"Şenliği kuran ekip yine yardım eder; yeni bir şenlik değil, bir akşam sofrası. Ya da panoyu kahveye asarız.\""
     }
    ],
    "choices": [
@@ -3961,7 +4291,7 @@
        "amount": -3
       }
      ],
-     "memory": "Köyün başardıklarını ortak bir buluşmayla gösterdiniz."
+     "memory": "Köyün başardıklarını meydanda bir sofrayla gösterdin."
     },
     {
      "id": "note",
@@ -3981,7 +4311,7 @@
    "day": 18,
    "slot": "anchor",
    "speakerID": "kurul",
-   "title": "Erken dosya toplantısı",
+   "title": "Kurul dosyaya bakıyor",
    "requirements": [
     {
      "kind": "flag",
@@ -3992,7 +4322,7 @@
      "target": "caseResolved"
     }
    ],
-   "body": "Kurul dosyanı tarttı. Eksik: {missingParts}. Aynı kanıtı üç kez sunman gerekmiyor; eksik parça tamamlanınca 24. gün son kamuya açık görüşme var.",
+   "body": "Kurul dosyanı masaya yaydı. \"Eksik olan: {missingParts},\" dedi kurulun en yaşlısı. \"Tamamlarsan ayın 24'ünde herkesin önünde bir kez daha dinleriz.\"",
    "variants": [
     {
      "when": [
@@ -4001,7 +4331,7 @@
        "value": "culprit"
       }
      ],
-     "body": "Dosyan tam: imza, bağımsız tarih ve tanıklı mühür zinciri üç ayrı kaynaktan. Kurul kamuya açık görüşmeye hazır. Kimin dosyasını sunacaksın?",
+     "body": "Dosyan tam: imza kaydı, tarih kaydı ve mührün tanıklı teslimi; üçü de ayrı yerden. Kurul herkesi meydana çağırdı. Kimin dosyasını sunacaksın?",
      "choices": [
       {
        "id": "selim",
@@ -4039,7 +4369,7 @@
       {
        "id": "wait",
        "label": "Bugün sunma",
-       "resultText": "Kurul dosyayı 24. güne bıraktı.",
+       "resultText": "Kurul dosyayı ayın 24'üne bıraktı.",
        "effects": []
       }
      ]
@@ -4049,7 +4379,7 @@
     {
      "id": "ok",
      "label": "Anladım",
-     "resultText": "Kurul eksik listeyi Defter'e yazdı.",
+     "resultText": "Kurul eksik listeyi deftere yazdı.",
      "effects": []
     }
    ]
@@ -4059,8 +4389,8 @@
    "day": 18,
    "slot": "night",
    "speakerID": "elif",
-   "title": "Sonuçları izlemek",
-   "body": "Elif programını gösterdi: Sisliova'daki meslek kursuna başvurusu kabul edilmiş. \"Hafta sonları gidip geleceğim.\" Dosyanın eksik parçası için de bir fikri var: \"Kayıt araştırması ya da mühür zinciri; hangisi eksikse.\"",
+   "title": "Elif'in kursu",
+   "body": "Elif programını gösterdi: Sisliova'daki meslek kursuna kabul edilmiş. \"Hafta sonları gidip geleceğim. Yol parası biraz dert ama hallederim.\"",
    "variants": [
     {
      "when": [
@@ -4069,7 +4399,7 @@
        "target": "caseResolved"
       }
      ],
-     "body": "Köyde dosyanın kapandığı konuşuluyor. Kimi rahatladı, kimi {culpritAcc} savunuyor: \"Köy için yaptı.\" Elif programını gösterdi: Sisliova'daki meslek kursuna kabul edilmiş. \"Hafta sonları gidip geleceğim.\""
+     "body": "Köyde dosyanın kapandığı konuşuluyor. Kimi rahatladı, kimi {culpritAcc} savunuyor: \"Köy için yaptı.\" Elif programını gösterdi: Sisliova'daki meslek kursuna kabul edilmiş. \"Hafta sonları gidip geleceğim. Yol parası biraz dert ama hallederim.\""
     }
    ],
    "choices": [
@@ -4081,9 +4411,23 @@
     },
     {
      "id": "plan",
-     "label": "Planını anlat",
-     "resultText": "Elif saatlerce anlattı. Köyün geleceği biraz da onun defterinde.",
-     "effects": []
+     "label": "Yol parasını kooperatif karşılasın",
+     "resultText": "Elif önce itiraz etti, sonra parayı aldı. \"Kursu bitirince ilk işim kooperatifin tanıtımı,\" dedi.",
+     "effects": [
+      {
+       "kind": "cash",
+       "amount": -150000
+      },
+      {
+       "kind": "trust",
+       "amount": 2
+      },
+      {
+       "kind": "setFlag",
+       "target": "elifSupported"
+      }
+     ],
+     "memory": "Elif'in kurs yol parasını kooperatif karşıladı."
     }
    ]
   },
@@ -4092,7 +4436,7 @@
    "slot": "agenda",
    "speakerID": "elif",
    "title": "Şehirden görünürlük",
-   "body": "Bir şehir ajansı büyük bir tanıtım teklif ediyor: bugün 5.000 TL ve hafta sonu otobüs dolusu misafir. Karşılığında köyün adı her yerde geçecek. Ya da Elif köyün kendi anlatımını yayar: 2.000 TL, daha az kalabalık.",
+   "body": "Şehirden bir tanıtım ajansı aradı: hafta sonu otobüs dolusu misafir, her yerde Karaçam'ın adı; üstelik para da veriyorlar. Elif kaşlarını çattı: \"Ben de kendi videomu çekerim. Daha az kişi gelir, ama gelen geri gelir.\"",
    "choices": [
     {
      "id": "big",
@@ -4146,12 +4490,12 @@
      "value": "elif.call,timeline.witness,plate"
     }
    ],
-   "body": "Kurul tanık ifadesini kayda almak istiyor. Dosyada açık isim kullanılırsa ifade hemen geçer ama tanık köyün önüne çıkar. Kayıtlı ama sınırlı erişimli bir ifade 2.000 TL tutar; kurul onu kabul ediyor ve tanık gereksiz yere teşhir edilmiyor. Bu kurgusal kurulun usulü; gerçek bir hukuk prosedürü değil.",
+   "body": "Kurul tanığın ifadesini tutanağa geçirmek istiyor. Adı açıkça yazılırsa ifade hemen geçer, ama tanık köyün önüne çıkar. Adını yalnız kurulun bileceği kapalı bir tutanak da olur; kapalı tutanağın yazımı ve saklanması para ister.",
    "choices": [
     {
      "id": "open",
-     "label": "Dosyada açık isim kullan",
-     "resultText": "Elif'in adı tutanağa geçti. Ertesi sabah herkes ona baktı.",
+     "label": "Adını açıkça yaz",
+     "resultText": "Elif'in adı tutanağa geçti. İfade, telefon konuşmasının saatini ve yerini doğruluyor. Ertesi sabah herkes Elif'e baktı.",
      "effects": [
       {
        "kind": "pressure",
@@ -4169,8 +4513,8 @@
     },
     {
      "id": "limited",
-     "label": "Sınırlı erişimli ifade",
-     "resultText": "İfade kurul kasasında; adını yalnız kurul biliyor.",
+     "label": "Kapalı tutanak",
+     "resultText": "İfade kurulun kasasında; telefon konuşmasının saatini ve yerini doğruluyor. Tanığın adını yalnız kurul biliyor.",
      "effects": [
       {
        "kind": "cash",
@@ -4195,7 +4539,7 @@
    "slot": "morning",
    "speakerID": "rauf",
    "title": "Hazır olmak",
-   "body": "Rauf'un haber verdiği hava geldi. Yol iki gün kapanacak. Korumalı, kapalı taşıma düzenlenebilir; ya da iş iki gün durur: 21 ve 22. akşam brüt gelir yok, sabit giderler sürer.",
+   "body": "Rauf'un haber verdiği hava geldi; yol iki gün kapanacak. Rauf kapıda, eldivenleri elinde: \"Brandayı, zinciri hazırladım. Ya kamyonetleri yola çıkarırız ya da iki gün kapıyı kapatırız.\"",
    "variants": [
     {
      "when": [
@@ -4204,7 +4548,7 @@
        "amount": 60
       }
      ],
-     "body": "Rauf'un haber verdiği hava geldi. Yol iki gün kapanacak. Köyden gönüllüler kapıda: kapalı taşıma 2.000 TL'ye düzenlenebilir. Ya da iş iki gün durur: 21 ve 22. akşam brüt gelir yok, sabit giderler sürer."
+     "body": "Rauf'un haber verdiği hava geldi; yol iki gün kapanacak. Köyden gönüllüler kapıda; Rauf güldü: \"Bu kalabalıkla kapalı taşıma yarı fiyatına çıkar. Ya da iki gün kapıyı kapatırız.\""
     }
    ],
    "choices": [
@@ -4243,7 +4587,7 @@
     {
      "id": "stop",
      "label": "İki gün normal işi durdur",
-     "resultText": "Kapılar kapandı. İki akşam gelir yok; giderler sürüyor.",
+     "resultText": "Kapılar kapandı. İki gün kimse gelmeyecek; maaşlar ve yakıt yine gidiyor.",
      "effects": [
       {
        "kind": "setDayGrossPercent",
@@ -4260,7 +4604,7 @@
    "day": 20,
    "slot": "night",
    "speakerID": "sevim",
-   "title": "Beklenen nüsha",
+   "title": "Gelen belgeler",
    "requirements": [
     {
      "kind": "flag",
@@ -4349,7 +4693,7 @@
    "slot": "agenda",
    "speakerID": "sevim",
    "title": "Ortakların payı",
-   "body": "Sevim dönem hesabını kapattı. \"Bu maaş değil, ortaklık payı. Dağıtırsak 6.000 TL; ödeme hedefi varken bunun bir bedeli var. Kasada tutarsak ortaklar bunu konuşur.\"",
+   "body": "Sevim dönem hesabını kapattı. \"Bu maaş değil, ortaklık payı. Yedi ortağa dağıtırsak taksit için biriktirdiğimizden yer. Kasada tutarsak ortaklar bunu konuşur.\"",
    "choices": [
     {
      "id": "keep",
@@ -4385,14 +4729,14 @@
    "day": 21,
    "slot": "night",
    "speakerID": "kurul",
-   "title": "Suçluya yaklaşım",
+   "title": "Gece yarısı dosya",
    "requirements": [
     {
      "kind": "flag",
      "target": "letterRead"
     }
    ],
-   "body": "Dosya henüz kapanmadı. Bu gece hazırlık yapılabilir: eksik parçalar ({missingParts}) ve 24. gün son kamuya açık görüşme.",
+   "body": "Masada kâğıtlar, saat gece yarısı. Dosyada eksik kalan: {missingParts}. Ayın 24'ünde kurul herkesin önünde son kez dinleyecek.",
    "variants": [
     {
      "when": [
@@ -4401,7 +4745,7 @@
        "target": "caseResolved"
       }
      ],
-     "body": "{culprit} masada. \"Geri dönüp o imzayı atmamış olamam,\" diyor. \"Ama açtığım deliği kapatabilirim.\" Masaya boş bir dosya kapağı konuyor. İki yolun da sınırı var: bağışlamak para, cezalandırmak güven üretmez.",
+     "body": "{culprit} masada. \"Geri dönüp o imzayı atmamış olamam,\" diyor. \"Ama açtığım deliği kapatabilirim.\" Kurulun en yaşlısı boş bir dosya kapağını masaya koydu: \"Karar senin. Ne yaparsan yap, köy bunu konuşacak.\"",
      "choices": [
       {
        "id": "end",
@@ -4427,7 +4771,8 @@
        ],
        "memory": "İmza sahibine yetkisiz, denetimli bir onarım yolu açtın."
       }
-     ]
+     ],
+     "title": "İmzanın sahibiyle ne olacak?"
     },
     {
      "when": [
@@ -4435,7 +4780,7 @@
        "kind": "wrongAccusationOpen"
       }
      ],
-     "body": "Dosya henüz kapanmadı ve köyün önünde haksız bir itham duruyor. Eksik parçalar: {missingParts}. Düzeltme yolu açık.",
+     "body": "Köyün önünde haksız yere suçladığın kişi hâlâ o lafla yaşıyor. Dosyada eksik kalan: {missingParts}.",
      "choices": [
       {
        "id": "correct",
@@ -4460,7 +4805,7 @@
     {
      "id": "prepare",
      "label": "Dosyaya çalış",
-     "resultText": "Gece geç saate kadar kâğıtları sıraladın. Özel görüşme ve kayıt araştırması gündemde.",
+     "resultText": "Gece geç saate kadar kâğıtları sıraladın.",
      "effects": []
     }
    ]
@@ -4470,7 +4815,7 @@
    "slot": "agenda",
    "speakerID": "nermin",
    "title": "Kış paketi",
-   "body": "Nermin bir kış paketi siparişiyle geldi. \"Bugün 3.000 TL hazırlık; 25. gün teslimde 14.000 TL. Net 11.000. İstemezsen başka bir üreticiye yönlendirirsin, sana komisyon kalır. Bunu baştan söylüyorum.\"",
+   "body": "Nermin bir kış paketi siparişiyle geldi. \"Bugün biraz hazırlık parası, ayın 25'inde teslim. İyi para, baştan söylüyorum. İstemezsen komşu köyün üreticisine yönlendir; aracılıktan sana pay kalır.\"",
    "variants": [
     {
      "when": [
@@ -4480,7 +4825,7 @@
        "value": "fulfilled"
       }
      ],
-     "body": "Nermin gülerek geldi. \"16. günkü teslimi müşterim unutmadı. Şimdi kış paketi istiyor. Bugün 3.000 TL hazırlık; 25. gün teslimde 14.000 TL. Net 11.000. İstemezsen başka bir üreticiye yönlendirirsin, sana komisyon kalır.\""
+     "body": "Nermin gülerek geldi. \"16'sındaki teslimi müşterim unutmadı; şimdi kış paketi istiyor. Bugün biraz hazırlık parası, ayın 25'inde teslim. İstemezsen komşu köyün üreticisine yönlendir; aracılıktan sana pay kalır.\""
     },
     {
      "when": [
@@ -4489,7 +4834,7 @@
        "target": "stallBuilt"
       }
      ],
-     "body": "Meydandaki tezgâhı gören bir şehir kooperatifi kış paketi istiyor; Nermin aracı. \"Bugün 3.000 TL hazırlık; 25. gün teslimde 14.000 TL. Net 11.000. İstemezsen başka bir üreticiye yönlendirirsin, sana komisyon kalır.\""
+     "body": "Meydandaki tezgâhı gören bir şehir kooperatifi kış paketi istiyor; Nermin aracı. \"Bugün biraz hazırlık parası, ayın 25'inde teslim. İyi para, baştan söylüyorum. İstemezsen komşu köyün üreticisine yönlendir; aracılıktan sana pay kalır.\""
     }
    ],
    "choices": [
@@ -4503,9 +4848,9 @@
        "amount": 2
       }
      ],
-     "requirementText": "Aynı anda en fazla iki açık taahhüt olabilir",
+     "requirementText": "Aynı anda en fazla iki açık sipariş alınabilir",
      "preview": [
-      "25. gün kendin teslim: +14.000 TL. Başka üreticiyle tamamlarsan +6.000 TL.",
+      "25. gün kendin teslim edersen +14.000 TL; başka üreticiyle tamamlarsan +6.000 TL.",
       "Bugünkü 3.000 TL hazırlık ikinci kez kesilmez."
      ],
      "effects": [
@@ -4516,7 +4861,7 @@
       {
        "kind": "acceptCommitment",
        "target": "order22",
-       "label": "Kış paketi siparişi (tahsilat 14.000)",
+       "label": "Kış paketi siparişi (teslimde 14.000)",
        "expiresAfterDay": 25,
        "amount": 1400000
       }
@@ -4550,9 +4895,22 @@
    "day": 22,
    "slot": "night",
    "speakerID": "haber",
-   "title": "Sisliova'dan kısa haber",
-   "body": "Sisliova'nın yerel gazetesinde küçük bir haber: \"Dağdaki Karaçam kooperatifi otuz günde ayağa kalkmaya çalışıyor.\" Fotoğrafta meydandaki çınar var. Haberin altında biri yorum yazmış: \"Bizim kasabaya da biri lazım.\"",
+   "title": "Sisliova'dan bir telefon",
+   "body": "Sisliova'nın yerel gazetesinden bir muhabir aradı. Küçük bir haber hazırlıyorlar: \"Dağdaki Karaçam kooperatifi otuz günde ayağa kalkmaya çalışıyor.\" Fotoğraf için meydandaki çınarı çekmişler. Muhabir yarına kadar senden birkaç cümle istiyor; adını yazacak.",
    "variants": [
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "caseResolved"
+      },
+      {
+       "kind": "flag",
+       "target": "weatherReady"
+      }
+     ],
+     "body": "Sisliova'nın yerel gazetesinden bir muhabir aradı. Başlık hazır: \"Karaçam kooperatifi satış yetkisini iptal ettirdi.\" Fotoğraf için meydandaki çınarı çekmişler. Yol kapalıyken Karaçam'ın kamyonetlerinin işlediğini de duymuşlar. Muhabir yarına kadar senden birkaç cümle istiyor; adını yazacak."
+    },
     {
      "when": [
       {
@@ -4560,15 +4918,45 @@
        "target": "caseResolved"
       }
      ],
-     "body": "Sisliova'nın yerel gazetesinde küçük bir haber: \"Karaçam kooperatifi satış yetkisini iptal ettirdi.\" Fotoğrafta meydandaki çınar var. Haberin altında biri yorum yazmış: \"Bizim kasabaya da biri lazım.\""
+     "body": "Sisliova'nın yerel gazetesinden bir muhabir aradı. Başlık hazır: \"Karaçam kooperatifi satış yetkisini iptal ettirdi.\" Fotoğraf için meydandaki çınarı çekmişler. Muhabir yarına kadar senden birkaç cümle istiyor; adını yazacak."
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "weatherReady"
+      }
+     ],
+     "body": "Sisliova'nın yerel gazetesinden bir muhabir aradı. Küçük bir haber hazırlıyorlar: \"Dağdaki Karaçam kooperatifi otuz günde ayağa kalkmaya çalışıyor.\" Fotoğraf için meydandaki çınarı çekmişler. Yol kapalıyken Karaçam'ın kamyonetlerinin işlediğini de duymuşlar. Muhabir yarına kadar senden birkaç cümle istiyor; adını yazacak."
     }
    ],
    "choices": [
     {
+     "id": "talk",
+     "label": "Konuş, köyün hikâyesini anlat",
+     "resultText": "Haber ertesi gün senin sözlerinle çıktı. Kahvede gazete elden ele dolaştı; biri haberi kesip kooperatifin panosuna astı. Alacaklının avukatı da okumuştur.",
+     "effects": [
+      {
+       "kind": "trust",
+       "amount": 2
+      },
+      {
+       "kind": "pressure",
+       "amount": 3
+      }
+     ],
+     "memory": "Sisliova gazetesine köyün hikâyesini anlattın."
+    },
+    {
      "id": "smile",
-     "label": "Gazeteyi katla",
-     "resultText": "Gazete kahvede elden ele dolaştı.",
-     "effects": []
+     "label": "Kısa kes: \"Söyleyecek bir şey yok\"",
+     "resultText": "Haber çıktı, senden tek cümle yoktu. Gazete kahvede elden ele dolaştı; kimse adını aramadı, alacaklı da.",
+     "effects": [
+      {
+       "kind": "pressure",
+       "amount": -2
+      }
+     ]
     }
    ]
   },
@@ -4577,7 +4965,7 @@
    "slot": "agenda",
    "speakerID": "ekip",
    "title": "Yalnız kazanç yetmiyor",
-   "body": "Son haftanın ek işi ekibin üstünde. Rutin maaş giderde; bu, son dönemin ek yükü. Karşılamak 3.000 TL. Ya da aynı planı sürdürürsün.",
+   "body": "Son haftanın ek işi ekibin üstünde. Rauf açık konuştu: \"Maaşa lafım yok. Ama bu son günlerin fazlası; bir haftalığına iki kişi daha lazım.\"",
    "variants": [
     {
      "when": [
@@ -4591,7 +4979,7 @@
        "target": "teamTired"
       }
      ],
-     "body": "Kış paketi hazırlığı ekibin üstünde. Rauf 10. günü hatırlattı: \"O hafta da biz üstlenmiştik.\" Bu maaş değil; son siparişin yarattığı ek iş. Karşılamak 3.000 TL. Ya da aynı planı sürdürürsün."
+     "body": "Kış paketi hazırlığı ekibin üstünde. Rauf açılış haftasını hatırlattı: \"O zaman da yükü biz taşımıştık, kimse saymamıştı.\" Bir haftalığına iki kişi daha lazım."
     },
     {
      "when": [
@@ -4601,7 +4989,7 @@
        "value": "accepted"
       }
      ],
-     "body": "Kış paketi hazırlığı ekibin üstünde. Bu maaş değil; son siparişin yarattığı ek iş. Karşılamak 3.000 TL. Ya da aynı planı sürdürürsün."
+     "body": "Kış paketi hazırlığı ekibin üstünde. Rauf: \"Bu sipariş fazladan iş demek. Bir haftalığına iki kişi daha alırsak yetişir.\""
     },
     {
      "when": [
@@ -4610,7 +4998,7 @@
        "target": "teamTired"
       }
      ],
-     "body": "Son haftanın ek işi ekibin üstünde. Rauf 10. günü hatırlattı: \"O hafta da biz üstlenmiştik.\" Karşılamak 3.000 TL. Ya da aynı planı sürdürürsün."
+     "body": "Son haftanın ek işi ekibin üstünde. Rauf açılış haftasını hatırlattı: \"O zaman da yükü biz taşımıştık.\" Bir haftalığına iki kişi daha lazım."
     }
    ],
    "choices": [
@@ -4657,46 +5045,8 @@
    "day": 23,
    "slot": "night",
    "speakerID": "elif",
-   "title": "Gelecek niyeti",
+   "title": "Kalıyor musun?",
    "body": "Elif meydanda. \"Kurs bitince ne yapacağım biliyor musun? Burada kalacağım. Ama sen? Otuz gün bitince kalıyor musun, devredip gidiyor musun?\"",
-   "variants": [
-    {
-     "when": [
-      {
-       "kind": "flag",
-       "target": "deryaMet"
-      }
-     ],
-     "speakerID": "derya",
-     "body": "Derya köprünün başında, elinde taş ölçüleri. İşten konuşmadınız bu kez. \"Restorasyon bitince başka bir köye giderim herhalde. Ya da gitmem.\" Sana baktı. \"Sen ne düşünüyorsun, bunu bilmek isterim. Dostluk da bana yeter; açık konuşalım sadece.\"",
-     "choices": [
-      {
-       "id": "friend",
-       "label": "Dostça devam edelim",
-       "resultText": "Derya gülümsedi. \"İyi bir dost bulmak, iyi bir taş bulmaktan zor.\"",
-       "effects": [
-        {
-         "kind": "setFlag",
-         "target": "deryaFriend"
-        }
-       ],
-       "memory": "Derya ile dostça devam etmeyi seçtin."
-      },
-      {
-       "id": "interest",
-       "label": "Seni daha yakından tanımak istiyorum",
-       "resultText": "Derya bir süre sustu. \"Ben de,\" dedi. \"Ama acele etmeden. Benim de burada bir işim var.\"",
-       "effects": [
-        {
-         "kind": "setFlag",
-         "target": "deryaInterest"
-        }
-       ],
-       "memory": "Derya'ya onu daha yakından tanımak istediğini söyledin; o da istedi."
-      }
-     ]
-    }
-   ],
    "choices": [
     {
      "id": "stay",
@@ -4723,11 +5073,52 @@
    ]
   },
   {
+   "id": "d23.night.derya",
+   "day": 23,
+   "slot": "night",
+   "group": "derya",
+   "speakerID": "derya",
+   "title": "Köprünün başında",
+   "body": "Derya köprünün başında, elinde taş ölçüleri. İşten konuşmadınız bu kez. \"Restorasyon bitince başka bir köye giderim herhalde. Ya da gitmem.\" Sana baktı. \"Sen ne düşünüyorsun, bunu bilmek isterim. Dostluk da bana yeter; açık konuşalım sadece.\"",
+   "requirements": [
+    {
+     "kind": "flag",
+     "target": "deryaMet"
+    }
+   ],
+   "choices": [
+    {
+     "id": "friend",
+     "label": "Dostça devam edelim",
+     "resultText": "Derya gülümsedi. \"İyi bir dost bulmak, iyi bir taş bulmaktan zor.\"",
+     "effects": [
+      {
+       "kind": "setFlag",
+       "target": "deryaFriend"
+      }
+     ],
+     "memory": "Derya ile dostça devam etmeyi seçtin."
+    },
+    {
+     "id": "interest",
+     "label": "Seni daha yakından tanımak istiyorum",
+     "resultText": "Derya bir süre sustu. \"Ben de,\" dedi. \"Ama acele etmeden. Benim de burada bir işim var.\"",
+     "effects": [
+      {
+       "kind": "setFlag",
+       "target": "deryaInterest"
+      }
+     ],
+     "memory": "Derya'ya onu daha yakından tanımak istediğini söyledin; o da istedi."
+    }
+   ]
+  },
+  {
    "id": "ag.finalFile",
    "slot": "agenda",
    "speakerID": "mektup",
    "title": "Son mali dosya",
-   "body": "Alacaklıya gidecek son dosya. Dış kontrol yaptırmak 4.000 TL ve baskıyı düşürür. Kendin sunarsan bedava, ama baskı artar. Bu ödemeyi yapmayanın ödeme hakkı kilitlenmez; farkı baskı tablosunda görürsün.",
+   "body": "Alacaklıya gidecek son dosya. Sevim iki yol gösterdi: \"Dışarıdan bir denetçi imzalarsa avukat soru sormaz; dört bin ister. Kendimiz sunarsak bedava, ama avukat her satırı didikler.\"",
    "choices": [
     {
      "id": "audit",
@@ -4762,14 +5153,14 @@
    "day": 24,
    "slot": "anchor",
    "speakerID": "kurul",
-   "title": "Son kamuya açık görüşme",
+   "title": "Son açık görüşme",
    "requirements": [
     {
      "kind": "flag",
      "target": "letterRead"
     }
    ],
-   "body": "Son kamuya açık görüşme. Dosya eksik: {missingParts}. Kanıtlar karşılaştırıldı; elinde satış yetkisinin kopyası olmadan iptal istenemiyor. Yetki yine de mühür kaybı bildirimiyle dondurulabilir.",
+   "body": "Meydanda son açık görüşme. Kurulun en yaşlısı dosyayı kapattı: \"Eksik olan: {missingParts}. Elinde satış yetkisinin bir kopyası olmadan iptal isteyemeyiz. Ama mührün kaybolduğunu buradan, herkesin önünde bildirirsen eski mühürle yapılan her iş durur.\"",
    "variants": [
     {
      "when": [
@@ -4778,7 +5169,7 @@
        "target": "caseResolved"
       }
      ],
-     "body": "Kurul toplandı. Bu bir tekrar mahkemesi değil: yetki iptal edildi, kayıtlar panoda. Kurul yalnız yeni düzeni teyit ediyor.",
+     "body": "Kurul meydanda toplandı. Yetki iptal edildi, kayıtlar panoda. Bugün yalnız yeni düzen okunacak: mühür kooperatifin kasasında, anahtarı iki kişide.",
      "choices": [
       {
        "id": "confirm",
@@ -4811,7 +5202,7 @@
        "value": "culprit"
       }
      ],
-     "body": "Dosyan tam: imza, bağımsız tarih ve tanıklı mühür zinciri. Kurul kamuya açık görüşmeye hazır. Kimin dosyasını sunacaksın?",
+     "body": "Dosyan tam: imza kaydı, tarih kaydı ve mührün tanıklı teslimi. Meydan dolu. Kimin dosyasını sunacaksın?",
      "choices": [
       {
        "id": "selim",
@@ -4855,7 +5246,7 @@
        "value": "draft.pressing,draft.carbon,draft.halil,draft.sevim,signature"
       }
      ],
-     "body": "Son kamuya açık görüşme. Dosya eksik: {missingParts}. Kimin imzaladığı kanıtlanamıyor; ama elindeki kopya, kooperatif adına bir satış yetkisinin hazırlandığını gösteriyor. Kurul bu şüpheli yetkinin iptalini oylayabilir.",
+     "body": "Meydanda son açık görüşme. \"Eksik olan: {missingParts},\" dedi kurulun en yaşlısı. \"Kimin imzaladığını kanıtlayamıyoruz. Ama elindeki kopya, kooperatif adına bir satış yetkisi hazırlandığını gösteriyor. İstersen bu şüpheli yetkinin iptalini oylarız.\"",
      "choices": [
       {
        "id": "revoke",
@@ -4867,7 +5258,7 @@
          "target": "authorityRevoked"
         }
        ],
-       "memory": "24. gün şüpheli satış yetkisini kurula iptal ettirdin."
+       "memory": "Şüpheli satış yetkisini kurulda iptal ettirdin."
       },
       {
        "id": "correct",
@@ -4888,7 +5279,7 @@
       {
        "id": "pass",
        "label": "Bugün oylatma",
-       "resultText": "Yetki hâlâ geçerli olabilir. Kayıp bildirimi gündemde.",
+       "resultText": "Oylama yapılmadı. Yetki hâlâ geçerli olabilir.",
        "effects": []
       }
      ]
@@ -4911,7 +5302,7 @@
        "target": "authorityFrozen"
       }
      ],
-     "memory": "24. gün mührün kaybını bildirdin; yetki donduruldu."
+     "memory": "Mührün kaybını meydanda bildirdin; yetki donduruldu."
     },
     {
      "id": "correct",
@@ -4932,7 +5323,7 @@
     {
      "id": "ok",
      "label": "Dinle",
-     "resultText": "Görüşme bitti. Kayıtlar Defter'de.",
+     "resultText": "Görüşme bitti. Kurulun notları defterde.",
      "effects": []
     }
    ]
@@ -4943,7 +5334,7 @@
    "slot": "night",
    "speakerID": "koy",
    "title": "İnsanların tepkisi",
-   "body": "Köy akşam kendi kararını konuşuyor. Kimin ne yaptığı, kimin neyi bildiği. Sana kızan da var, selam veren de.",
+   "body": "Köy akşam kahvede kendi kararını konuşuyor: kimin ne yaptığı, kimin neyi bildiği. Sana kızan da var, selam veren de.\n\nGece yarısına doğru Elif kahveye bir kâğıtla koştu: şirket ilçeye yeni bir başvuru yapmış. Kayıp mührün yerine yeni mühür çıkarılmasını ve yetkinin yeniden işletilmesini istiyorlar. \"Yarın öğlen ilçede dinlenecek,\" dedi. \"Biri avukat tutalım diyor, biri hep beraber gidelim.\"",
    "variants": [
     {
      "when": [
@@ -4956,7 +5347,7 @@
        "target": "nineHelped"
       }
      ],
-     "body": "{culprit} akşam kahveye gelmedi. Masum şüpheliler ilk kez rahat oturdu. Hatice Nine yüksek sesle konuştu: \"Bu çocuk bana odun verdi, şimdi de köyü verdirmedi.\""
+     "body": "{culprit} akşam kahveye gelmedi. Masum şüpheliler ilk kez rahat oturdu. Hatice Nine yüksek sesle konuştu: \"Bu çocuk bana odun verdi, şimdi de köyü verdirmedi.\"\n\nGece yarısına doğru Elif kahveye bir kâğıtla koştu: şirket ilçeye yeni bir başvuru yapmış. Kayıp mührün yerine yeni mühür çıkarılmasını ve yetkinin yeniden işletilmesini istiyorlar. \"Yarın öğlen ilçede dinlenecek,\" dedi. \"Biri avukat tutalım diyor, biri hep beraber gidelim.\""
     },
     {
      "when": [
@@ -4965,7 +5356,7 @@
        "target": "caseResolved"
       }
      ],
-     "body": "{culprit} akşam kahveye gelmedi. Masum şüpheliler ilk kez rahat oturdu. Biri \"Köy için yaptı\" dedi, öbürü \"Bize sormadı\" dedi. İkisi de doğru."
+     "body": "{culprit} akşam kahveye gelmedi. Masum şüpheliler ilk kez rahat oturdu. Biri \"Köy için yaptı\" dedi, öbürü \"Bize sormadı\" dedi. İkisi de doğru.\n\nGece yarısına doğru Elif kahveye bir kâğıtla koştu: şirket ilçeye yeni bir başvuru yapmış. Kayıp mührün yerine yeni mühür çıkarılmasını ve yetkinin yeniden işletilmesini istiyorlar. \"Yarın öğlen ilçede dinlenecek,\" dedi. \"Biri avukat tutalım diyor, biri hep beraber gidelim.\""
     },
     {
      "when": [
@@ -4973,15 +5364,31 @@
        "kind": "wrongAccusationOpen"
       }
      ],
-     "body": "Köyün önünde haksız yere suçladığın kişi sana selam vermedi. Kimse bir şey söylemedi; söylemelerine gerek yoktu."
+     "body": "Köyün önünde haksız yere suçladığın kişi sana selam vermedi. Kimse bir şey söylemedi; söylemelerine gerek yoktu.\n\nGece yarısına doğru Elif kahveye bir kâğıtla koştu: şirket ilçeye yeni bir başvuru yapmış. Kayıp mührün yerine yeni mühür çıkarılmasını ve yetkinin yeniden işletilmesini istiyorlar. \"Yarın öğlen ilçede dinlenecek,\" dedi. \"Biri avukat tutalım diyor, biri hep beraber gidelim.\""
     }
    ],
    "choices": [
     {
      "id": "listen",
-     "label": "Dinle",
-     "resultText": "Gece uzun sürdü.",
-     "effects": []
+     "label": "Kahvede kal, herkesi dinle",
+     "resultText": "Gece uzun sürdü. Kimi kızdı, kimi güldü; sabaha karşı herkes yarın ilçeye kimin gideceğini konuşuyordu.",
+     "effects": [
+      {
+       "kind": "trust",
+       "amount": 2
+      }
+     ]
+    },
+    {
+     "id": "prepare",
+     "label": "Eve dön, yarının kâğıtlarını hazırla",
+     "resultText": "Gece kâğıtları tek tek sıraladın. Kahvede adın geçti mi bilmiyorsun; ama yarın elin dolu gideceksin.",
+     "effects": [
+      {
+       "kind": "pressure",
+       "amount": -2
+      }
+     ]
     }
    ]
   },
@@ -4991,7 +5398,7 @@
    "slot": "morning",
    "speakerID": "nermin",
    "title": "Son teslimat",
-   "body": "Kış paketi başka bir üreticiye gitmişti. Nermin yine de uğradı: \"Küçük bir ek satış var, 4.000 TL. Ya da bugün köye zaman ayır.\"",
+   "body": "Nermin uğradı. \"Küçük bir ek satış var, bir kamyonet dolusu. Ya da bugün köye zaman ayır.\"",
    "variants": [
     {
      "when": [
@@ -5001,7 +5408,7 @@
        "value": "accepted"
       }
      ],
-     "body": "Kış paketi teslim günü. 22. günkü 3.000 TL hazırlık zaten kesildi; bugün yeniden kesilmez. Kendin teslim edersen 14.000 TL. Başka bir üreticiyle tamamlarsan iş paylaşılır: 6.000 TL.",
+     "body": "Kış paketi teslim günü. Hazırlık parası zaten çıktı, bugün yeniden kesilmez. Nermin: \"Kendin teslim edersen hepsi senin. Komşu köyün üreticisi yarısını alırsa iş paylaşılır, para da.\"",
      "choices": [
       {
        "id": "deliver",
@@ -5021,7 +5428,7 @@
          "target": "order22"
         }
        ],
-       "memory": "25. gün kış paketini kendin teslim ettin."
+       "memory": "Kış paketini kendin teslim ettin."
       },
       {
        "id": "partner",
@@ -5041,9 +5448,18 @@
          "target": "order22"
         }
        ],
-       "memory": "25. gün kış paketini başka bir üreticiyle tamamladın."
+       "memory": "Kış paketini başka bir üreticiyle tamamladın."
       }
      ]
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "redirected22"
+      }
+     ],
+     "body": "Kış paketini yönlendirdiğin komşu köyün üreticisi teslimatı yaptı; Nermin memnun. \"Küçük bir ek satış var, bir kamyonet dolusu. Ya da bugün köye zaman ayır.\""
     }
    ],
    "choices": [
@@ -5061,11 +5477,168 @@
     {
      "id": "time",
      "label": "Köye zaman ayır",
-     "resultText": "Bütün gün meydandaydın. Kimse bir şey istemedi; sadece konuştunuz.",
+     "resultText": "Bütün gün meydandaydın. Kimse bir şey istemedi; sadece konuştun, dinledin.",
      "effects": [
       {
        "kind": "trust",
        "amount": 4
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "d25.noon.application",
+   "day": 25,
+   "slot": "anchor",
+   "speakerID": "sicil",
+   "title": "Şirketin yeni başvurusu",
+   "body": "İlçe kayıt dairesinin koridoru dolu. Şirket avukatı kayıp mührün yerine yeni bir mühür çıkarılmasını ve elindeki imzalı yetkinin kayda geçmesini istiyor. Memur sana döndü: \"İtirazınız varsa şimdi.\" Mührün kaybı kurula bildirilmediği için elinde yazılı bir itiraz yoksa başvuru geçer.",
+   "choices": [
+    {
+     "id": "lawyer",
+     "label": "Avukatla yazılı itiraz ver",
+     "resultText": "Avukatın dilekçesi mührün kayıp olduğunu kayda geçirdi. Memur başvuruyu bekletti: eski mühürle yapılan işler artık durur.",
+     "effects": [
+      {
+       "kind": "cash",
+       "amount": -300000
+      },
+      {
+       "kind": "pressure",
+       "amount": -3
+      },
+      {
+       "kind": "setFlag",
+       "target": "authorityFrozen"
+      },
+      {
+       "kind": "setFlag",
+       "target": "counterLawyer"
+      }
+     ],
+     "memory": "Şirketin yeni başvurusuna avukatla itiraz ettin; yetki donduruldu."
+    },
+    {
+     "id": "village",
+     "label": "Köyü ilçeye götür",
+     "resultText": "Otuz kişi koridoru doldurdu, Hatice Nine en önde. Memur kalabalığı not etti, ama yazılı itiraz olmadan başvuruyu kayda aldı. Yetki hâlâ geçerli; mührün kaybını bildirmek için hâlâ vakit var.",
+     "effects": [
+      {
+       "kind": "trust",
+       "amount": 3
+      },
+      {
+       "kind": "pressure",
+       "amount": 4
+      },
+      {
+       "kind": "setFlag",
+       "target": "counterVillage"
+      }
+     ],
+     "memory": "Şirketin başvurusuna köyle birlikte gittin."
+    }
+   ],
+   "variants": [
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "caseResolved"
+      }
+     ],
+     "body": "Şirket iptal kararına itiraz etmiş: yetkinin kurulda haksız yere iptal edildiğini, yeni mühür çıkarılması gerektiğini yazmışlar. Memur dosyanı açtı. \"Kayıtlarınız tam. Yine de itirazı bugün cevaplamanız lazım.\"",
+     "choices": [
+      {
+       "id": "lawyer",
+       "label": "Avukatla yazılı cevap ver",
+       "resultText": "Avukatın cevabı iki sayfaydı: iptal kararı, imza kaydı, tarih kaydı, teslim tutanağı. Memur itirazı reddetti.",
+       "effects": [
+        {
+         "kind": "cash",
+         "amount": -300000
+        },
+        {
+         "kind": "pressure",
+         "amount": -4
+        },
+        {
+         "kind": "setFlag",
+         "target": "counterLawyer"
+        }
+       ],
+       "memory": "Şirketin itirazına avukatla yazılı cevap verdin."
+      },
+      {
+       "id": "village",
+       "label": "Köyü ilçeye götür",
+       "resultText": "Otuz kişi koridoru doldurdu, Hatice Nine en önde. Memur itirazı reddetti; alacaklının avukatı da oradaydı ve kalabalığı not etti.",
+       "effects": [
+        {
+         "kind": "trust",
+         "amount": 3
+        },
+        {
+         "kind": "pressure",
+         "amount": 3
+        },
+        {
+         "kind": "setFlag",
+         "target": "counterVillage"
+        }
+       ],
+       "memory": "Şirketin itirazına köyle birlikte gittin."
+      }
+     ]
+    },
+    {
+     "when": [
+      {
+       "kind": "authoritySafe"
+      }
+     ],
+     "body": "İlçe kayıt dairesinin koridoru dolu. Şirket avukatı kayıp mührün yerine yeni bir mühür istiyor; yeni mühürle durdurulan yetkiyi yeniden işletmek niyetinde. Memur sana döndü: \"İtirazınız varsa şimdi.\"",
+     "choices": [
+      {
+       "id": "lawyer",
+       "label": "Avukatla yazılı itiraz ver",
+       "resultText": "Avukatın dilekçesi yarım saat sürdü. Memur başvuruyu reddetti: mühür kayıp bildirildiyse yenisi ancak kurul kararıyla çıkar.",
+       "effects": [
+        {
+         "kind": "cash",
+         "amount": -300000
+        },
+        {
+         "kind": "pressure",
+         "amount": -4
+        },
+        {
+         "kind": "setFlag",
+         "target": "counterLawyer"
+        }
+       ],
+       "memory": "Şirketin yeni mühür başvurusuna avukatla itiraz ettin."
+      },
+      {
+       "id": "village",
+       "label": "Köyü ilçeye götür",
+       "resultText": "Otuz kişi koridoru doldurdu, Hatice Nine en önde. Memur başvuruyu kurul kararı gelene kadar bekletti. Alacaklının avukatı da oradaydı; kalabalığı not etti.",
+       "effects": [
+        {
+         "kind": "trust",
+         "amount": 3
+        },
+        {
+         "kind": "pressure",
+         "amount": 4
+        },
+        {
+         "kind": "setFlag",
+         "target": "counterVillage"
+        }
+       ],
+       "memory": "Şirketin yeni mühür başvurusuna köyle birlikte gittin."
       }
      ]
     }
@@ -5081,10 +5654,43 @@
    "choices": [
     {
      "id": "understand",
-     "label": "Anlıyorum",
-     "resultText": "Halanın hatası da iyi niyeti de aynı defterde.",
-     "effects": [],
-     "memory": "Borcun halanın tek başına aldığı kararlardan büyüdüğünü öğrendin."
+     "label": "Bunu köye anlat",
+     "resultText": "Ertesi gün kahvede halanın hikâyesini anlattın. Kimi kızdı, kimi ağladı; ama artık kimse \"borç gökten düştü\" demiyor. Alacaklının avukatı da duydu: kurul onayı olmadan alınmış krediler onun dosyasında da var.",
+     "effects": [
+      {
+       "kind": "trust",
+       "amount": 3
+      },
+      {
+       "kind": "pressure",
+       "amount": 2
+      },
+      {
+       "kind": "setFlag",
+       "target": "auntTruthShared"
+      }
+     ],
+     "memory": "Halanın tek başına aldığı kredileri köye anlattın."
+    },
+    {
+     "id": "protect",
+     "label": "Halanın adını koru, yalnız kurula söyle",
+     "resultText": "Kayıtları kurula verdin, kahveye değil. Nine başını salladı: \"Ölünün arkasından konuşulmaz.\" Bazıları bir şey saklandığını sezdi.",
+     "effects": [
+      {
+       "kind": "trust",
+       "amount": -1
+      },
+      {
+       "kind": "pressure",
+       "amount": -2
+      },
+      {
+       "kind": "setFlag",
+       "target": "auntProtected"
+      }
+     ],
+     "memory": "Halanın hatasını yalnız kurula anlattın; adını korudun."
     }
    ]
   },
@@ -5094,7 +5700,7 @@
    "slot": "morning",
    "speakerID": "kurul",
    "title": "Kim yönetecek?",
-   "body": "Kurul geleceği soruyor: yetki kurulda paylaşılsın mı, yoksa bir dönem daha sorumluluğu sen mi üstleneceksin? Bu bir rol tercihi; iki yolda da kayıtların açıklığı ve imza sahibinin sınırlandırılması korunur.",
+   "body": "Kurul meydanda toplandı. Kurulun en yaşlısı söz aldı: \"Otuz gün bitince ne olacak? Yetkiyi yedimiz paylaşalım mı, yoksa bir dönem daha sen mi taşıyacaksın?\" Arkadan Elif seslendi: \"Hangisini seçersen seç, defter herkese açık kalsın.\"",
    "choices": [
     {
      "id": "shared",
@@ -5128,7 +5734,7 @@
    "slot": "night",
    "speakerID": "kurul",
    "title": "Gerçek kapanır",
-   "body": "{truthConfession}\n\nBu, son resmî kayıtla açıklandı. Kendi dosyanla doğrulanmadı; ama köy artık neyin olduğunu biliyor.",
+   "body": "{truthConfession}\n\nİlçeden son kayıtlar geldi ve gerçek ortaya çıktı. Bunu senin dosyan değil, zaman açtı; ama köy artık ne olduğunu biliyor.",
    "variants": [
     {
      "when": [
@@ -5137,7 +5743,7 @@
        "target": "caseResolved"
       }
      ],
-     "body": "{truthReveal}\n\n{truthAccounting}\n\nBunu sen daha önce kendi dosyanla doğruladın. Bu gece yalnız özetin yazıldı."
+     "body": "{truthReveal}\n\n{truthAccounting}\n\nBunu sen çok önce kendi dosyanla kanıtlamıştın. Bu gece Sevim yalnız özetini deftere yazdı."
     }
    ],
    "choices": [
@@ -5158,7 +5764,7 @@
    "slot": "agenda",
    "speakerID": "sevim",
    "title": "Atıl kooperatif minibüsü",
-   "body": "Varlık listesindeki minibüs. Satarsan bugün 15.000 TL; ama köyden Sisliova pazarına insan ve küçük yük taşıması dışarıdan alınır: bugünden itibaren günlük 500 TL. Bu, köprünün kamyon farkından ayrı bir hizmet. Epilogda ortak bir varlığın gittiği yazılır.",
+   "body": "Sevim varlık listesini açtı. \"Çınarın altındaki minibüs. Sisliova'da bir okul alır, iyi para verir. Ama satarsak pazara inmek için her gün dışarıdan araç tutarız.\"",
    "choices": [
     {
      "id": "sell",
@@ -5205,7 +5811,7 @@
    "slot": "anchor",
    "speakerID": "avukat",
    "title": "Şirketin son açık teklifi",
-   "body": "Avukat son kez geldi; bu bir saldırı değil, açık bir teklif. \"Şartlar ilk günkü gibi. Çalışanlar ve ortaklar için yazdıklarımız şunlar.\" Kabul edersen oyun burada biter.",
+   "body": "Şirket avukatı son kez geldi. \"Şartlar ilk günkü gibi. Çalışanlar ve ortaklar için yazdıklarımız şunlar.\" Kâğıtları masaya dizdi. \"Kabul ederseniz bugün biter; borç da, bu telaş da.\"",
    "choices": [
     {
      "id": "accept",
@@ -5248,14 +5854,34 @@
    "day": 27,
    "slot": "night",
    "speakerID": "elif",
-   "title": "Son bölüm özeti",
-   "body": "Elif masaya üç kâğıt koydu: hangi koşul sağlandı, hangi para eksik, son üç günde kesin ne gelecek. \"Büyük laf yok. Sadece liste.\"\n\n{finalChecklist}",
+   "title": "Elif'in listesi",
+   "body": "Elif masaya üç kâğıt koydu: hangi şart tamam, hangi para eksik, son üç günde kesin ne gelecek. \"Büyük laf yok. Sadece liste.\"\n\n{finalChecklist}",
    "choices": [
     {
      "id": "ok",
      "label": "Listeyi al",
-     "resultText": "Liste Defter'in ilk sayfasında.",
+     "resultText": "Listeyi defterinin ilk sayfasına koydun.",
      "effects": []
+    },
+    {
+     "id": "feast",
+     "label": "Son akşam için meydanda ortak sofra kur",
+     "resultText": "Elif listeye bir satır ekledi: \"30'unda meydanda sofra.\" Kadınlar şimdiden un elemeye başladı.",
+     "effects": [
+      {
+       "kind": "cash",
+       "amount": -200000
+      },
+      {
+       "kind": "trust",
+       "amount": 3
+      },
+      {
+       "kind": "setFlag",
+       "target": "finalFeast"
+      }
+     ],
+     "memory": "Son akşam için köye ortak sofra kurdun."
     }
    ]
   },
@@ -5264,7 +5890,7 @@
    "day": 28,
    "slot": "night",
    "speakerID": "anlatici",
-   "title": "Kişisel karşılık",
+   "title": "Sessiz bir akşam",
    "body": "Köprünün başında durdun. Rauf'un demirleri, Halil'in tabelası, kamyonların izi. Ay suyun üstünde. Otuz günün ilk kez sessiz bir akşamı.",
    "variants": [
     {
@@ -5301,7 +5927,7 @@
      "when": [
       {
        "kind": "flag",
-       "target": "met.nine"
+       "target": "nineRefused"
       }
      ],
      "speakerID": "nine",
@@ -5323,7 +5949,7 @@
    "slot": "morning",
    "speakerID": "elif",
    "title": "Son çalışma günü",
-   "body": "Son çalışma günü. Tam gün açık tutarsan olağan gelir. Yarım gün çalışıp köy hazırlığına zaman ayırırsan yalnız bugünün brüt geliri yarıya iner; işletmenin kalıcı geliri değişmez, yarın normal çalışır.\n\n{finalChecklist}",
+   "body": "Elif sabah erkenden geldi. \"Bugün son çalışma günü. Kapıyı akşama kadar açık tutarız ya da öğleden sonra kapatır, meydanı yarın için hazırlarız. Yarım gün çalışırsak bugünün kazancı yarıya iner; yarın her şey normal.\"\n\n{finalChecklist}",
    "choices": [
     {
      "id": "full",
@@ -5355,8 +5981,8 @@
    "day": 29,
    "slot": "night",
    "speakerID": "sevim",
-   "title": "Anlaşma kontrolü",
-   "body": "Sevim son kez hesabı okudu. Görülmeyen komisyon yok, zorunlu arıza yok, baskı sıçraması yok.\n\n{finalChecklist}\n\nİstersen gün ya da bölüm başı kaydına dönebilirsin; ilk tahminin ve geri sarma sayın ayrı tutulur.",
+   "title": "Sevim'in son hesabı",
+   "body": "Sevim son kez hesabı okudu. \"Yarın kimse kapıya beklenmedik bir fatura getirmeyecek. Ne görüyorsan o.\"\n\n{finalChecklist}",
    "choices": [
     {
      "id": "ready",
@@ -5372,13 +5998,24 @@
    "slot": "morning",
    "speakerID": "anlatici",
    "title": "Son sabah",
-   "body": "Otuzuncu gün. Bugünün normal geliri akşam bir kez hesaplanacak; önceden duyurulan bütün teslim ve giderler dahil. Ardından 150.000 TL ilk taksit ve kurulun desteği kontrol edilecek.",
+   "body": "Otuzuncu gün. Akşam günün hesabı kapanınca havale kâğıdı doldurulacak: 150.000 TL ilk taksit. Kurulun yedi ortağı da imza için orada olacak.",
    "choices": [
     {
      "id": "go",
      "label": "Son günü aç",
      "resultText": "Çınarın altında kalabalık var.",
      "effects": []
+    }
+   ],
+   "variants": [
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "finalFeast"
+      }
+     ],
+     "body": "Otuzuncu gün. Meydanda sofralar kuruluyor, Nine'nin tencereleri çoktan ocakta. Akşam günün hesabı kapanınca havale kâğıdı doldurulacak: 150.000 TL ilk taksit. Kurulun yedi ortağı da imza için orada olacak."
     }
    ]
   },
@@ -5429,7 +6066,7 @@
    "slot": "agenda",
    "speakerID": "koy",
    "title": "Halk toplantısı",
-   "body": "Çınarın altında halk toplantısı. 2.000 TL organizasyon. Aynı özrü her hafta tekrarlamak puan getirmez; şikâyetin kaynağı konuşulursa kapanır.",
+   "body": "Çınarın altında bir halk toplantısı yapılabilir: çay, ikram, bir hoparlör. Köylüler konuşur, sen dinlersin. Sevim uyardı: \"Her hafta aynı özrü dilersen kimse dinlemez. Derdin kaynağını konuşursan kapanır.\"",
    "variants": [
     {
      "when": [
@@ -5437,7 +6074,7 @@
        "kind": "grievanceAny"
       }
      ],
-     "body": "Köyde konuşulan bir aksama var. Halk toplantısında kaynağını açıkça konuşmak 2.000 TL; şikâyet varsa kapanır, bilinen aksamalar masaya yatırılır."
+     "body": "Köyde konuşulan bir dert var. Çınarın altında açık bir toplantıda kaynağını konuşmak meseleyi kapatabilir."
     }
    ],
    "choices": [
@@ -5472,8 +6109,8 @@
    "id": "ag.records",
    "slot": "agenda",
    "speakerID": "sicil",
-   "title": "Bağımsız kayıt araştırması",
-   "body": "İlçe sicil memurluğu bağımsız kayıt verir: önce satış yetkisinin imza nüshası. 1.500 TL. Aynı belge yeniden satın alınmaz.",
+   "title": "İlçeden kayıt istemek",
+   "body": "İlçe kayıt dairesindeki memur dosyaları tanıyor. \"Satış yetkisinin imzalı kopyasını çıkarabilirim. Harcı bin beş yüz.\"",
    "variants": [
     {
      "when": [
@@ -5482,12 +6119,12 @@
        "target": "signature"
       }
      ],
-     "body": "İmza nüshası elinde. Sicil bu kez 19 Eylül akşamının bağımsız tarih kaydını verebilir. 1.500 TL.",
+     "body": "İmzalı kopya elinde. Memur bu kez 19 Eylül akşamının kaydını önerdi: \"Kim, ne zaman, nereye; hepsi teslim defterinde yazar. Harç yine bin beş yüz.\"",
      "choices": [
       {
        "id": "timeline",
        "label": "Tarih kaydını iste",
-       "resultText": "Tarih kaydı geldi. Kimsenin sözüne dayanmıyor.",
+       "resultText": "Tarih kaydı geldi; deftere işledin. Kimsenin sözüne dayanmıyor.",
        "effects": [
         {
          "kind": "cash",
@@ -5498,7 +6135,7 @@
          "target": "timeline"
         }
        ],
-       "memory": "İlçe sicilinden bağımsız tarih kaydını aldın."
+       "memory": "İlçe kayıt dairesinden 19 Eylül akşamının tarih kaydını aldın."
       }
      ]
     }
@@ -5506,8 +6143,8 @@
    "choices": [
     {
      "id": "signature",
-     "label": "İmza nüshasını iste",
-     "resultText": "Nüsha geldi. Altında bir imza var.",
+     "label": "İmzalı kopyayı iste",
+     "resultText": "İmzalı kopya geldi; deftere işledin.",
      "effects": [
       {
        "kind": "cash",
@@ -5518,7 +6155,7 @@
        "target": "signature"
       }
      ],
-     "memory": "İlçe sicilinden satış yetkisinin imza nüshasını aldın."
+     "memory": "İlçe kayıt dairesinden satış yetkisinin imzalı kopyasını aldın."
     }
    ]
   },
@@ -5527,7 +6164,7 @@
    "slot": "agenda",
    "speakerID": "koy",
    "title": "Özel görüşme",
-   "body": "Kimi dinlemek istiyorsun? Bu kamuya açık bir itham değil; özel bir görüşme. Söylenenler iddia olarak yazılır, kayıtla örtüşürse destekli sayılır. Son görüşmeden beri yeni bir kayıt yoksa aynı kişiye yeni soru açılmaz.",
+   "body": "Kiminle baş başa konuşacaksın? Bu bir suçlama değil; kapı kapalı, kimse duymaz. Anlatılan bir kayıtla örtüşürse ağırlığı artar. Elinde yeni bir kâğıt yoksa aynı kişiye aynı soruyu sormanın anlamı yok.",
    "choices": [
     {
      "id": "selim",
@@ -5593,7 +6230,7 @@
    "slot": "agenda",
    "speakerID": "halil",
    "title": "Mührü erken geri almak",
-   "body": "Mührün yerini biliyorsun ya da iki yere indirdin. Takvimdeki geceyi beklemen gerekmiyor. Tanıkla ve kayıtla teslim almak 1.500 TL; sessizce almak bedava ama tanık zincirini sonra tamamlamak gerekir.",
+   "body": "Mührün yerini biliyorsun ya da iki yere daralttın. Halil: \"Takvimi beklemeye gerek yok. Tanıkla, tutanakla alırsak kimse itiraz edemez. Sessizce alırsak mühür bizde olur, ama kurul onu kanıt saymaz.\"",
    "choices": [
     {
      "id": "witnessed",
@@ -5618,7 +6255,7 @@
     {
      "id": "silent",
      "label": "Sessizce alıp kilitle",
-     "resultText": "Mühür artık sende. Kimse görmedi; bu yüzden kurul için kanıt değil.",
+     "resultText": "Mühür artık sende. Kimse görmedi; kurul bunu senin sözün sayar.",
      "effects": [
       {
        "kind": "pressure",
@@ -5637,13 +6274,13 @@
    "id": "ag.custody",
    "slot": "agenda",
    "speakerID": "sevim",
-   "title": "Mührün teslim zinciri",
-   "body": "Mühür sende ama nereden ve kimin önünde alındığı yazılı değil. Tanıkları toplayıp tutanak yazmak 1.500 TL.",
+   "title": "Mühür için tanıklı tutanak",
+   "body": "Mühür sende, ama nereden ve kimin önünde aldığın yazılı değil. Sevim: \"Tanıkları toplayıp tutanak yazalım. Yazımı, imzası, saklanması bin beş yüz.\"",
    "choices": [
     {
      "id": "record",
      "label": "Tanık kaydını yaptır",
-     "resultText": "Halil, Sevim ve Selim'in önünde tutanak yazıldı. Mührün zinciri artık kayıtlı.",
+     "resultText": "Üç tanığın önünde tutanak yazıldı. Mührün nereden çıktığı artık kayıtlı.",
      "effects": [
       {
        "kind": "cash",
@@ -5654,7 +6291,7 @@
        "value": "witnessed"
       }
      ],
-     "memory": "Mührün teslim zincirini tanıklarla tamamladın."
+     "memory": "Mühür için tanıklı tutanak yazdırdın."
     }
    ]
   },
@@ -5663,7 +6300,7 @@
    "slot": "agenda",
    "speakerID": "kurul",
    "title": "Dosyayı kurula sunmak",
-   "body": "Kurul, yeterli kanıtla erken çözüme açık. Formal sunum üç ayrı kaynaktan doğrulanmış imza, bağımsız tarih ve tanıklı mühür zinciri ister. Eksik dosyayla bir kişiyi köyün önünde suçlamak kamuya açık bir itham olur; haksız çıkarsa bedeli var. Yalnız yetkiyi dondurmak ileride gerçek sunumu kilitlemez.",
+   "body": "Kurul seni dinlemeye hazır. Kurulun en yaşlısı kuralı söyledi: \"Bir kişiyi köyün önünde suçlayacaksan üç ayrı kâğıt getir: imza kaydı, tarih kaydı ve mührün tanıklar önünde teslim alındığını gösteren tutanak. Eksik dosyayla suçlarsan ve yanılırsan, bunu köy unutmaz.\" İstersen kimseyi suçlamadan yalnız satış yetkisini de durdurabilirsin; noter ve ilan masrafı var, dosyan açık kalır.",
    "choices": [
     {
      "id": "selim",
@@ -5701,7 +6338,7 @@
     {
      "id": "freeze",
      "label": "Yalnız yetkiyi dondur",
-     "resultText": "Kurul tutanağa yazdı: mühür kayıp, eski mühürle yapılan işler geçersiz. Dosya açık kalıyor.",
+     "resultText": "Kurul tutanağa yazdı: mühür kayıp, eski mühürle yapılan işler geçersiz. Noterden ilan çıktı. Dosya açık kalıyor.",
      "requirements": [
       {
        "kind": "authorityUnsafe"
@@ -5709,6 +6346,10 @@
      ],
      "hideWhenUnavailable": true,
      "effects": [
+      {
+       "kind": "cash",
+       "amount": -300000
+      },
       {
        "kind": "setFlag",
        "target": "authorityFrozen"
@@ -5721,25 +6362,49 @@
   {
    "id": "ag.freeze",
    "slot": "agenda",
-   "speakerID": "kurul",
+   "speakerID": "sevim",
    "title": "Mühür kayıp bildirimi",
-   "body": "Mührün kaybolduğunu kurula ve köye yazılı bildirirsin. Eski mühürle yapılmış ya da yapılacak işler donar. Bu kimseyi suçlamaz ve araştırmayı bitirmez.",
+   "body": "Sevim bir dilekçe taslağı yazmış: kooperatifin mührü kayıp, eski mühürle yapılmış ya da yapılacak her iş geçersiz. \"Kurula okuruz, noterden geçirip gazeteye ilan veririz. Noter, harç, ilan; üç bin tutar. Kimseyi suçlamaz; kimin yaptığını aramaya da devam ederiz.\"",
    "choices": [
     {
      "id": "declare",
      "label": "Kayıp bildirimini yap",
-     "resultText": "Tutanak çınarın altında okundu. Satış yetkisi donduruldu.",
+     "resultText": "Tutanak çınarın altında okundu, ilan ertesi gün gazetedeydi. Satış yetkisi donduruldu.",
      "effects": [
+      {
+       "kind": "cash",
+       "amount": -300000
+      },
+      {
+       "kind": "pressure",
+       "amount": -2
+      },
       {
        "kind": "setFlag",
        "target": "authorityFrozen"
-      },
-      {
-       "kind": "trust",
-       "amount": 1
       }
      ],
      "memory": "Mührün kaybını bildirdin; satış yetkisi donduruldu."
+    }
+   ],
+   "variants": [
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "nineStory"
+      }
+     ],
+     "body": "Hatice Nine'nin sözü aklında: \"Mühür kaybolursa kurula yazılı bildirirsin, eski mühürle yapılan işler durur.\" Sevim bir dilekçe taslağı yazmış: kooperatifin mührü kayıp, eski mühürle yapılmış ya da yapılacak her iş geçersiz. \"Kurula okuruz, noterden geçirip gazeteye ilan veririz. Noter, harç, ilan; üç bin tutar. Kimseyi suçlamaz; kimin yaptığını aramaya da devam ederiz.\""
+    },
+    {
+     "when": [
+      {
+       "kind": "flag",
+       "target": "freezeKnown"
+      }
+     ],
+     "body": "Halanın arşiv defterindeki not aklında: \"Mühür kaybolursa kurula bildir.\" Sevim bir dilekçe taslağı yazmış: kooperatifin mührü kayıp, eski mühürle yapılmış ya da yapılacak her iş geçersiz. \"Kurula okuruz, noterden geçirip gazeteye ilan veririz. Noter, harç, ilan; üç bin tutar. Kimseyi suçlamaz; kimin yaptığını aramaya da devam ederiz.\""
     }
    ]
   },
@@ -5748,7 +6413,7 @@
    "slot": "agenda",
    "speakerID": "rauf",
    "title": "Köprüyü kalıcı onarmak",
-   "body": "Rauf hesabı yaptı: kalıcı onarım 15.000 TL. Bugünün kamyonet farkı yine ödenir; yarından itibaren biter.",
+   "body": "Rauf hesabı masaya koydu. \"İlk konuştuğumuzda on iki bindi. Kamyon olayından sonra herkes demir aldı, fiyatlar arttı; şimdi on beş. Yaparsam bu akşamki taşıma sonuncusu olur.\"",
    "choices": [
     {
      "id": "repair",
@@ -5780,8 +6445,8 @@
    "id": "ag.creditor",
    "slot": "agenda",
    "speakerID": "mektup",
-   "title": "Alacaklı dosyası görüşmesi",
-   "body": "Alacaklının avukatıyla yüz yüze görüşme. Dosyayı hazırlatıp götürmek 3.000 TL ve baskıyı belirgin düşürür. Ücretsiz bir açık süre talebi de var; etkisi küçük.",
+   "title": "Alacaklının avukatıyla görüşme",
+   "body": "Alacaklının avukatı ilçeye uğrayacak; borcun sahibi adına konuşuyor, şirketle ilgisi yok. Sevim: \"Dosyayı hazırlatıp götürürsek avukatı biraz sakinleştiririz. Ya da gidip yalnız süre isteriz; o da bir şeydir.\"",
    "choices": [
     {
      "id": "meet",
@@ -5817,7 +6482,7 @@
    "speakerID": "derya",
    "title": "Derya ile tanışmak",
    "illustration": "kaplica",
-   "body": "Derya il kültür müdürlüğünden gelen restorasyon uzmanı; kaplıcanın taş duvarlarını ve köprüyü inceliyor. Otomatik bir ödülü yok; bir sabahını ona ayırırsın.",
+   "body": "Köprünün başında elinde metreyle bir kadın: Derya, il kültür müdürlüğünden gelen restorasyon uzmanı. Kaplıcanın taş duvarlarını ve köprünün ayaklarını inceliyor. \"Bir sabahınızı bana ayırır mısınız? Köyü bilen biriyle gezmek isterim.\"",
    "choices": [
     {
      "id": "tour",
@@ -5858,13 +6523,13 @@
    "slot": "agenda",
    "speakerID": "avukat",
    "title": "Şirketle özel pazarlık",
-   "body": "Avukat telefonda. \"Kapalı bir avans: bugün 20.000 TL. Karşılığında yarından itibaren her akşam 1.500 TL payımızı alırız. Kurula söylemek zorunda değilsiniz.\" Bu karanlık bir iş; alacaklının ve köyün gözünde bedeli var.",
+   "body": "Şirket avukatı telefonda, sesi alçak. \"Size bir avans verelim: bugün yirmi bin. Karşılığında her akşam iki bin payımızı alırız, otuzuncu güne kadar. Kurula söylemek zorunda değilsiniz.\" Telefonu kapattıktan sonra da sesi kulağında.",
    "choices": [
     {
      "id": "take",
      "label": "Avansı al",
      "resultText": "Para hesaba geçti. Kimse görmedi; ama şehirde biri not aldı.",
-     "confirm": "Bugün +20.000 TL. Yarından itibaren her akşam −1.500 TL, oyun sonuna kadar. Baskı +8, güven −4. Bir kez alınabilir. Kabul ediyor musun?",
+     "confirm": "Bugün +20.000 TL. Yarından itibaren her akşam −2.000 TL, otuzuncu güne kadar. Baskı +8, güven −4. Bu gizli anlaşmayı yaparsan \"Birlikte kurtardık\" sonu kapanır. Kabul ediyor musun?",
      "effects": [
       {
        "kind": "cash",
@@ -5873,7 +6538,7 @@
       {
        "kind": "setExpense",
        "target": "company.advance",
-       "amount": 150000,
+       "amount": 200000,
        "label": "Şirket avansının günlük payı",
        "startsAfterDays": 1
       },
@@ -5888,6 +6553,10 @@
       {
        "kind": "setFlag",
        "target": "companyAdvance"
+      },
+      {
+       "kind": "setFlag",
+       "target": "companyAdvanceTaken"
       }
      ],
      "memory": "Şirketten kapalı avans aldın."
@@ -5919,7 +6588,7 @@
    "slot": "agenda",
    "speakerID": "anlatici",
    "title": "Sabahı olağan işe vermek",
-   "body": "Bugün yeni bir şey başlatmıyorsun. İşletme her zamanki gibi çalışır, akşam hesabı olağan.",
+   "body": "Bugün yeni bir şey başlatmıyorsun. İşler her zamanki gibi döner; akşam hesabı olağan.",
    "choices": [
     {
      "id": "rest",
@@ -5935,14 +6604,14 @@
    "dynamic": true,
    "group": "mandate",
    "speakerID": "kurul",
-   "title": "Yönetim yöntemi",
+   "title": "Kararları kim verir?",
    "requirements": [
     {
      "kind": "dayIn",
      "value": "8,15,22"
     }
    ],
-   "body": "Kurul yeni projelerin nasıl başlatılacağını soruyor. Ortak kurulda her yeni proje bir gün sonra başlar ama köy kararın içinde olur (güven +3). Merkezî yürütmede proje aynı gün başlar, karar senin üstünde kalır (güven −1). Bu fark yalnız yeni projelerin başlama günüdür; mevcut gelir, yardım ve açık tarihli sözleşmeler değişmez.",
+   "body": "Kurul yeni işlerin nasıl başlatılacağını soruyor. \"Her yeni işi kurulda oylarsak bir gün geç başlar, ama köy kararın içinde olur. Sen karar verirsen aynı gün başlar, yükü de sen taşırsın.\" Var olan işler ve verilmiş sözler değişmez.",
    "variants": [
     {
      "when": [
@@ -5951,7 +6620,7 @@
        "value": "shared"
       }
      ],
-     "body": "Kurul yöntemi yeniden soruyor. Şu an ortak kurulla çalışıyorsun: yeni projeler bir gün sonra başlıyor. Merkezî yürütmeye geçersen aynı gün başlar (güven −1). Mevcut gelir ve sözleşmeler değişmez."
+     "body": "Kurul yöntemi yeniden soruyor. Şu an yeni işler kurulda oylanıyor ve bir gün geç başlıyor. Kararları kendin vermeye geçebilirsin; kurul sonradan bilgilendirilir."
     },
     {
      "when": [
@@ -5960,7 +6629,7 @@
        "value": "central"
       }
      ],
-     "body": "Kurul yöntemi yeniden soruyor. Şu an merkezî yürütmeyle çalışıyorsun: yeni projeler aynı gün başlıyor. Ortak kurula geçersen bir gün gecikir ama köy kararın içinde olur (güven +3). Mevcut gelir ve sözleşmeler değişmez."
+     "body": "Kurul yöntemi yeniden soruyor. Şu an kararları sen veriyorsun; yeni işler aynı gün başlıyor. Kurulda oylamaya dönersen bir gün gecikir, ama köy kararın içinde olur."
     }
    ],
    "choices": [
@@ -6064,7 +6733,7 @@
     {
      "id": "noted",
      "label": "Fark ettim",
-     "resultText": "İki gün sonra bir dilekçe gelecek gibi.",
+     "resultText": "Yakında bir dilekçe gelecek gibi.",
      "effects": []
     }
    ]
@@ -6082,7 +6751,7 @@
      "value": "petition"
     }
    ],
-   "body": "Yirmi üç imzalı bir dilekçe: {complaint}. Gündemi görüşmeye ayırırsan şikâyet konuşulur ve kapanır. Mevcut kararında ısrar edersen iki gün sonra güven oylaması yapılır: destek 35 ve üstündeyse görev sürer, altındaysa kurul denetimi başlar.",
+   "body": "Kapına yirmi üç imzalı bir dilekçe geldi: {complaint}. Dilekçeyi getiren ortak kâğıdı uzattı: \"Bunu bugün konuşursak kapanır. Konuşmazsak kurul güven oylamasına gider; destek otuz beşin altına düşerse yönetimi kurul denetler.\"",
    "choices": [
     {
      "id": "discuss",
@@ -6106,7 +6775,7 @@
     {
      "id": "insist",
      "label": "Mevcut kararda ısrar et",
-     "resultText": "Dilekçe kurula gitti. Oylama iki gün sonra.",
+     "resultText": "Dilekçe kurula gitti. Oylamanın günü panoda yazıyor.",
      "effects": [],
      "memory": "Dilekçeye rağmen kararında ısrar ettin."
     }
@@ -6125,7 +6794,7 @@
      "value": "vote"
     }
    ],
-   "body": "Kurul güven oylaması yapıyor. Destek bugünkü güvenin: {trust}. 35 ve üstündeyse görev sürer. Altındaysa kurul denetimi başlar: oyun bitmez, ama şirketle kapalı pazarlık yetkin kalkar. Oylamaya çıkmazsan güven −8, baskı +3 ve denetim yine başlar.",
+   "body": "Kurul güven oylaması için toplandı. Bugün arkanda duranların oranı: {trust}. Otuz beş ve üstüyse görevine devam edersin. Altındaysa kurul yönetimi denetler: işler sürer, ama şirketle kapalı pazarlık yapamazsın. Oylamaya hiç çıkmazsan denetim yine başlar, üstüne köy bunu affetmez.",
    "choices": [
     {
      "id": "attend",

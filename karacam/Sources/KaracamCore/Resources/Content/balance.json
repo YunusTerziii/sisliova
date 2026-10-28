@@ -8,6 +8,7 @@
     "lowTrust": 25,
     "highTrust": 70,
     "paymentTrust": 50,
+    "villageCover": 1000000,
     "lowBasisPoints": 7000,
     "normalBasisPoints": 10000,
     "highBasisPoints": 11500,
@@ -37,7 +38,7 @@
         {"id": "spa.base", "label": "Kaplıca girişleri", "amount": 600000}
       ],
       "expenses": [
-        {"id": "spa.base", "label": "Kaplıca rutin gideri (ücret, yakıt, sarf)", "amount": 240000, "earliestDay": 8}
+        {"id": "spa.base", "label": "Kaplıca rutin gideri (ücret, yakıt, sarf)", "amount": 225000, "earliestDay": 8}
       ]
     },
     {
@@ -48,7 +49,7 @@
         {"id": "bees.base", "label": "Arı evi satışları", "amount": 250000}
       ],
       "expenses": [
-        {"id": "bees.base", "label": "Arı evi rutin gideri (ücret, kavanoz, sarf)", "amount": 70000, "earliestDay": 8}
+        {"id": "bees.base", "label": "Arı evi rutin gideri (ücret, kavanoz, sarf)", "amount": 55000, "earliestDay": 8}
       ]
     },
     {
@@ -60,7 +61,7 @@
         {"id": "bees.buyer", "label": "Ağın alıcı sözleşmesi", "amount": 150000}
       ],
       "expenses": [
-        {"id": "bees.base", "label": "Üretici ağı rutin gideri", "amount": 70000, "earliestDay": 8}
+        {"id": "bees.base", "label": "Üretici ağı rutin gideri", "amount": 55000, "earliestDay": 8}
       ]
     }
   ]

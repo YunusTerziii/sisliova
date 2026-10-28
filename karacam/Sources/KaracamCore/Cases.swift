@@ -63,7 +63,7 @@ enum Cases {
             lines.append("Bugünkü koşullarla 30. akşamdan sonra beklenen kasa: \(Money.format(cash)).")
         }
         let st = Final.status(s, c)
-        lines.append("İlk taksit: 150.000 TL · Güven \(s.trust) (gereken \(r.requiredTrust)) · Baskı \(s.pressure) (\(r.pressureLoss) erken tahsilat).")
+        lines.append("İlk taksit: 150.000 TL · Güven \(s.trust) (gereken \(r.requiredTrust)) · Baskı \(s.pressure) (\(r.pressureLoss) olursa alacaklı beklemez).")
         lines.append(st.authoritySafe ? "Satış yetkisi güvence altında." : "Satış yetkisi güvence altında değil: kayıp bildirimi ya da iptal gerekiyor.")
         return lines.joined(separator: "\n")
     }

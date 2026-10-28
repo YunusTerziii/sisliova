@@ -91,8 +91,19 @@ public enum Final {
     /// güven yetmezse destek kaybı; ödeme sonrası düşük kasa ikinci bir kayıp değildir.
     static func settle(_ s: inout RunState, content c: GameContent, notes: inout [String]) {
         guard s.ending == nil, s.day == c.rules.finalDay, s.settledDays.contains(s.day) else { return }
-        let st = status(s, c)
+        // İmece: az bir fark kalmışsa ve köy arkandaysa, köylüler aralarında toplayıp kapatır.
+        // Kıl payı eksik bir kasa, köyü kazanmış bir oyuncuyu kaybettirmez; bedeli güvenden ödenir.
+        let gap = c.rules.firstInstallment - s.cash
+        if gap > 0, gap <= c.rules.villageCoverLimit,
+           s.trust >= c.rules.requiredTrust + c.rules.villageCoverTrust {
+            s.cash += gap
+            s.trust -= c.rules.villageCoverTrust
+            s.flags.insert("villageCovered")
+            s.counters["villageCover"] = Int(gap)
+            notes.append("Kasada \(Money.format(gap)) eksik vardı. Sevim defteri açmadan köylüler zarfları masaya bıraktı; fark imeceyle kapandı.")
+        }
         s.finalCashBeforePayment = s.cash
+        let st = status(s, c)
         if !st.cashEnough {
             s.ending = .cash
         } else if !st.trustEnough {

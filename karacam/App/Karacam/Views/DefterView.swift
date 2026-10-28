@@ -134,7 +134,7 @@ struct DefterView: View {
         case "Belge": "doc.text.fill"
         case "İmza": "signature"
         case "Tarih": "clock.fill"
-        case "Teslim zinciri": "seal.fill"
+        case "Tanıklı teslim": "seal.fill"
         case "İfade": "quote.bubble.fill"
         case "Yer": "mappin.and.ellipse"
         default: "doc.fill"
