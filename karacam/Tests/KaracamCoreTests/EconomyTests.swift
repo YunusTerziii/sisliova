@@ -109,4 +109,22 @@ struct EconomyTests {
         #expect(Money.format(-15_000_000) == "−150.000 TL")
         #expect(Money.format(50_000, signed: true) == "+500 TL")
     }
+
+    @Test func villageCoversOnlyASmallGapAndOnlyWithSupport() {
+        func final(cash: Kurus, trust: Int) -> RunState {
+            var s = Driver().s
+            s.day = rules.finalDay
+            s.settledDays.insert(rules.finalDay)
+            s.flags.insert("authorityRevoked")
+            s.cash = cash
+            s.trust = trust
+            var notes: [String] = []
+            Final.settle(&s, content: sharedContent, notes: &notes)
+            return s
+        }
+        let covered = final(cash: rules.firstInstallment - 300_000, trust: 60)
+        #expect(covered.paymentMade && covered.flags.contains("villageCovered") && covered.trust == 55)
+        #expect(final(cash: rules.firstInstallment - 2_000_000, trust: 60).ending == .cash)
+        #expect(final(cash: rules.firstInstallment - 300_000, trust: 52).ending == .cash)
+    }
 }

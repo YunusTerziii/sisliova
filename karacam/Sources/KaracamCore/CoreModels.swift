@@ -229,6 +229,10 @@ public struct Rules: Codable, Sendable {
     /// 30. gün ödeme planı için gereken kurul desteği. Eski içerikte yoksa `highTrust`.
     public var paymentTrust: Int?
     public var requiredTrust: Int { paymentTrust ?? highTrust }
+    /// 30. gün imecesi: köylülerin kapatabileceği en büyük fark ve bedeli olan güven.
+    public var villageCover: Kurus?
+    public var villageCoverLimit: Kurus { villageCover ?? 0 }
+    public var villageCoverTrust: Int { 5 }
     public var lowBasisPoints: Int64
     public var normalBasisPoints: Int64
     public var highBasisPoints: Int64

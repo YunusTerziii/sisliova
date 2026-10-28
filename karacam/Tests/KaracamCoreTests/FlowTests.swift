@@ -187,4 +187,13 @@ struct FlowTests {
         set("shared", 3)
         #expect(s.trust == 41)
     }
+
+    @Test func trustCannotEndTheGameInTheFreeWeek() throws {
+        var d = Driver()
+        try d.run(to: 4, phase: .evening)
+        d.env.state.trust = 0
+        try d.settle()
+        #expect(d.s.ending == nil)
+        #expect(d.s.trust == 1)
+    }
 }

@@ -596,7 +596,7 @@ extension Engine {
         case .document: "Belge"
         case .signature: "İmza"
         case .timeline: "Tarih"
-        case .custody: "Teslim zinciri"
+        case .custody: "Tanıklı teslim"
         case .testimony: "İfade"
         case .location: "Yer"
         }
@@ -696,6 +696,9 @@ extension Engine {
         let why = def.why.filter { Rulebook.all($0.when, s, content) }.map { Cases.fill($0.text, s, content) }
         let decisive = def.decisive.filter { Rulebook.all($0.when, s, content) }.map { Cases.fill($0.text, s, content) }
         var numbers: [LinePresentation] = []
+        if let cover = s.counters["villageCover"] {
+            numbers.append(LinePresentation(id: "cover", label: "Köyün imecesi", amount: Money.format(Kurus(cover), signed: true), note: nil))
+        }
         if let before = s.finalCashBeforePayment {
             numbers.append(LinePresentation(id: "before", label: "Ödeme öncesi kasa", amount: Money.format(before), note: nil))
         }

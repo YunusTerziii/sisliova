@@ -391,8 +391,13 @@ public struct Engine: Sendable {
             return
         }
         if s.trust <= 0 {
-            end(&s, .trust, events: &events)
-            return
+            // İlk bölüm öğrenme haftası: köy sırt çevirir ama oyun bitmez.
+            if s.day <= rules.freeLastDay {
+                s.trust = 1
+            } else {
+                end(&s, .trust, events: &events)
+                return
+            }
         }
         Social.maybeStartComplaint(&s, content: content)
     }
