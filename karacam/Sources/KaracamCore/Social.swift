@@ -72,14 +72,16 @@ public enum Final {
     public static func status(_ s: RunState, _ c: GameContent) -> FinalStatus {
         FinalStatus(cashBefore: s.cash,
                     cashEnough: s.cash >= c.rules.firstInstallment,
-                    trustEnough: s.trust >= c.rules.highTrust,
+                    trustEnough: s.trust >= c.rules.requiredTrust,
                     pressureOK: s.pressure < c.rules.pressureLoss,
                     authoritySafe: authoritySafe(s))
     }
 
-    /// Özel başarı: kanıtlı doğru hesaplaşma, güvenli mühür zinciri, düzeltilmemiş haksız itham yok.
+    /// Özel başarı: kanıtlı doğru hesaplaşma, güvenli mühür zinciri, düzeltilmemiş haksız itham yok,
+    /// şirketten gizli avans alınmamış.
     public static func special(_ s: RunState) -> Bool {
-        s.flags.contains("culpritExposed")
+        !s.flags.contains("companyAdvanceTaken")
+            && s.flags.contains("culpritExposed")
             && CaseSolver.canProve(s.caseID, with: Array(s.evidence.values))
             && s.flags.contains("custodyVerified")
             && !s.accusations.contains { !$0.correct && !$0.corrected }

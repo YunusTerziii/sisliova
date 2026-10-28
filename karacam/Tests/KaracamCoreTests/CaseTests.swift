@@ -126,8 +126,43 @@ struct CaseTests {
             let p = d.engine.present(d.env)
             let dump = "\(p.notebook)" + "\(p.agenda as Any)"
             // Kimseyi gösteren doğrulanmış kayıt yokken dosya satırı boş olmalı.
-            #expect(p.notebook.fileLine.contains("· imza nüshası"))
+            #expect(p.notebook.fileLine.contains("· imza kaydı"))
             #expect(!dump.contains("caseID"))
         }
+    }
+
+    @Test func recordsNameTwoPeopleAndOnlyTogetherPointToCulprit() {
+        for culprit in SuspectID.allCases {
+            var d = Driver(culprit: culprit)
+            Cases.grant("signature", to: &d.env.state, content: sharedContent)
+            Cases.grant("timeline", to: &d.env.state, content: sharedContent)
+            let sig = d.s.evidence["signature"]!
+            let time = d.s.evidence["timeline"]!
+            #expect(sig.possibleSuspects.count == 2 && time.possibleSuspects.count == 2)
+            #expect(sig.possibleSuspects.intersection(time.possibleSuspects) == [culprit])
+            // Metinde iki ad da geçer; tek kayıt suçluyu adıyla tek başına göstermez.
+            let names = sig.possibleSuspects.map { sharedContent.suspect($0).name }
+            #expect(names.allSatisfy { sig.text.contains($0) })
+            #expect(!sig.text.contains("{") && !time.text.contains("{"))
+        }
+    }
+
+    @Test func unprovenAccusationLooksTheSameForRightAndWrongPerson() throws {
+        var right = Driver(culprit: .sevim)
+        try right.run(to: 9, phase: .agenda)
+        right.env.state.trust = 40
+        try right.agenda("submitCase", "sevim")
+        var wrong = Driver(culprit: .sevim)
+        try wrong.run(to: 9, phase: .agenda)
+        wrong.env.state.trust = 40
+        try wrong.agenda("submitCase", "selim")
+        #expect(right.s.trust == wrong.s.trust)
+        #expect(right.s.pressure == wrong.s.pressure)
+        #expect(!right.s.flags.contains("caseResolved"))
+        try right.run(to: 10, phase: .agenda)
+        try wrong.run(to: 10, phase: .agenda)
+        // Geri alma işi ikisinde de açılır; gündem de suçluyu ele vermez.
+        #expect(right.engine.availableAgenda(right.s).contains { $0.id == "correct" })
+        #expect(wrong.engine.availableAgenda(wrong.s).contains { $0.id == "correct" })
     }
 }

@@ -359,14 +359,16 @@ public struct Engine: Sendable {
         }
         let title = variantTitle(scene, instance.variantIndex)
         let text = ([resultText] + notes).filter { !$0.isEmpty }.joined(separator: " ")
-        s.lastOutcome = Outcome(day: s.day, sceneTitle: title, text: text)
+        let gained = Set(s.evidence.keys).subtracting(evidenceBefore)
+        let gainedTitles = gained.sorted().compactMap { s.evidence[$0]?.title }
+        s.lastOutcome = Outcome(day: s.day, sceneTitle: title, text: text, sceneID: scene.id,
+                                newEvidence: gainedTitles.isEmpty ? nil : gainedTitles)
         if let memory = choice.memory {
             s.memories.append(Memory(day: s.day, text: memory))
         }
         events.append(.choiceApplied(text: text))
-        let gained = Set(s.evidence.keys).subtracting(evidenceBefore)
-        if !gained.isEmpty {
-            events.append(.evidenceGained(gained.sorted().compactMap { s.evidence[$0]?.title }))
+        if !gainedTitles.isEmpty {
+            events.append(.evidenceGained(gainedTitles))
         }
         if let ending = s.ending {
             s.phase = .ended

@@ -106,6 +106,18 @@ public struct Outcome: Codable, Sendable, Equatable {
     public var day: Int
     public var sceneTitle: String
     public var text: String
+    /// Sonucu doğuran sahne; eski kayıtlarda yok.
+    public var sceneID: String?
+    /// Bu seçimle deftere eklenen kanıtların başlıkları; eski kayıtlarda yok.
+    public var newEvidence: [String]?
+
+    public init(day: Int, sceneTitle: String, text: String, sceneID: String? = nil, newEvidence: [String]? = nil) {
+        self.day = day
+        self.sceneTitle = sceneTitle
+        self.text = text
+        self.sceneID = sceneID
+        self.newEvidence = newEvidence
+    }
 }
 
 public struct EveningRecord: Codable, Sendable, Equatable {
@@ -212,7 +224,11 @@ public struct Rules: Codable, Sendable {
     public var firstInstallment: Kurus
     public var totalDebt: Kurus
     public var lowTrust: Int
+    /// Gelir çarpanının yükseldiği güven eşiği.
     public var highTrust: Int
+    /// 30. gün ödeme planı için gereken kurul desteği. Eski içerikte yoksa `highTrust`.
+    public var paymentTrust: Int?
+    public var requiredTrust: Int { paymentTrust ?? highTrust }
     public var lowBasisPoints: Int64
     public var normalBasisPoints: Int64
     public var highBasisPoints: Int64

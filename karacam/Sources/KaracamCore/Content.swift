@@ -196,7 +196,9 @@ public struct SuspectDefinition: Codable, Sendable, Equatable {
 }
 
 public enum SuspectRule: String, Codable, Sendable {
-    case all, culprit, others, pair, notCulprit
+    /// `pair`: suçlu + yanıltıcı şüpheli. `notDecoy`: suçlu + üçüncü kişi.
+    /// İki kayıt ayrı ayrı iki kişiyi gösterir; suçlu ancak ikisi birleştirilince kalır.
+    case all, culprit, others, pair, notCulprit, notDecoy
 }
 
 public struct EvidenceTemplate: Codable, Sendable, Equatable {

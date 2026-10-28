@@ -15,13 +15,13 @@ struct EconomyTests {
         return d.s
     }
 
-    @Test(arguments: [(24, 700_000), (25, 1_000_000), (59, 1_000_000), (60, 1_250_000)])
+    @Test(arguments: [(24, 700_000), (25, 1_000_000), (69, 1_000_000), (70, 1_150_000)])
     func trustMultiplier(trust: Int, expected: Int64) {
         let ev = Economy.forecast(state(trust: trust), rules: rules)
         #expect(ev.adjustedGross == expected)
     }
 
-    @Test(arguments: [(49, 0), (50, 10_000), (80, 300_000), (100, 300_000)])
+    @Test(arguments: [(34, 0), (35, 10_000), (64, 300_000), (100, 300_000)])
     func pressureFee(pressure: Int, expected: Int64) {
         #expect(Economy.pressureFee(pressure: pressure, rules: rules) == expected)
     }

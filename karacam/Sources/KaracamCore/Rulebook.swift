@@ -82,7 +82,7 @@ public enum Rulebook {
             guard let mark = s.interviewMarks[who.rawValue] else { return true }
             return s.evidence.count > mark
         case .wrongAccusationOpen:
-            return s.accusations.contains { !$0.correct && !$0.corrected }
+            return s.accusations.contains { !$0.proven && !$0.corrected }
         case .grievanceAny:
             return c.social.grievances.contains { s.flags.contains($0.flag) }
         case .sealLocated: return s.evidence["location"] != nil || s.evidence["location.narrow"] != nil
