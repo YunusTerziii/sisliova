@@ -329,7 +329,7 @@ extension Engine {
             case .closeBusiness:
                 out.append("İşletmenin bütün geliri ve gideri kapanır")
             case .acceptCommitment:
-                out.append("Taahhüt: \(e.expiresAfterDay ?? s.day). gün")
+                out.append("Teslim: \(e.expiresAfterDay ?? s.day). gün")
             case .setDayGrossPercent:
                 out.append("\(Rulebook.list(e.value).map { "\($0)." }.joined(separator: ", ")) akşam brüt %\(a)")
             case .endGame:
