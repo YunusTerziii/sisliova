@@ -98,7 +98,7 @@ public struct Autoplayer {
 
         while env.state.ending == nil && commands < maxCommands && stuck == nil {
             let s = env.state
-            if s.trust >= 60 && firstTrust60 == nil { firstTrust60 = s.day }
+            if s.trust >= engine.content.rules.highTrust && firstTrust60 == nil { firstTrust60 = s.day }
             minCash = min(minCash, s.cash)
             switch s.phase {
             case .morning, .anchor, .night:

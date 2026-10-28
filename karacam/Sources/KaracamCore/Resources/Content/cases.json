@@ -89,22 +89,12 @@
      "text": "Kooperatifin mührü kayıp. Halan, mühür olmadan kimsenin köyü satamayacağını sanıyordu. Kopuk sayfa ile mühür aynı işin parçası."},
     {"id": "records.archive", "title": "Halanın arşiv defteri", "kind": "document", "reliability": "observed", "sourceID": "archive", "suspects": "all",
      "text": "Halanın arşiv defterinde 19 Eylül satırı boş bırakılmış. O gün ofiste bir görüşme olmuş ama kimin geldiği yazılmamış."},
-    {"id": "signature", "title": "İmza nüshası", "kind": "signature", "reliability": "verified", "sourceID": "registry", "suspects": "culprit",
-     "text": "İmza nüshası.",
-     "textByCase": {
-       "selim": "Ticaret sicilindeki bağımsız kayıt: şirkete verilen satış yetkisi taslağının altında Muhtar Selim'in imzası var. İmza ismi gösteriyor; işlemin bağlamını tek başına kanıtlamaz.",
-       "halil": "Ticaret sicilindeki bağımsız kayıt: şirkete verilen satış yetkisi taslağının altında Bekçi Halil'in imzası var. İmza ismi gösteriyor; işlemin bağlamını tek başına kanıtlamaz.",
-       "sevim": "Ticaret sicilindeki bağımsız kayıt: şirkete verilen satış yetkisi taslağının altında Sayman Sevim'in imzası var. İmza ismi gösteriyor; işlemin bağlamını tek başına kanıtlamaz."
-     }},
-    {"id": "timeline", "title": "Bağımsız tarih kaydı", "kind": "timeline", "reliability": "verified", "sourceID": "deliveryLog", "suspects": "culprit",
-     "text": "Tarih kaydı.",
-     "textByCase": {
-       "selim": "İlçe teslim kaydı: şirket avukatıyla görüşme 19 Eylül akşamı muhtarlıkta yapılmış; nöbet defterine o akşam yalnız Muhtar Selim giriş atmış.",
-       "halil": "İlçe teslim kaydı: şirketin zarfı 19 Eylül gecesi kaplıcaya teslim edilmiş; kapı saatine o gece yalnız Bekçi Halil'in kartı basılmış.",
-       "sevim": "İlçe teslim kaydı: şirket avukatının makbuzu 19 Eylül akşamı kooperatif hesabına işlenmiş; o saatte hesap defterine giriş yapan Sayman Sevim."
-     }},
-    {"id": "timeline.witness", "title": "Tanıdıkların hatırladığı saat", "kind": "timeline", "reliability": "corroborated", "sourceID": "neighbors", "suspects": "culprit",
-     "text": "Tanıdıklar 19 Eylül akşamı {culpritAcc} şehir plakalı arabanın yanında gördüklerini söylüyor. Destekli bir anlatım; bağımsız bir kayıtla doğrulanmalı."},
+    {"id": "signature", "title": "İmza kaydı", "kind": "signature", "reliability": "verified", "sourceID": "registry", "suspects": "pair",
+     "text": "Kayıt dairesindeki satış yetkisi taslağının altındaki imza okunaksız; yalnız paraf seçiliyor. Memur parafı dosyadaki iki imzaya benzetiyor: {sigA} ya da {sigB}. Kâğıt tek başına hangisi olduğunu söylemiyor."},
+    {"id": "timeline", "title": "Tarih kaydı", "kind": "timeline", "reliability": "verified", "sourceID": "deliveryLog", "suspects": "notDecoy",
+     "text": "İlçe teslim kaydı: şirketin zarfı 19 Eylül akşamı köye bırakılmış. O saatte kooperatifin kapı ve hesap defterlerinde adı geçen iki kişi var: {tlA} ve {tlB}."},
+    {"id": "timeline.witness", "title": "Tanıdıkların hatırladığı saat", "kind": "timeline", "reliability": "corroborated", "sourceID": "neighbors", "suspects": "notDecoy",
+     "text": "Tanıdıklar 19 Eylül akşamı şehir plakalı arabanın yanında birini gördüklerini söylüyor. Karanlıktı; {tlA} mıydı {tlB} mi, ikisi arasında kalıyorlar. Bağımsız bir kayıtla doğrulanmalı."},
     {"id": "location.narrow", "title": "Mührün izi daralıyor", "kind": "location", "reliability": "observed", "sourceID": "trail", "suspects": "pair",
      "text": "Mührün gidebileceği yer ikiye indi: {placeA} ya da {placeB}. İkisini de tanıkla açmak mümkün."},
     {"id": "location", "title": "Mührün yeri", "kind": "location", "reliability": "observed", "sourceID": "trail", "suspects": "culprit",
